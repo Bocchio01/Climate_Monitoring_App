@@ -7,6 +7,13 @@
         "commons-lang3-3.12.0-javadoc.jar",
         "commons-lang3-3.12.0-sources.jar",
         "commons-lang3-3.12.0-tests.jar",
-        "commons-lang3-3.12.0-test-sources.jar"
+        "commons-lang3-3.12.0-test-sources.jar",
+        "Librerie/commons-lang3-3.12.0.jar",
+        "Librerie/commons-lang3-3.12.0-javadoc.jar",
+        "Librerie/commons-lang3-3.12.0-sources.jar",
+        "Librerie/commons-lang3-3.12.0-tests.jar",
+        "Librerie/commons-lang3-3.12.0-test-sources.jar",
+        "Librerie/opencsv-5.7.1.jar",
+        "Librerie/prog-4ed.jar"
     ]
 }
