@@ -1,7 +1,6 @@
 import com.opencsv.*;
 
 import java.io.*;
-import java.util.*;
 
 public class Test2 {
     public static void main(String[] args) throws Exception {
@@ -17,6 +16,7 @@ public class Test2 {
                 }
                 System.out.println();
             }
+            openCsvReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
