@@ -8,7 +8,7 @@ public class Main {
         String zona;
 
         out.println("Inserisci 1 se sei un Utente o 2 se sei un Operatore");
-        char scelta = in.readChar();
+        int scelta = in.readInt();
         if (scelta == 1) {
             out.println("Inserisci la zona che vuoi trovare");
             cercaAreaGeografica(zona);// da definire
