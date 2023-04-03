@@ -1,9 +1,7 @@
 import java.io.BufferedWriter;
-import java.io.Console;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import prog.io.*;
 
 public class Operatore {
@@ -15,19 +13,11 @@ public class Operatore {
     private String password;
     public String centroMonitoraggio;
 
-    public Operatore(String nomeCognome, String codFiscale, String eMail, int userID, String password,
-            String centroMonitoraggio) {
-
-        this.nomeCognome = nomeCognome;
-        this.codFiscale = codFiscale;
-        this.eMail = eMail;
-        Operatore.userID = userID++;
-        this.password = password;
-        this.centroMonitoraggio = centroMonitoraggio;
+    public Operatore() {
 
     }
 
-    private void registrazione() throws IOException {
+    private static void registrazione(Operatore g) throws IOException {
         FileWriter fw = null;
         BufferedWriter bw = null;
         PrintWriter out = null;
@@ -53,27 +43,34 @@ public class Operatore {
                 System.out.println("Password troppo corta, reinseriscila");
                 password = in.readLine();
             }
-            out.print(password);
+            out.print(password + "\t");
 
             System.out.println("Inserisci, se vuoi, il tuo centro di Monitoraggio di appartenenza");
             String centroMonitoraggio = in.readLine();
             if (centroMonitoraggio != null)
-                out.print(centroMonitoraggio);
+                out.print(centroMonitoraggio + "\t");
 
             int userID = codFiscale.charAt(0) + codFiscale.charAt(1) + codFiscale.charAt(2);
-            System.out.println("Registrazione completata. Accedi all'App usando questo userID: " + Operatore.userID
+            System.out.println("Registrazione completata. Accedi all'App usando questo userID: " + userID
                     + " e la tua password");
             out.print(userID);
+            out.println();
 
             out.close();
 
         } catch (IOException e) {
-            // exception handling left as an exercise for the reader
+
         } finally {
             if (out != null)
                 out.close();
 
         }
 
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        Operatore g1 = new Operatore();
+        registrazione(g1);
     }
 }
