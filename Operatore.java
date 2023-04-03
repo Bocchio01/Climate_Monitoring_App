@@ -72,18 +72,7 @@ public class Operatore {
         } finally {
             if (out != null)
                 out.close();
-            try {
-                if (bw != null)
-                    bw.close();
-            } catch (IOException e) {
-                // exception handling left as an exercise for the reader
-            }
-            try {
-                if (fw != null)
-                    fw.close();
-            } catch (IOException e) {
-                // exception handling left as an exercise for the reader
-            }
+
         }
 
     }
