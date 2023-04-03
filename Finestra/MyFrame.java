@@ -15,7 +15,7 @@ public class MyFrame extends JFrame {
         setSize(500, 500); // imposta le dimensioni (x,y) della finestra
         setVisible(true); // rende visibile la finestra, alla fine delle opzioni
 
-        ImageIcon image = new ImageIcon("filename"); // crea un'icona
+        ImageIcon image = new ImageIcon("filename"); // crea un'icona, quando Marta ha trovato il logo lo si mette qui
         setIconImage(image.getImage());// cambia l'icona della finestra
         getContentPane().setBackground(new Color(123, 50, 250)); // imposta il colore del background in variabili
                                                                  // RGB o esadecimali
