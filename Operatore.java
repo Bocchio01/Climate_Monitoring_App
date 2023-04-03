@@ -1,7 +1,9 @@
 import java.io.BufferedWriter;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import prog.io.*;
 
 public class Operatore {
@@ -9,24 +11,24 @@ public class Operatore {
     public String nomeCognome;
     public String codFiscale;
     public String eMail;
-    public static int userID = 1;
-    private String password;
+    public int userID;
+    public String password;
     public String centroMonitoraggio;
 
     public Operatore() {
 
     }
 
-    private static void registrazione(Operatore g) throws IOException {
+    private static void registrazione() throws IOException {
         FileWriter fw = null;
         BufferedWriter bw = null;
         PrintWriter out = null;
         ConsoleInputManager in = new ConsoleInputManager();
 
         try {
-            fw = new FileWriter("OperatoriRegistrati.dati.txt", true);
+            fw = new FileWriter("OperatoriRegistrati.dati.txt", true); // file su cui scrivere
             bw = new BufferedWriter(fw);
-            out = new PrintWriter(bw);
+            out = new PrintWriter(bw);// "variabile" di scitttura
 
             System.out.println("Inserisci il tuo nome e cognome");
             String nomeCognome = in.readLine();
@@ -53,6 +55,7 @@ public class Operatore {
             int userID = codFiscale.charAt(0) + codFiscale.charAt(1) + codFiscale.charAt(2);
             System.out.println("Registrazione completata. Accedi all'App usando questo userID: " + userID
                     + " e la tua password");
+
             out.print(userID);
             out.println();
 
@@ -63,14 +66,12 @@ public class Operatore {
         } finally {
             if (out != null)
                 out.close();
-
         }
 
     }
 
     public static void main(String[] args) throws IOException {
-
-        Operatore g1 = new Operatore();
-        registrazione(g1);
+        registrazione();
     }
+
 }
