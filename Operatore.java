@@ -1,4 +1,4 @@
-opimport java.io.BufferedWriter;
+import java.io.BufferedWriter;
 import java.io.Console;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -49,7 +49,7 @@ public class Operatore {
             out.print(eMail + "\t");
             System.out.println("Inserisci la tua password lunga almeno 8 caratteri");
             String password = in.readLine();
-            while (password.length() < 7) {
+            while (password.length() < 8) {
                 System.out.println("Password troppo corta, reinseriscila");
                 password = in.readLine();
             }
