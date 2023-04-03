@@ -5,7 +5,7 @@ import java.io.*;
 public class Test2 {
     public static void main(String[] args) throws Exception {
         try {
-            String filePath = "./geonames-and-coordinates.csv";
+            String filePath = "./CoordinateMonitoraggi.dati.csv";
             FileReader fileReader = new FileReader(filePath);
 
             CSVReader openCsvReader = new CSVReader(fileReader);
