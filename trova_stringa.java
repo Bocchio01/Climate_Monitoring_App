@@ -4,58 +4,41 @@ public class trova_stringa {
     public static void main(String[] args) 
     throws IOException {
         FileReader f;
-        f=new FileReader("./CoordinateMonitoraggi.dati.csv");
+        f=new FileReader("./CoordinateMonitoraggi.dati.csv");//"./Dati_abbreviati.csv"
     
         BufferedReader b;
         b=new BufferedReader(f);
     
-        String s, ricerca="Westborough";
+        String s, ricerca="Watson";
+        ricerca = ricerca.toLowerCase();
         String[] riga = new String[7];
-        int j=0, m=0, i=0, fine=0, l=0;
-
+        int j=0, m=0, i=0, l=0;
 
         boolean find=false;
 
         s=b.readLine()+",";
-        //System.out.println(s);
         
         while (find==false) {
+            s=b.readLine()+",";
             l=s.length();
-            System.out.println(l);
-            for (int j = 0; j < l; j++) {
+            for (j = 0; j < l; j++) {
                 if(s.charAt(j)==','){
-                    riga[i] = s.substring(m,j);
-                    //System.out.println(riga[i]);
+                    if(i>=7) i=6;
+                    riga[i] = s.substring(m,j).toLowerCase();
                     m=j+1;
                     i++;
                 }
-                j++;
             }
-            /*while (j<l) {
-                if(s.charAt(j)==','){
-                    riga[i] = s.substring(m,j);
-                    //System.out.println(riga[i]);
-                    m=j+1;
-                    i++;
-                }
-                j++;
-            }*/
             i=0;
-            j=0;
             m=0;
-            for (int n = 0; n <= 6; n++) {
-                System.out.println(riga[n]);
-                if (riga[n]==ricerca) {
+            for (int n = 0; n < 7; n++) {
+                if (riga[n].equals(ricerca)) {
                     System.out.println(s);
                     find=true;
-                }
-                else{
-                    s=b.readLine()+",";
-                    //System.out.println(s);
+                    break;
                 }
             }
-            //System.out.println(s);
-            if(s==null) break;
+            if(b.readLine()==null) break;
         }
       }
 }
