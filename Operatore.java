@@ -19,7 +19,7 @@ public class Operatore {
 
     }
 
-    private static void registrazione() throws IOException {
+    public static void registrazione() throws IOException {
         FileWriter fw = null;
         BufferedWriter bw = null;
         PrintWriter out = null;
@@ -67,6 +67,19 @@ public class Operatore {
             if (out != null)
                 out.close();
         }
+
+    }
+
+    public boolean isRegistrazione(int userID, String password){
+        ConsoleInputManager in = new ConsoleInputManager();
+
+        while (){//ID e password non presenti nel file
+        System.out.println("Hai sbagliato a inserire le credenziali o Operatore non registrato");
+        System.out.println("Reinserisci le credenziali");
+        userID=in.readInt();
+        password=in.readLine();
+        isRegistrazione(userID, password);}
+        return true;
 
     }
 
