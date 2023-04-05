@@ -1,6 +1,6 @@
 import prog.io.*;
 
-public class Main {
+public class Main extends Operatore {
     public static void main(String[] args) {
         ConsoleInputManager in = new ConsoleInputManager();
         ConsoleOutputManager out = new ConsoleOutputManager();
@@ -17,9 +17,9 @@ public class Main {
         } else if (scelta == 2) {
             out.println("Sei un nuovo operatore?");
             String azione = in.readLine();
-            if (azione == "signup") {
+            if (azione == "si") {// signup
                 registrazione();// da definire
-            } else if (azione == "login") {
+            } else if (azione == "no") {// login
                 autenticazione();// da definire
             }
 
