@@ -11,7 +11,7 @@ public class trova_coordinate {
     
         String s, s_latitudine="45", s_longitudine="70", closest="";
         String[] riga = new String[7];
-        int j=0, m=0, i=0, l=0, c=0;
+        int j=0, m=0, i=0, l=0;
         double d_latitude = Double.parseDouble(s_latitudine), d_longitude = Double.parseDouble(s_longitudine);
         double data_latitude, data_longitude, distance=400, temp_distance;
 
