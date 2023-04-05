@@ -16,14 +16,13 @@ public class trova_stringa {
 
         boolean find=false;
 
-        s=b.readLine()+",";
+        s=b.readLine()+";";
         
         while (find==false) {
-            s=b.readLine()+",";
+            s=b.readLine()+";";
             l=s.length();
             for (j = 0; j < l; j++) {
-                if(s.charAt(j)==','){
-                    if(i>=7) i=6;
+                if(s.charAt(j)==';'){
                     riga[i] = s.substring(m,j).toLowerCase();
                     m=j+1;
                     i++;
