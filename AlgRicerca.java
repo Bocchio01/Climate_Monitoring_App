@@ -6,7 +6,6 @@ import prog.io.ConsoleInputManager;
 class AlgRicerca {
     public static void main(String[] args) {
         ConsoleInputManager in = new ConsoleInputManager();
-        PrintWriter print = new PrintWriter(System.out, true);
         String nomeFile = "CoordinateMonitoraggi.dati.csv";
         String ricerca = in.readLine("Inserisci il luogo che vuoi visualizzare" + "\n");
 
@@ -29,7 +28,7 @@ class AlgRicerca {
             if (campi[1].toLowerCase().equals(ricerca.toLowerCase())
                     || campi[2].toLowerCase().equals(ricerca.toLowerCase())) {
 
-                print.println("ID: " + campi[0] + "\n" + "Nome: " + campi[1] + "\n" + "Nome ASCII: " + campi[2]
+                System.out.println("ID: " + campi[0] + "\n" + "Nome: " + campi[1] + "\n" + "Nome ASCII: " + campi[2]
                         + "\n" + "Codice Paese: " + campi[3] + "\n" + "Nome Paese: " + campi[4] + "\n" + "Latitudine: "
                         + campi[5] + "\n" + "Longitudine: " + campi[6] + "\n");
 
