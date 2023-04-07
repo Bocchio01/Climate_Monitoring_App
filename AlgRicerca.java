@@ -2,12 +2,26 @@
 import java.io.*;
 import java.util.*;
 import prog.io.ConsoleInputManager;
+import java.text.Normalizer;
 
 class AlgRicerca {
     public static void main(String[] args) {
         ConsoleInputManager in = new ConsoleInputManager();
         String nomeFile = "CoordinateMonitoraggi.dati.csv";
         String ricerca = in.readLine("Inserisci il luogo che vuoi visualizzare" + "\n");
+
+        char c;
+        int q = 0;
+        String subs;
+
+        for (int i = 0; i < ricerca.length(); i++) {
+            c = ricerca.charAt(i);
+            if (!Character.isLetter(c)) {
+                subs = ricerca.substring(q, i);
+                ricerca = ricerca.substring(i + 1);
+                ricerca = subs + ricerca;
+            }
+        }
 
         List<String[]> data = new ArrayList<>();// lista per memorizzare i dati del file
         try (BufferedReader br = new BufferedReader(new FileReader(nomeFile))) {
