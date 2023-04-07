@@ -26,11 +26,10 @@ class AlgRicerca {
         }
 
         for (String[] campi : data) {
-            if (campi[1].toLowerCase().equals(ricerca.toLowerCase())) {
-                print.write("ID: " + campi[0] + "\n" + "Nome: " + campi[1] + "\n" + "Nome ASCII: " + campi[2]
+            if (campi[2].toLowerCase().equals(ricerca.toLowerCase())) {
+                print.println("ID: " + campi[0] + "\n" + "Nome: " + campi[1] + "\n" + "Nome ASCII: " + campi[2]
                         + "\n" + "Codice Paese: " + campi[3] + "\n" + "Nome Paese: " + campi[4] + "\n" + "Latitudine: "
                         + campi[5] + "\n" + "Longitudine: " + campi[6] + "\n");
-                print.close();
 
             }
         }
