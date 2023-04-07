@@ -1,5 +1,5 @@
-
 import java.io.*;
+import java.text.Normalizer;
 
 public class trova_stringa {
     public static void main(String[] args)
@@ -10,8 +10,25 @@ public class trova_stringa {
         BufferedReader b;
         b = new BufferedReader(f);
 
-        String s, ricerca = "Parigi";
+        String s, ricerca = "sakcagoz", subs="";
+        ricerca = Normalizer.normalize( ricerca, Normalizer.Form.NFD );
+
+        char c;
+        int q=0;
+
+        for (int i = 0; i < ricerca.length(); i++) {
+            c = ricerca.charAt(i);
+            if(!Character.isLetter(c)){
+                subs=ricerca.substring(q, i);
+                ricerca=ricerca.substring(i+1);
+                ricerca=subs+ricerca;
+            }
+        }
+        //ricerca = ricerca.replaceAll("\\p{M}", "");
         ricerca = ricerca.toLowerCase();
+        System.out.println(ricerca);
+        
+
         String[] riga = new String[7];
         int j = 0, m = 0, i = 0, l = 0;
 
@@ -29,7 +46,7 @@ public class trova_stringa {
             }
             i = 0;
             m = 0;
-            for (int n = 0; n < 7; n++) {
+            for (int n = 1; n < 5; n++) {
                 if (riga[n].equals(ricerca)) {
                     System.out.println(s);
                     break;
