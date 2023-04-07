@@ -46,7 +46,7 @@ public class Coord {
         }
     }
 
-    // calcolo della diztanza usando l'emisenoverso
+    // calcolo della distanza ortodromica usando l'emisenoverso
     private static double calcolaDistanza(double lat1, double lon1, double lat2, double lon2) {
         int R = 6371; // raggio terrestre medio in km
         double latDistanza = Math.toRadians(lat2 - lat1);
