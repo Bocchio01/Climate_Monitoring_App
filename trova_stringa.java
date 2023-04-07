@@ -1,4 +1,3 @@
-package Algoritmi;
 
 import java.io.*;
 
