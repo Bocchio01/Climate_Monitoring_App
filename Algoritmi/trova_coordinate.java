@@ -1,3 +1,5 @@
+package Algoritmi;
+
 import java.io.*;
 
 public class trova_coordinate {
@@ -16,8 +18,7 @@ public class trova_coordinate {
         double data_latitude, data_longitude, distance = 400, temp_distance;
 
         s = b.readLine() + ";";
-        // TODO Luca prova a vedere se conviene utilizzare il metodo split() per le
-        // TODO stringhe invece del substring, stessa cosa nel trova_stringa
+
         while (true) {
             s = b.readLine() + ";";
             l = s.length();
