@@ -16,6 +16,7 @@
         "Librerie/opencsv-5.7.1.jar",
         "Librerie/prog-4ed.jar",
         "Librerie/junidecode-0.4.1.jar",
-        "Librerie/junidecode-0.4.1-javadoc.jar"
+        "Librerie/junidecode-0.4.1-javadoc.jar",
+        "Librerie/commons-io-2.11.0.jar"
     ]
 }
