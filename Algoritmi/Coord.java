@@ -25,15 +25,15 @@ public class Coord {
             while ((str = br.readLine()) != null) {
 
                 String[] paeseData = str.split(";");
-                String countryName = paeseData[1];
+                String nomePaese = paeseData[1];
                 double latitudine = Double.parseDouble(paeseData[5]);
                 double longitudine = Double.parseDouble(paeseData[6]);
 
-                double distance = calcolaDistanza(inputLatitudine, inputLongitudine, latitudine, longitudine);
+                double distanza = calcolaDistanza(inputLatitudine, inputLongitudine, latitudine, longitudine);
 
-                if (distance < closestDistanza) {
-                    closestPaese = countryName;
-                    closestDistanza = distance;
+                if (distanza < closestDistanza) {// se la distanza è minore, salva i dati del paese più vicino
+                    closestPaese = nomePaese;
+                    closestDistanza = distanza;
                 }
             }
 

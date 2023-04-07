@@ -15,7 +15,7 @@ class AlgRicerca {
 
             String str;
             while ((str = br.readLine()) != null) {
-                String[] campi = str.split(";");// divido la riga in base al semicolon
+                String[] campi = str.split(";");// divido la riga in base al punto e virgola
                 data.add(campi);// aggiungo i dati alla lista
 
             }
