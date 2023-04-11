@@ -12,7 +12,7 @@ class AlgRicerca {
         System.setOut(new java.io.PrintStream(System.out, true, StandardCharsets.ISO_8859_1));
         Scanner scanner = new Scanner(new InputStreamReader(System.in, StandardCharsets.ISO_8859_1));
 
-        String nomeFile = "CoordinateMonitoraggi.dati.csv";
+        String nomeFile = "geonames-and-coordinates.csv";
         System.out.println("Inserisci il luogo che vuoi visualizzare" + "\n");
         String ricerca = scanner.nextLine();
         ricerca = Normalizer.normalize(ricerca, Normalizer.Form.NFC);
