@@ -6,13 +6,13 @@ public class Layout extends JFrame {
 
 //Creiamo i componenti
 
-JLabel ipLabel = new JLabel("Nome Utente", SwingConstants.LEFT);
+JLabel nuLabel = new JLabel("Nome Utente", SwingConstants.LEFT);
 
 JLabel passwordLabel = new JLabel("Password", SwingConstants.LEFT);
 
-JLabel fileDaInviareLabel = new JLabel("File da inviare", SwingConstants.LEFT);
+//JLabel fileDaInviareLabel = new JLabel("File da inviare", SwingConstants.LEFT);
 
-JTextField ipText = new JTextField();
+JTextField nuText = new JTextField();
 
 JPasswordField passwordText = new JPasswordField();
 
@@ -44,9 +44,9 @@ gbc.weighty = wy;
 
 public Layout() { // Il costruttore della nostra classe
 
-super("File transfer appz");
+super("Login");
 
-setSize(300, 120);
+setSize(500, 300);
 
 setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -54,7 +54,7 @@ JPanel pannello = new JPanel();
 
 // impostiamo le proprietà dei componenti
 
-ipText.setEditable(true);
+nuText.setEditable(true);
 
 fileDaInviareText.setEditable(true);
 
@@ -70,23 +70,23 @@ pannello.setLayout(grigliaAvanzata);
 
 //definiamo i limiti di ogni componente e lo aggiungiamo al pannello
 
-impostaLimite(limite,0,0,1,1,35,0); //etichetta IP host
+impostaLimite(limite,0,0,1,1,35,0); //etichetta Nome Utente
 
 limite.fill = GridBagConstraints.NONE;
 
 limite.anchor = GridBagConstraints.EAST;
 
-grigliaAvanzata.setConstraints(ipLabel,limite);
+grigliaAvanzata.setConstraints(nuLabel,limite);
 
-pannello.add(ipLabel);
+pannello.add(nuLabel);
 
-impostaLimite(limite,1,0,1,1,65,100); //campo IP host
+impostaLimite(limite,1,0,1,1,65,100); //campo Nome Utente
 
 limite.fill = GridBagConstraints.HORIZONTAL;
 
-grigliaAvanzata.setConstraints(ipText,limite);
+grigliaAvanzata.setConstraints(nuText,limite);
 
-pannello.add(ipText);
+pannello.add(nuText);
 
 impostaLimite(limite,0,1,1,1,0,0); //etichetta password
 
@@ -106,23 +106,23 @@ grigliaAvanzata.setConstraints(passwordText,limite);
 
 pannello.add(passwordText);
 
-impostaLimite(limite,0,2,1,1,0,0); //etichetta File da inviare
+//impostaLimite(limite,0,2,1,1,0,0); //etichetta File da inviare
 
 limite.fill = GridBagConstraints.NONE;
 
 limite.anchor = GridBagConstraints.EAST;
 
-grigliaAvanzata.setConstraints(fileDaInviareLabel,limite);
+// grigliaAvanzata.setConstraints(fileDaInviareLabel,limite);
 
-pannello.add(fileDaInviareLabel);
+// pannello.add(fileDaInviareLabel);
 
-impostaLimite(limite,1,2,1,1,0,100); //campo File da inviare
+// impostaLimite(limite,1,2,1,1,0,100); //campo File da inviare
 
-limite.fill = GridBagConstraints.HORIZONTAL;
+// limite.fill = GridBagConstraints.HORIZONTAL;
 
-grigliaAvanzata.setConstraints(fileDaInviareText,limite);
+// grigliaAvanzata.setConstraints(fileDaInviareText,limite);
 
-pannello.add(fileDaInviareText);
+// pannello.add(fileDaInviareText);
 
 impostaLimite(limite,0,3,2,1,0,50); // Pulsante
 
@@ -146,7 +146,8 @@ show(); // Visualizziamo il tutto!
 
 
 
-public static void main(String argv[]) {
+
+public static void main(String args[]) {
 
 Layout nf = new Layout();
 
