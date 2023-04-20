@@ -1,6 +1,6 @@
 import prog.io.*;
 
-public class Main {
+public class Main extends Operatore {
     public static void main(String[] args) {
         ConsoleInputManager in = new ConsoleInputManager();
         ConsoleOutputManager out = new ConsoleOutputManager();
@@ -11,29 +11,29 @@ public class Main {
         char scelta = in.readChar();
         if (scelta == 1) {
             out.println("Inserisci la zona che vuoi trovare");
-            cercaAreaGeografica(zona);// da definire
-            visulazziAreaGeografica(zona);// da definire
+            cercaAreaGeografica(zona);// TODO definire il metodo
+            visulazziAreaGeografica(zona);// TODO definire il metodo
 
         } else if (scelta == 2) {
             out.println("Sei un nuovo operatore?");
             String azione = in.readLine();
-            if (azione == signup) {
-                registrazione();// da definire
-            } else if (azione == login) {
-                autenticazione();// da definire
+            if (azione == "si") {// signup
+                registrazione();
+            } else if (azione == "no") {// login
+                autenticazione();// TODO implementare la ricerca di stringhe per le credenziali
             }
 
             out.println("Cosa vuole fare?");
             String azione2 = in.readLine();
             if (azione == cercaarea) {
                 out.println("Inserisci la zona che vuoi trovare");
-                cercaAreaGeografica(zona);// da definire
+                cercaAreaGeografica(zona);// TODO metodo da definire
                 out.println("Vuoi inserire dei nuovi dati o modificarli?");
                 String scelta2 = in.readLine();
-                if (scelta2 == si) {
-                    inserisciParametriClimatici(zona);
-                } else if (scelta2 == no) {
-                    visulazziAreaGeografica(zona);// da definire
+                if (scelta2 == "si") {
+                    inserisciParametriCLimatici(zona);// TODO metodo da definire
+                } else if (scelta2 == "no") {
+                    visulazziAreaGeografica(zona);// TODO metodo da definire
 
                 }
 
