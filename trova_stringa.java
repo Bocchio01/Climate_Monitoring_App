@@ -12,6 +12,7 @@ public class trova_stringa {
         b=new BufferedReader(f);
 
         //!in terminale chcp 850
+        //? forse funge anche senza
 
         Console console = System.console();
         if (console == null) {
