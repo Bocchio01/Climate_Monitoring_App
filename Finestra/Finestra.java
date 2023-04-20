@@ -1,19 +1,25 @@
 package Finestra;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
 public class Finestra {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
         // JLabel= un'area per fare vedere una stringa di testo/immagine
-        ImageIcon image = new ImageIcon("Finestra/image.png");
+
         Border border = BorderFactory.createLineBorder(Color.green, 3);// crea un bordo attorno alla label
 
         JLabel label = new JLabel(); // crea una label
         label.setText("testo etichetta");// imposta il teso dell'etichetta
-        label.setIcon(image); // imposta un'immagine nella finestra
+
+        // label.setIcon(image); // imposta un'immagine nella finestra
         label.setHorizontalTextPosition(JLabel.CENTER);// imposta il testo LEFT,CENTER,RIGHT rispetto l'immagine
         label.setVerticalTextPosition(JLabel.TOP);// imposta il testo TOP,CENTER,BOTTOM rispetto l'immagine
         label.setForeground(new Color(0x00FF00));// imposta il colore del testo

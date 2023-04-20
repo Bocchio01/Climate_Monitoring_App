@@ -33,12 +33,19 @@ public class Operatore {
             System.out.println("Inserisci il tuo nome e cognome");
             String nomeCognome = in.readLine();
             out.print(nomeCognome + "\t");
+
             System.out.println("Inserisci il tuo codice fiscale");
             String codFiscale = in.readLine();
             out.print(codFiscale + "\t");
+
             System.out.println("Inserisci la tua e-mail");
             String eMail = in.readLine();
+            while (!eMail.contains("@")) {
+                System.out.println("Non hai inserito correttamente la mail, reinseriscila");
+                eMail = in.readLine();
+            }
             out.print(eMail + "\t");
+
             System.out.println("Inserisci la tua password lunga almeno 8 caratteri");
             String password = in.readLine();
             while (password.length() < 8) {
@@ -70,18 +77,20 @@ public class Operatore {
 
     }
 
-    public boolean isRegistrazione(int userID, String password){
-        ConsoleInputManager in = new ConsoleInputManager();
-
-        while (){//ID e password non presenti nel file
-        System.out.println("Hai sbagliato a inserire le credenziali o Operatore non registrato");
-        System.out.println("Reinserisci le credenziali");
-        userID=in.readInt();
-        password=in.readLine();
-        isRegistrazione(userID, password);}
-        return true;
-
-    }
+    public boolean isRegistrato(int userID, String password){
+      ConsoleInputManager in = new ConsoleInputManager();
+      
+      while (){//TODO trasformare trova_stringa in un metodo con il nome del file e eventuali parametri passati come valori
+     System.out.
+      println("Hai sbagliato a inserire le credenziali o Operatore non registrato"
+      );
+      System.out.println("Reinserisci le credenziali");
+      userID=in.readInt();
+      password=in.readLine();
+      isRegistrato(userID, password);}
+      return true;
+      
+      }
 
     public static void main(String[] args) throws IOException {
         registrazione();

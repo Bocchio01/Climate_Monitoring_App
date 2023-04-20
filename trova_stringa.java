@@ -1,17 +1,53 @@
 import java.io.*;
+import java.text.Normalizer;
+import prog.io.ConsoleInputManager;
+import java.util.Scanner;
+import java.nio.charset.StandardCharsets;
 import java.nio.charset.*;
 import prog.io.*;
 
 public class trova_stringa {
+    public static void main(String[] args)
+            throws IOException {
+
+        ConsoleInputManager in = new ConsoleInputManager();
+
+        System.setIn(new java.io.BufferedInputStream(System.in));
+        System.setOut(new java.io.PrintStream(System.out, true, StandardCharsets.ISO_8859_1));
+
+        Scanner scanner = new Scanner(new InputStreamReader(System.in, StandardCharsets.ISO_8859_1));
+
     public static void main(String[] args) 
     throws IOException {
 
         ConsoleInputManager in = new ConsoleInputManager();
 
         FileReader f;
-        f=new FileReader("./CoordinateMonitoraggi.dati.csv");//"./Dati_abbreviati.csv"
-    
+        f = new FileReader("./CoordinateMonitoraggi.dati.csv");// "./Dati_abbreviati.csv"
+
         BufferedReader b;
+        b = new BufferedReader(f);
+
+        String s, ricerca, subs = "";
+        System.out.print("Inserisci una parola con caratteri accentati: ");
+        ricerca = scanner.nextLine();
+        ricerca = Normalizer.normalize(ricerca, Normalizer.Form.NFC);
+        System.out.println(ricerca);
+
+        char c;
+        int q = 0;
+
+        for (int i = 0; i < ricerca.length(); i++) {
+            c = ricerca.charAt(i);
+            if (!Character.isLetter(c)) {
+                subs = ricerca.substring(q, i);
+                ricerca = ricerca.substring(i);
+                ricerca = subs + ricerca;
+            }
+        }
+        ricerca = ricerca.toLowerCase();
+        System.out.println(ricerca);
+
         b=new BufferedReader(f);
 
         Console console = System.console();
@@ -38,17 +74,15 @@ public class trova_stringa {
 
         System.out.println(command);
 
-        boolean find=false;
+        s = b.readLine() + "\t";
 
-        s=b.readLine()+";";
-        
-        while (find==false) {
-            s=b.readLine()+";";
-            l=s.length();
+        while (true) {
+            s = b.readLine() + "\t";
+            l = s.length();
             for (j = 0; j < l; j++) {
-                if(s.charAt(j)==';'){
-                    riga[i] = s.substring(m,j).toLowerCase();
-                    m=j+1;
+                if (s.charAt(j) == '\t') {
+                    riga[i] = s.substring(m, j).toLowerCase();
+                    m = j + 1;
                     i++;
                 }
             }
@@ -57,11 +91,11 @@ public class trova_stringa {
             for (int n = 0; n < 7; n++) {
                 if (riga[n].equals(command)) {
                     System.out.println(s);
-                    find=true;
                     break;
                 }
             }
-            if(b.readLine()==null) break;
+            if (b.readLine() == null)
+                break;
         }
-      }
+    }
 }

@@ -8,32 +8,32 @@ public class Main extends Operatore {
         String zona;
 
         out.println("Inserisci 1 se sei un Utente o 2 se sei un Operatore");
-        int scelta = in.readInt();
+        char scelta = in.readChar();
         if (scelta == 1) {
             out.println("Inserisci la zona che vuoi trovare");
-            cercaAreaGeografica(zona);// da definire
-            visulazziAreaGeografica(zona);// da definire
+            cercaAreaGeografica(zona);// TODO definire il metodo
+            visulazziAreaGeografica(zona);// TODO definire il metodo
 
         } else if (scelta == 2) {
             out.println("Sei un nuovo operatore?");
             String azione = in.readLine();
             if (azione == "si") {// signup
-                registrazione();// da definire
+                registrazione();
             } else if (azione == "no") {// login
-                autenticazione();// da definire
+                autenticazione();// TODO implementare la ricerca di stringhe per le credenziali
             }
 
             out.println("Cosa vuole fare?");
             String azione2 = in.readLine();
-            if (azione == "cercaarea") {
+            if (azione == cercaarea) {
                 out.println("Inserisci la zona che vuoi trovare");
-                cercaAreaGeografica(zona);// da definire
+                cercaAreaGeografica(zona);// TODO metodo da definire
                 out.println("Vuoi inserire dei nuovi dati o modificarli?");
                 String scelta2 = in.readLine();
                 if (scelta2 == "si") {
-                    inserisciParametriCLimatici(zona);
+                    inserisciParametriCLimatici(zona);// TODO metodo da definire
                 } else if (scelta2 == "no") {
-                    visulazziAreaGeografica(zona);// da definire
+                    visulazziAreaGeografica(zona);// TODO metodo da definire
 
                 }
 
