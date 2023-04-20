@@ -30,6 +30,7 @@ public class MyFrame extends JFrame implements ActionListener {
         setVisible(true); // rende visibile la finestra, alla fine delle opzioni
         BufferedImage logo = ImageIO.read(new File("./logo.png"));
         JLabel wlogo = new JLabel(new ImageIcon(logo));
+        wlogo.setPreferredSize(new Dimension(20, 20));
         add(wlogo);
 
         ImageIcon image = new ImageIcon("logo.png"); // crea un'icona, quando Marta ha trovato il logo lo si mette qui
