@@ -79,7 +79,7 @@ class LoginFrame extends JFrame implements ActionListener {
         // Bottone Registrati
         if (e.getSource() == registratiButton) {
             // Apre la finestra per la regitrazione
-            JOptionPane.showMessageDialog(this, "Finstra registrazione");
+            JOptionPane.showMessageDialog(this, "Finstra registrazione");// ?Come passare da un contenitore ad un altro
 
         }
 
