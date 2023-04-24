@@ -28,7 +28,7 @@ class RegisterFrame extends JFrame implements ActionListener {
 
     JButton registrati = new JButton("Registrati");
 
-    JLabel logo = new JLabel(new ImageIcon("log3.png"));
+    JLabel logo = new JLabel(new ImageIcon("Immagini/logo3.png"));
 
     RegisterFrame() {
 
@@ -126,7 +126,7 @@ class Register {
         frame.setVisible(true);
         frame.setBounds(10, 10, 800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("logo_png.png");
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
         frame.setIconImage(image.getImage());
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
