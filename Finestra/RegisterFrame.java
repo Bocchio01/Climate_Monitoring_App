@@ -73,7 +73,7 @@ class RegisterFrame extends JFrame implements ActionListener {
 
         registrati.setBounds(370, 465, 120, 30);
 
-        campiObblabel.setBounds(20, 510, 200, 30);
+        campiObblabel.setBounds(640, 510, 200, 30);
 
         logo.setBounds(0, 0, 200, 186);
 
@@ -129,6 +129,6 @@ class Register {
         ImageIcon image = new ImageIcon("Immagini/logo_png.png");
         frame.setIconImage(image.getImage());
         frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
+        frame.setResizable(false);
     }
 }
