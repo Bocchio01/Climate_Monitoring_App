@@ -9,7 +9,7 @@ public class trova_coordinate {
 
         BufferedReader b;
         b = new BufferedReader(f);
-
+        
         String s, s_latitudine = "45", s_longitudine = "70", closest = "";
         String[] riga = new String[7];
         int j = 0, m = 0, i = 0, l = 0;
