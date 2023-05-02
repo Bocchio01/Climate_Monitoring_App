@@ -12,23 +12,23 @@ public class trova_stringa {
         b=new BufferedReader(f);
 
         //!in terminale chcp 850
-        //? forse funge anche senza
+        //? forse funge anche senza     yep eventuale bugfix    chiedere alla rizz
 
         Console console = System.console();
         if (console == null) {
             System.err.println("No console");
             System.exit(1);
         }
-        String command = console.readLine("Che citta' vuoi cercare? %n");
-        //System.out.format("command: %s%n", command);
+        String ricerca = console.readLine("Che citta' vuoi cercare? %n");
+        //System.out.format("ricerca: %s%n", ricerca);
 
         String s;
 
-        command = command.toLowerCase();
+        ricerca = ricerca.toLowerCase();
         String[] riga = new String[7];
         int j=0, m=0, i=0, l=0;
 
-        System.out.println(command);
+        System.out.println(ricerca);
 
         boolean find=false;
 
@@ -49,7 +49,7 @@ public class trova_stringa {
             m=0;
             //System.out.println(riga[0]);
             for (int n = 0; n < 7; n++) {
-                if (riga[n].equals(command)) {
+                if (riga[n].equals(ricerca)) {
                     System.out.println(s);
                 }
             }
