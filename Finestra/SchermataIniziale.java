@@ -68,8 +68,8 @@ public class SchermataIniziale extends JFrame implements ActionListener {
 
         // Bottone homeButton
         if (e.getSource() == homeButton) {
-            this.setVisible(false);// ?Rendere invisibile o chiuderla direttamente?
             setFrame(new HomePage());
+            dispose();// Chiude il frame dopo l'apertura del secondo
 
         }
 

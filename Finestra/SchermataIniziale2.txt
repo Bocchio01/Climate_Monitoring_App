@@ -1,0 +1,65 @@
+﻿package Finestra;
+
+import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
+import java.awt.*;
+
+public class SchermataIniziale2 extends SchermataBase {
+
+    private ImageIcon iconaButton;
+    private JButton homeButton;
+    private JLabel nomeLabel;
+
+    public SchermataIniziale2() {
+        super("Schermata Iniziale");
+        iconaButton = new ImageIcon("Immagini/logo_png_home.png");
+        homeButton = new JButton();
+        nomeLabel = new JLabel("Monitoraggio Climatico");
+
+    }
+
+    @Override
+    protected void setLayoutManager() {
+        container.setBackground(new Color(153, 255, 255));
+        container.setLayout(null);
+    }
+
+    @Override
+    protected void setLocationAndSize() {
+        System.out.println(iconaButton);
+        System.out.println(homeButton);
+        homeButton.setBounds(150, 50, 500, 400);
+        homeButton.setIcon(iconaButton);
+        homeButton.setBorder(null);
+        homeButton.setContentAreaFilled(false);
+        nomeLabel.setBounds(210, 470, 405, 55);
+        nomeLabel.setFont(new Font("Harlow Solid Italic", Font.BOLD, 40));
+        homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
+    @Override
+    protected void addComponentsToContainer() {
+        container.add(homeButton);
+        container.add(nomeLabel);
+    }
+
+    @Override
+    protected void addActionEvent() {
+        homeButton.addActionListener((ActionEvent e) -> {
+            setFrame(new HomePage());
+            dispose();
+        });
+    }
+
+    private void setFrame(HomePage e) {
+        e.setTitle("Home Page");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+    }
+
+}
