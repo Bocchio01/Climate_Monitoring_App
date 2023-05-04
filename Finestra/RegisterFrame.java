@@ -135,6 +135,8 @@ class RegisterFrame extends JFrame implements ActionListener {
                 fileWriter.write(dati);
                 fileWriter.close();
                 JOptionPane.showMessageDialog(null, "Dati salvati correttamente su file txt!");
+                // dispose();
+                // setFrame(new Login);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
