@@ -39,12 +39,12 @@ public class SchermataIniziale extends JFrame implements ActionListener {
     public void setLocationAndSize() {
 
         // !Centrare i compnenti
-        homeButton.setBounds(150, 50, 500, 400);
+        homeButton.setBounds(150, 50, 420, 400);
         homeButton.setIcon(icona);
         homeButton.setBorder(null);
         homeButton.setContentAreaFilled(false);
         nomeLabel.setBounds(210, 470, 405, 55);
-        nomeLabel.setFont(new Font("Harlow Solid Italic", Font.BOLD, 40));
+        nomeLabel.setFont(new Font("Gaglin", Font.BOLD, 20));
         homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
