@@ -78,7 +78,7 @@ public class AreaOperatore extends JFrame implements ActionListener {
         // Bottone area operatore
         if (e.getSource() == registratiButton) {
             // Apre la finestra per l'accesso
-            this.setVisible(false);
+            dispose();
             setFrame(new RegisterFrame());
 
         }
