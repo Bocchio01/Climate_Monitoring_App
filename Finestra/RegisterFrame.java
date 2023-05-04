@@ -75,6 +75,7 @@ class RegisterFrame extends JFrame implements ActionListener {
 
         registrati.setBounds(370, 465, 120, 30);
         registrati.addActionListener(this);
+        registrati.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         campiObblabel.setBounds(640, 510, 200, 30);
 
