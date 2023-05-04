@@ -6,9 +6,9 @@ public class Layout extends JFrame {
 
 //Creiamo i componenti
 
-JLabel nuLabel = new JLabel("Nome Utente", SwingConstants.LEFT);
+JLabel nuLabel = new JLabel("Nome Utente ", SwingConstants.LEFT);
 
-JLabel passwordLabel = new JLabel("Password", SwingConstants.LEFT);
+JLabel passwordLabel = new JLabel("Password ", SwingConstants.LEFT);
 
 //JLabel fileDaInviareLabel = new JLabel("File da inviare", SwingConstants.LEFT);
 
@@ -144,8 +144,14 @@ show(); // Visualizziamo il tutto!
 
 }
 
+/* 
+private void disegna() {
+        Graphics g = this.getAccessibleContext();
+        g.drawImage(getIconImage(), EXIT_ON_CLOSE, ABORT, rootPane);
+        g.dispose();
+}
 
-
+*/
 
 public static void main(String args[]) {
 
