@@ -114,32 +114,34 @@ class RegisterFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-// Ottenere i valori inseriti dall'utente
-String nomeCognome = nomeCognomeField.getText();
-String codiceFisc = codiceFiscField.getText();
-String eMail = eMailField.getText();
-String userId = userIdField.getText();
-String password = new String(passwordField.getPassword());
-String centroMon = centroMonField.getText();
+        // Ottenere i valori inseriti dall'utente
+        if (e.getSource() == registrati) {
+            String nomeCognome = nomeCognomeField.getText();
+            String codiceFisc = codiceFiscField.getText();
+            String eMail = eMailField.getText();
+            String userId = userIdField.getText();
+            String password = new String(passwordField.getPassword());
+            String centroMon = centroMonField.getText();
 
-// Creare una stringa con i dati inseriti
-String dati = nomeCognome + "\n" + codiceFisc + "\n" + eMail + "\n" + userId + "\n" + password + "\n" + centroMon + "\n";
+            // Creare una stringa con i dati inseriti
+            String dati = nomeCognome + "\n" + codiceFisc + "\n" + eMail + "\n" + userId + "\n" + password + "\n"
+                    + centroMon + "\n";
 
-// Salvare i dati su file txt
-try {
-    FileWriter fileWriter = new FileWriter("dati_utente.txt", true); // true per aggiungere dati alla fine del file
-    fileWriter.write(dati);
-    fileWriter.close();
-    JOptionPane.showMessageDialog(null, "Dati salvati correttamente su file txt!");
-} catch (IOException ex) {
-    ex.printStackTrace();
-}
-}
-
-
+            // Salvare i dati su file txt
+            try {
+                FileWriter fileWriter = new FileWriter("dati_utente.txt", true); // true per aggiungere dati alla fine
+                                                                                 // del
+                                                                                 // file
+                fileWriter.write(dati);
+                fileWriter.close();
+                JOptionPane.showMessageDialog(null, "Dati salvati correttamente su file txt!");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
-
+}
 
 class Register {
     public static void main(String[] args) {
