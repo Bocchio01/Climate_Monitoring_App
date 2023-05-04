@@ -81,12 +81,9 @@ class HomePage extends JFrame implements ActionListener {
         }
 
         // Bottone Ospite
-        if (e.getSource() == ospiteButton)
-
-        {
-            // Apre la finestra per la ricerca della zona
-            JOptionPane.showMessageDialog(this, "Finstra cerca/viasualizza area");
-
+        if (e.getSource() == ospiteButton) {
+            setFrame(new Tabella());
+            dispose();
         }
 
     }
@@ -95,6 +92,18 @@ class HomePage extends JFrame implements ActionListener {
 
         e.setTitle("Area Operatore");
         e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
+    }
+
+    private void setFrame(Tabella e) {
+
+        e.setTitle("Tabella");
+        // e.setVisible(true);
         e.setBounds(10, 10, 800, 600);
         e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageIcon image = new ImageIcon("Immagini/logo_png.png");
