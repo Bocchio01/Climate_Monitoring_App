@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.ImageIcon;
 
 class RegisterFrame extends JFrame implements ActionListener {
@@ -31,7 +34,6 @@ class RegisterFrame extends JFrame implements ActionListener {
     JLabel logo = new JLabel(new ImageIcon("Immagini/logo3.png"));
 
     RegisterFrame() {
-
         // Costruttore: formazione del frame+componenti
 
         setLayoutManager();
@@ -72,6 +74,7 @@ class RegisterFrame extends JFrame implements ActionListener {
         centroMonField.setBounds(330, 410, 200, 30);
 
         registrati.setBounds(370, 465, 120, 30);
+        registrati.addActionListener(this);
 
         campiObblabel.setBounds(640, 510, 200, 30);
 
@@ -111,7 +114,31 @@ class RegisterFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // Ottenere i valori inseriti dall'utente
+        if (e.getSource() == registrati) {
+            String nomeCognome = nomeCognomeField.getText();
+            String codiceFisc = codiceFiscField.getText();
+            String eMail = eMailField.getText();
+            String userId = userIdField.getText();
+            String password = new String(passwordField.getPassword());
+            String centroMon = centroMonField.getText();
 
+            // Creare una stringa con i dati inseriti
+            String dati = nomeCognome + "\n" + codiceFisc + "\n" + eMail + "\n" + userId + "\n" + password + "\n"
+                    + centroMon + "\n";
+
+            // Salvare i dati su file txt
+            try {
+                FileWriter fileWriter = new FileWriter("dati_utente.txt", true); // true per aggiungere dati alla fine
+                                                                                 // del
+                                                                                 // file
+                fileWriter.write(dati);
+                fileWriter.close();
+                JOptionPane.showMessageDialog(null, "Dati salvati correttamente su file txt!");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
 }
