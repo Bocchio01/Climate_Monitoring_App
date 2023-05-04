@@ -3,6 +3,7 @@
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,11 +11,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class AreaOperatore extends JFrame implements ActionListener {
     // Oggetti da inserire nel frame
 
-    Container container = getContentPane();
+    JPanel container = new JPanel();
+
     JButton registratiButton = new JButton("Registrati");
     JButton accediButton = new JButton("Accedi");
     JLabel logo = new JLabel(new ImageIcon("Immagini/logo3.png"));
@@ -60,6 +63,7 @@ public class AreaOperatore extends JFrame implements ActionListener {
         container.add(registratiButton);
         container.add(logo);
         container.add(accediButton);
+        add(container);
 
     }
 
