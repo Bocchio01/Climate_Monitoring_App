@@ -13,7 +13,7 @@ class RegisterFrame extends JFrame implements ActionListener {
 
     // Oggetti da inserire nel frame
 
-    JPanel container = new JPanel();
+    Container container = getContentPane();
 
     JLabel nomeCognomeLabel = new JLabel("Nome e Cognome*");
     JTextField nomeCognomeField = new JTextField();
@@ -104,8 +104,6 @@ class RegisterFrame extends JFrame implements ActionListener {
         container.add(campiObblabel);
         container.add(registrati);
         container.add(logo);
-
-        add(container);
 
     }
 
