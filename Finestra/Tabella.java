@@ -6,6 +6,7 @@ import java.awt.*;
 class Tabella extends JFrame {
 
     // Dati della tabella
+
     JScrollPane container = new JScrollPane();
 
     Object[][] data = {
@@ -28,13 +29,19 @@ class Tabella extends JFrame {
         addComponentsToContainer();
         setVisible(true);
 
+        getContentPane().setLayout(null); // Imposta il layout a null
+        container = new JScrollPane(table);
+        container.setBounds(10, 10, 380, 280); // Imposta le dimensioni e la posizione della tabella
+        getContentPane().add(container);
+
+        setVisible(true);
     }
 
     public void setLayoutManager() {
 
         // Set info Container
 
-        container.setBackground(new Color(153, 255, 255));
+       // container.setBackground(new Color(153, 255, 255));
         container.setLayout(null);
     }
 
