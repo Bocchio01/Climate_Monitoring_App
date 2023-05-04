@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.ImageIcon;
 
 class RegisterFrame extends JFrame implements ActionListener {
@@ -31,7 +34,8 @@ class RegisterFrame extends JFrame implements ActionListener {
     JLabel logo = new JLabel(new ImageIcon("Immagini/logo3.png"));
 
     RegisterFrame() {
-
+        container = getContentPane();
+        registrati.addActionListener(this);
         // Costruttore: formazione del frame+componenti
 
         setLayoutManager();
@@ -111,10 +115,32 @@ class RegisterFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+// Ottenere i valori inseriti dall'utente
+String nomeCognome = nomeCognomeField.getText();
+String codiceFisc = codiceFiscField.getText();
+String eMail = eMailField.getText();
+String userId = userIdField.getText();
+String password = new String(passwordField.getPassword());
+String centroMon = centroMonField.getText();
+
+// Creare una stringa con i dati inseriti
+String dati = nomeCognome + "\n" + codiceFisc + "\n" + eMail + "\n" + userId + "\n" + password + "\n" + centroMon + "\n";
+
+// Salvare i dati su file txt
+try {
+    FileWriter fileWriter = new FileWriter("dati_utente.txt", true); // true per aggiungere dati alla fine del file
+    fileWriter.write(dati);
+    fileWriter.close();
+    JOptionPane.showMessageDialog(null, "Dati salvati correttamente su file txt!");
+} catch (IOException ex) {
+    ex.printStackTrace();
+}
+}
+
 
     }
 
-}
+
 
 class Register {
     public static void main(String[] args) {
