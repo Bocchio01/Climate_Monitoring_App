@@ -34,8 +34,6 @@ class RegisterFrame extends JFrame implements ActionListener {
     JLabel logo = new JLabel(new ImageIcon("Immagini/logo3.png"));
 
     RegisterFrame() {
-        container = getContentPane();
-        registrati.addActionListener(this);
         // Costruttore: formazione del frame+componenti
 
         setLayoutManager();
@@ -76,6 +74,7 @@ class RegisterFrame extends JFrame implements ActionListener {
         centroMonField.setBounds(330, 410, 200, 30);
 
         registrati.setBounds(370, 465, 120, 30);
+        registrati.addActionListener(this);
 
         campiObblabel.setBounds(640, 510, 200, 30);
 
