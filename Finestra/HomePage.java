@@ -10,7 +10,7 @@ class HomePage extends JFrame implements ActionListener {
 
     // Oggetti da inserire nel frame
 
-    Container container = getContentPane();
+    JPanel container = new JPanel();
     JButton areaOpButton = new JButton("Area Operatore");
     JButton ospiteButton = new JButton("Dove vuoi andare?");
     JLabel logo = new JLabel(new ImageIcon("Immagini/logo3.png"));
@@ -56,6 +56,7 @@ class HomePage extends JFrame implements ActionListener {
         container.add(ospiteButton);
         container.add(logo);
         container.add(areaOpButton);
+        add(container);
 
     }
 
