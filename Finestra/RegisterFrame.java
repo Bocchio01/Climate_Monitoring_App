@@ -16,7 +16,7 @@ class RegisterFrame extends JFrame implements ActionListener {
 
     // Oggetti da inserire nel frame
 
-    Container container = getContentPane();
+    JPanel container = new JPanel();
 
     JLabel nomeCognomeLabel = new JLabel("Nome e Cognome*");
     JTextField nomeCognomeField = new JTextField();
@@ -107,6 +107,7 @@ class RegisterFrame extends JFrame implements ActionListener {
         container.add(campiObblabel);
         container.add(registrati);
         container.add(logo);
+        add(container);
 
     }
 
@@ -128,7 +129,10 @@ class RegisterFrame extends JFrame implements ActionListener {
             String centroMon = centroMonField.getText();
 
             if (nomeCognome.isEmpty() == true) {
+            if (nomeCognome.isEmpty() == true) {
                 JOptionPane.showMessageDialog(null, "inserisci un nome e cognome");
+            } else {
+                if (codiceFisc.isEmpty() == true) {
             } else {
                 if (codiceFisc.isEmpty() == true) {
                     JOptionPane.showMessageDialog(null, "inserisci un codice fiscale");
