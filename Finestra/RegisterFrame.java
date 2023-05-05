@@ -123,8 +123,33 @@ class RegisterFrame extends JFrame implements ActionListener {
             String password = new String(passwordField.getPassword());
             String centroMon = centroMonField.getText();
 
+            
+            if (nomeCognome.isEmpty() == true){
+                JOptionPane.showMessageDialog(null, "inserisci un nome e cognome");
+            }
+            else{
+                if (codiceFisc.isEmpty() == true){
+                    JOptionPane.showMessageDialog(null, "inserisci un codice fiscale");
+                }
+                else{
+                    if (eMail.isEmpty() == true){
+                        JOptionPane.showMessageDialog(null, "inserisci un email");
+                    }
+                    else{
+                        if (userId.isEmpty() == true){
+                            JOptionPane.showMessageDialog(null, "inserisci un id");
+                        }
+                        else{
+                            if (password.isEmpty() == true){
+                                JOptionPane.showMessageDialog(null, "inserisci una password");
+                            }
+                            else{
+                if (centroMon.isEmpty() == true){
+                    centroMon = null;
+                }
+
             // Creare una stringa con i dati inseriti
-            String dati = nomeCognome + "\n" + codiceFisc + "\n" + eMail + "\n" + userId + "\n" + password + "\n"
+            String dati = nomeCognome + "," + codiceFisc + "," + eMail + "," + userId + "," + password + ","
                     + centroMon + "\n";
 
             // Salvare i dati su file txt
@@ -134,11 +159,12 @@ class RegisterFrame extends JFrame implements ActionListener {
                                                                                  // file
                 fileWriter.write(dati);
                 fileWriter.close();
-                JOptionPane.showMessageDialog(null, "Dati salvati correttamente su file txt!");
+                JOptionPane.showMessageDialog(null, "Profilo registrato con successo");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }
+            }
+    }}}}}
     }
 
 }
