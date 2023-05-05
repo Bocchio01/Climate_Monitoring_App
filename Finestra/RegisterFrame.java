@@ -13,7 +13,7 @@ class RegisterFrame extends JFrame implements ActionListener {
 
     // Oggetti da inserire nel frame
 
-    Container container = getContentPane();
+    JPanel container = new JPanel();
 
     JLabel nomeCognomeLabel = new JLabel("Nome e Cognome*");
     JTextField nomeCognomeField = new JTextField();
@@ -104,6 +104,7 @@ class RegisterFrame extends JFrame implements ActionListener {
         container.add(campiObblabel);
         container.add(registrati);
         container.add(logo);
+        add(container);
 
     }
 
@@ -124,48 +125,49 @@ class RegisterFrame extends JFrame implements ActionListener {
             String password = new String(passwordField.getPassword());
             String centroMon = centroMonField.getText();
 
-            
-            if (nomeCognome.isEmpty() == true){
+            if (nomeCognome.isEmpty() == true) {
                 JOptionPane.showMessageDialog(null, "inserisci un nome e cognome");
-            }
-            else{
-                if (codiceFisc.isEmpty() == true){
+            } else {
+                if (codiceFisc.isEmpty() == true) {
                     JOptionPane.showMessageDialog(null, "inserisci un codice fiscale");
-                }
-                else{
-                    if (eMail.isEmpty() == true){
+                } else {
+                    if (eMail.isEmpty() == true) {
                         JOptionPane.showMessageDialog(null, "inserisci un email");
-                    }
-                    else{
-                        if (userId.isEmpty() == true){
+                    } else {
+                        if (userId.isEmpty() == true) {
                             JOptionPane.showMessageDialog(null, "inserisci un id");
-                        }
-                        else{
-                            if (password.isEmpty() == true){
+                        } else {
+                            if (password.isEmpty() == true) {
                                 JOptionPane.showMessageDialog(null, "inserisci una password");
+                            } else {
+                                if (centroMon.isEmpty() == true) {
+                                    centroMon = null;
+                                }
+
+                                // Creare una stringa con i dati inseriti
+                                String dati = nomeCognome + "," + codiceFisc + "," + eMail + "," + userId + ","
+                                        + password + ","
+                                        + centroMon + "\n";
+
+                                // Salvare i dati su file txt
+                                try {
+                                    FileWriter fileWriter = new FileWriter("dati_utente.txt", true); // true per
+                                                                                                     // aggiungere dati
+                                                                                                     // alla fine
+                                                                                                     // del
+                                                                                                     // file
+                                    fileWriter.write(dati);
+                                    fileWriter.close();
+                                    JOptionPane.showMessageDialog(null, "Profilo registrato con successo");
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
                             }
-                            else{
-                if (centroMon.isEmpty() == true){
-                    centroMon = null;
+                        }
+                    }
                 }
-
-            // Creare una stringa con i dati inseriti
-            String dati = nomeCognome + "," + codiceFisc + "," + eMail + "," + userId + "," + password + ","
-                    + centroMon + "\n";
-
-            // Salvare i dati su file txt
-            try {
-                FileWriter fileWriter = new FileWriter("dati_utente.txt", true); // true per aggiungere dati alla fine
-                                                                                 // del
-                                                                                 // file
-                fileWriter.write(dati);
-                fileWriter.close();
-                JOptionPane.showMessageDialog(null, "Profilo registrato con successo");
-            } catch (IOException ex) {
-                ex.printStackTrace();
             }
-            }
-    }}}}}
+        }
     }
 
 }
