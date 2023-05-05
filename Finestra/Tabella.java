@@ -1,6 +1,11 @@
 package Finestra;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.tree.DefaultTreeCellRenderer;
+
 import java.awt.*;
 
 class Tabella extends JFrame {
@@ -8,12 +13,16 @@ class Tabella extends JFrame {
     // Dati della tabella
 
     JScrollPane container = new JScrollPane();
+    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 
     Object[][] data = {
-            { "John", "Doe", 25, 4 },
-            { "Jane", "Doe", 32, 4 },
-            { "Bob", "Smith", 47, 4 },
-            { "Alice", "Johnson", 18, 4 }
+            { "Vento", "Velocità del vento (km/h), suddivisa in fasce", 1, "commento" },
+            { "Umidità", "% di Umidità, suddivisa in fasce", 1, "commento" },
+            { "Pressione", "In hPa, suddivisa in fasce", 1, "commento" },
+            { "Temperatura", "In C°, suddivisa in fasce", 1, "commento" },
+            { "Precipitazioni", "In mm di pioggia, suddivisa in fasce", 1, "commento" },
+            { "Altitudine dei ghiacciai", "In m, suddivisa in piogge", 1, "commento" },
+            { "Massa dei ghiacciai", "in kg, suddivisa in fasce", 1, "commento" }
     };
 
     // Nomi delle colonne della tabella
@@ -28,6 +37,9 @@ class Tabella extends JFrame {
         setLocationAndSize();
         addComponentsToContainer();
         setVisible(true);
+        // Allineamento delle celle al centro
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        table.setDefaultRenderer(Object.class, centerRenderer);
 
         getContentPane().setLayout(null); // Imposta il layout a null
         container = new JScrollPane(table);
@@ -41,17 +53,23 @@ class Tabella extends JFrame {
 
         // Set info Container
 
-       // container.setBackground(new Color(153, 255, 255));
         container.setLayout(null);
     }
 
     public void setLocationAndSize() {
+
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.doLayout();
         container.setBounds(0, 0, 800, 600);
-        table.setBounds(60, 60, 200, 200);
+        table.setBounds(700, 700, 700, 700);
 
-        // Set posizioni degli oggetti nel frame
+        // Imposta la proprietà di resizable a false per impedire di modificare la
+        // larghezza delle colonne
+        table.getTableHeader().setResizingAllowed(false);
 
-        // table.setBounds(290, 50, 100, 100);
+        // Imposta la proprietà di reordering a false per impedire di spostare le
+        // colonne
+        table.getTableHeader().setReorderingAllowed(false);
 
     }
 
@@ -61,9 +79,6 @@ class Tabella extends JFrame {
 
         container.add(table);
         add(container);
-
-        // container.add(table);
-        // add(container);
 
     }
 

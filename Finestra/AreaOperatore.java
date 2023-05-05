@@ -1,9 +1,9 @@
 ﻿package Finestra;
 
 import java.awt.Color;
-import java.awt.Container;
+
 import java.awt.Cursor;
-import java.awt.LayoutManager;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -92,12 +92,26 @@ public class AreaOperatore extends JFrame implements ActionListener {
 
         {
             // Apre la finestra per la ricerca della zona
+            dispose();
+            setFrame(new Login());
 
         }
 
     }
 
     private void setFrame(RegisterFrame e) {
+
+        e.setTitle("Registrazione");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
+    }
+
+    private void setFrame(Login e) {
 
         e.setTitle("Registrazione");
         e.setVisible(true);

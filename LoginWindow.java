@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.awt.*;
 
 public class LoginWindow extends JFrame {
 
@@ -40,6 +41,11 @@ public class LoginWindow extends JFrame {
         add(panel);
 
         loadUserCredentials();
+
+        // Calcola la posizione y per centrare la finestra verticalmente
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int y = (int) ((screenSize.getHeight() - getHeight()) / 2);
+        setLocation(getX(), y);
     }
 
     private void onLoginButtonClicked() {
@@ -103,6 +109,16 @@ public class LoginWindow extends JFrame {
 
     public static void main(String[] args) {
         LoginWindow loginWindow = new LoginWindow();
+        loginWindow.pack();
+
+        // Centra la finestra orizzontalmente
+        loginWindow.setLocationRelativeTo(null);
+
+        // Centra la finestra verticalmente
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int y = (int) ((screenSize.getHeight() - loginWindow.getHeight()) / 2);
+        loginWindow.setLocation(loginWindow.getX(), y);
+
         loginWindow.setVisible(true);
     }
 }

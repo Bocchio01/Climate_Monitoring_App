@@ -82,8 +82,9 @@ class HomePage extends JFrame implements ActionListener {
 
         // Bottone Ospite
         if (e.getSource() == ospiteButton) {
-            setFrame(new Tabella());
+
             dispose();
+            setFrame(new Cerca());
         }
 
     }
@@ -100,10 +101,10 @@ class HomePage extends JFrame implements ActionListener {
         e.setResizable(false);
     }
 
-    private void setFrame(Tabella e) {
+    private void setFrame(Cerca e) {
 
-        e.setTitle("Tabella");
-        // e.setVisible(true);
+        e.setTitle("Cerca");
+        e.setVisible(true);
         e.setBounds(10, 10, 800, 600);
         e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageIcon image = new ImageIcon("Immagini/logo_png.png");
