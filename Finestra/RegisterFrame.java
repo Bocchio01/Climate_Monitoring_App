@@ -4,12 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
-
 import javax.swing.ImageIcon;
 
 class RegisterFrame extends JFrame implements ActionListener {
@@ -129,58 +125,59 @@ class RegisterFrame extends JFrame implements ActionListener {
             String centroMon = centroMonField.getText();
 
             if (nomeCognome.isEmpty() == true) {
-            if (nomeCognome.isEmpty() == true) {
-                JOptionPane.showMessageDialog(null, "inserisci un nome e cognome");
-            } else {
-                if (codiceFisc.isEmpty() == true) {
-            } else {
-                if (codiceFisc.isEmpty() == true) {
-                    JOptionPane.showMessageDialog(null, "inserisci un codice fiscale");
+                if (nomeCognome.isEmpty() == true) {
+                    JOptionPane.showMessageDialog(null, "inserisci un nome e cognome");
                 } else {
-
-                    /*
-                     * if (codiceFisc.length() <= 15) {
-                     * JOptionPane.showMessageDialog(null, "inserisci un codice fiscale valido");
-                     * } else
-                     */ {
-                        if (eMail.isEmpty() == true) {
-                            JOptionPane.showMessageDialog(null, "inserisci una email");
+                    if (codiceFisc.isEmpty() == true) {
+                    } else {
+                        if (codiceFisc.isEmpty() == true) {
+                            JOptionPane.showMessageDialog(null, "inserisci un codice fiscale");
                         } else {
-                            if (eMail.contains("@") == false) {
-                                JOptionPane.showMessageDialog(null, "inserisci una email valida");
-                            } else {
-                                if (userId.isEmpty() == true) {
-                                    JOptionPane.showMessageDialog(null, "inserisci un id");
+
+                            /*
+                             * if (codiceFisc.length() <= 15) {
+                             * JOptionPane.showMessageDialog(null, "inserisci un codice fiscale valido");
+                             * } else
+                             */ {
+                                if (eMail.isEmpty() == true) {
+                                    JOptionPane.showMessageDialog(null, "inserisci una email");
                                 } else {
-                                    Scanner scanner = new Scanner("dati_utente.txt");
-
-                                    if (password.isEmpty() == true) {
-                                        JOptionPane.showMessageDialog(null, "inserisci una password");
+                                    if (eMail.contains("@") == false) {
+                                        JOptionPane.showMessageDialog(null, "inserisci una email valida");
                                     } else {
-                                        if (password.length() < 8) {
-                                            JOptionPane.showMessageDialog(null,
-                                                    "la password deve essere lunga almeno 8 cartteri");
-                                        } else if (!password.matches(".*[A-Z].*")) {
-                                            JOptionPane.showMessageDialog(null,
-                                                    "la password deve contenere almeno una lettera maiuscola");
+                                        if (userId.isEmpty() == true) {
+                                            JOptionPane.showMessageDialog(null, "inserisci un id");
                                         } else {
-                                            if (centroMon.isEmpty() == true) {
-                                                centroMon = null;
-                                            }
+                                            if (password.isEmpty() == true) {
+                                                JOptionPane.showMessageDialog(null, "inserisci una password");
+                                            } else {
+                                                if (password.length() < 8) {
+                                                    JOptionPane.showMessageDialog(null,
+                                                            "la password deve essere lunga almeno 8 cartteri");
+                                                } else if (!password.matches(".*[A-Z].*")) {
+                                                    JOptionPane.showMessageDialog(null,
+                                                            "la password deve contenere almeno una lettera maiuscola");
+                                                } else {
+                                                    if (centroMon.isEmpty() == true) {
+                                                        centroMon = null;
+                                                    }
 
-                                            // Creare una stringa con i dati inseriti
-                                            String dati = nomeCognome + "," + codiceFisc.toUpperCase() + "," + eMail
-                                                    + "," + userId + "," + password + "," + centroMon + "\n";
+                                                    // Creare una stringa con i dati inseriti
+                                                    String dati = nomeCognome + "," + codiceFisc.toUpperCase() + ","
+                                                            + eMail
+                                                            + "," + userId + "," + password + "," + centroMon + "\n";
 
-                                            // Salvare i dati su file txt
-                                            try {
-                                                FileWriter fileWriter = new FileWriter("dati_utente.txt", true);
-                                                fileWriter.write(dati);
-                                                fileWriter.close();
-                                                JOptionPane.showMessageDialog(null,
-                                                        "Profilo registrato con successo");
-                                            } catch (IOException ex) {
-                                                ex.printStackTrace();
+                                                    // Salvare i dati su file txt
+                                                    try {
+                                                        FileWriter fileWriter = new FileWriter("dati_utente.txt", true);
+                                                        fileWriter.write(dati);
+                                                        fileWriter.close();
+                                                        JOptionPane.showMessageDialog(null,
+                                                                "Profilo registrato con successo");
+                                                    } catch (IOException ex) {
+                                                        ex.printStackTrace();
+                                                    }
+                                                }
                                             }
                                         }
                                     }
