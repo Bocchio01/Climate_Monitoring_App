@@ -67,9 +67,23 @@ public class Login extends JFrame implements ActionListener {
         if (e.getSource() == loginButton) {
 
             // Controllo dati nel file
-            JOptionPane.showMessageDialog(this, "username or password.");
+            JOptionPane.showMessageDialog(this, "Login avvenuto con successo!");
+            dispose();
+            setFrame(new Data());
 
         }
 
+    }
+
+    private void setFrame(Data e) {
+
+        e.setTitle("Cerca");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
     }
 }

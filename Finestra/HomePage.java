@@ -95,7 +95,7 @@ class HomePage extends JFrame implements ActionListener {
         // Bottone Indietro
         if (e.getSource() == indietroButton) {
 
-            this.setVisible(false);
+            dispose();
             setFrame(new SchermataIniziale());
         }
 
@@ -127,7 +127,7 @@ class HomePage extends JFrame implements ActionListener {
 
     private void setFrame(SchermataIniziale e) {
 
-        e.setTitle("SchermataIniziale");
+        e.setTitle("Schermata Iniziale");
         e.setVisible(true);
         e.setBounds(10, 10, 800, 600);
         e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -137,8 +137,4 @@ class HomePage extends JFrame implements ActionListener {
         e.setResizable(false);
     }
 
-
 }
-
-
-
