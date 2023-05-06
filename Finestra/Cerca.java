@@ -20,6 +20,8 @@ public class Cerca extends JFrame implements ActionListener {
     JTextField longField = new JTextField(10);
     JButton cercaButton = new JButton("Cerca");
     Cursor cursoreReg = cercaButton.getCursor();
+    JButton indietroButton = new JButton("Indietro");
+
 
     Cerca() {
 
@@ -28,6 +30,7 @@ public class Cerca extends JFrame implements ActionListener {
         addComponentsToContainer();
         addActionEvent();
     }
+    
 
     public void setLayoutManager() {
 
@@ -50,10 +53,14 @@ public class Cerca extends JFrame implements ActionListener {
         longField.setBounds(520, 305, 100, 30);
         cercaButton.setBounds(340, 400, 100, 30);
         cercaButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        indietroButton.setBounds(670, 500, 80, 30);
+        indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
 
     public void addComponentsToContainer() {
+
+        // Aggiunta dei componenti al container
 
         container.add(logo);
         container.add(cittàLabel);
@@ -65,11 +72,13 @@ public class Cerca extends JFrame implements ActionListener {
         container.add(longLabel);
         container.add(longField);
         container.add(cercaButton);
+        container.add(indietroButton);
         add(container);
     }
 
     public void addActionEvent() {
         cercaButton.addActionListener(this);
+        indietroButton.addActionListener(this);
 
     }
 
@@ -81,9 +90,17 @@ public class Cerca extends JFrame implements ActionListener {
 
             // Controllo dati nel file
 
+
+        // Bottone Indietro
+        if (e.getSource() == indietroButton) {
+
+            dispose();
+            setFrame(new HomePage());
+
         }
 
     }
+}
 
     private void setFrame(Tabella e) {
 
@@ -96,4 +113,17 @@ public class Cerca extends JFrame implements ActionListener {
         e.setLocationRelativeTo(null);
         e.setResizable(false);
     }
+
+    private void setFrame(HomePage e) {
+
+        e.setTitle("HomePage");
+        // e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
+    }
+
 }
