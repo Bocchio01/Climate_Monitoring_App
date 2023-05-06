@@ -88,6 +88,8 @@ public class Cerca extends JFrame implements ActionListener {
 
             // Controllo dati nel file
 
+        }
+
 
         // Bottone Indietro
         if (e.getSource() == indietroButton) {
@@ -97,7 +99,6 @@ public class Cerca extends JFrame implements ActionListener {
 
         }
 
-    }
 }
 
     private void setFrame(Tabella1 e) {
