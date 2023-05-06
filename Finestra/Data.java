@@ -56,6 +56,9 @@ public class Data extends JFrame implements ActionListener {
         table.getColumnModel().getColumn(2).setPreferredWidth(50);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
 
+        // Impostazione della larghezza massima delle celle della colonna a 256
+        table.getColumnModel().getColumn(3).setMaxWidth(256);
+
         // table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         // for (int i = 0; i < columnNames.length; i++) {
         // table.getColumnModel().getColumn(i).setPreferredWidth(150);
@@ -83,10 +86,16 @@ public class Data extends JFrame implements ActionListener {
 
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        salvaFile();
+
+    }
+
     private void salvaFile() {
         // Creazione del file e scrittura nel file
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("tabella.txt"));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("tabella.txt", true));
             for (int i = 0; i < model.getRowCount(); i++) {
                 String row = model.getValueAt(i, 0) + "," + model.getValueAt(i, 2) + "," + model.getValueAt(i, 3);
                 writer.write(row);
@@ -97,12 +106,6 @@ public class Data extends JFrame implements ActionListener {
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Errore nella scrittura dei dati!");
         }
-
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        salvaFile();
 
     }
 
