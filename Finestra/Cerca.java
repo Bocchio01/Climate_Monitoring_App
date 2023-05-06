@@ -22,7 +22,6 @@ public class Cerca extends JFrame implements ActionListener {
     Cursor cursoreReg = cercaButton.getCursor();
     JButton indietroButton = new JButton("Indietro");
 
-
     Cerca() {
 
         setLayoutManager();
@@ -30,7 +29,6 @@ public class Cerca extends JFrame implements ActionListener {
         addComponentsToContainer();
         addActionEvent();
     }
-    
 
     public void setLayoutManager() {
 
@@ -86,26 +84,23 @@ public class Cerca extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cercaButton) {
             dispose();
-            setFrame(new Tabella());
+            setFrame(new Tabella1());
 
             // Controllo dati nel file
 
-
-        // Bottone Indietro
+        } // Bottone Indietro
         if (e.getSource() == indietroButton) {
 
             dispose();
             setFrame(new HomePage());
 
         }
-
     }
-}
 
-    private void setFrame(Tabella e) {
+    private void setFrame(Tabella1 e) {
 
         e.setTitle("Tabella");
-        // e.setVisible(true);
+        e.setVisible(true);
         e.setBounds(10, 10, 800, 600);
         e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageIcon image = new ImageIcon("Immagini/logo_png.png");
@@ -117,7 +112,7 @@ public class Cerca extends JFrame implements ActionListener {
     private void setFrame(HomePage e) {
 
         e.setTitle("HomePage");
-        // e.setVisible(true);
+        e.setVisible(true);
         e.setBounds(10, 10, 800, 600);
         e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageIcon image = new ImageIcon("Immagini/logo_png.png");
