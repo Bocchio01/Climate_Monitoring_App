@@ -13,6 +13,7 @@ class HomePage extends JFrame implements ActionListener {
     JPanel container = new JPanel();
     JButton areaOpButton = new JButton("Area Operatore");
     JButton ospiteButton = new JButton("Dove vuoi andare?");
+    JButton indietroButton = new JButton("indietro");
     JLabel logo = new JLabel(new ImageIcon("Immagini/logo3.png"));
     Cursor cursoreOp = areaOpButton.getCursor();
     Cursor cursoreOpsite = ospiteButton.getCursor();
@@ -43,9 +44,11 @@ class HomePage extends JFrame implements ActionListener {
         ospiteButton.setBounds(300, 270, 200, 30);
         logo.setBounds(290, 50, 200, 186);
         areaOpButton.setBounds(300, 320, 200, 30);
+        indietroButton.setBounds(670, 500, 80, 30);
 
         ospiteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         areaOpButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
 
@@ -56,6 +59,7 @@ class HomePage extends JFrame implements ActionListener {
         container.add(ospiteButton);
         container.add(logo);
         container.add(areaOpButton);
+        container.add(indietroButton);
         add(container);
 
     }
@@ -66,6 +70,7 @@ class HomePage extends JFrame implements ActionListener {
 
         ospiteButton.addActionListener(this);
         areaOpButton.addActionListener(this);
+        indietroButton.addActionListener(this);
 
     }
 
@@ -85,6 +90,13 @@ class HomePage extends JFrame implements ActionListener {
 
             dispose();
             setFrame(new Cerca());
+        }
+
+        // Bottone Indietro
+        if (e.getSource() == indietroButton) {
+
+            this.setVisible(false);
+            setFrame(new SchermataIniziale());
         }
 
     }
@@ -113,4 +125,20 @@ class HomePage extends JFrame implements ActionListener {
         e.setResizable(false);
     }
 
+    private void setFrame(SchermataIniziale e) {
+
+        e.setTitle("SchermataIniziale");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
+    }
+
+
 }
+
+
+

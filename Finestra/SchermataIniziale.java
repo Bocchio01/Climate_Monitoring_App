@@ -32,7 +32,7 @@ public class SchermataIniziale extends JFrame implements ActionListener {
 
         // Set info Container
 
-        container.setBackground(new Color(153, 255, 255));
+        container.setBackground(new Color(224, 251, 255));
         container.setLayout(null);
     }
 
@@ -44,7 +44,7 @@ public class SchermataIniziale extends JFrame implements ActionListener {
         homeButton.setBorder(null);
         homeButton.setContentAreaFilled(false);
         nomeLabel.setBounds(210, 470, 405, 55);
-        nomeLabel.setFont(new Font("Gaglin", Font.BOLD, 20));
+        nomeLabel.setFont(new Font("Ink Free", Font.CENTER_BASELINE, 35));
         homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
