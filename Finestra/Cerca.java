@@ -90,16 +90,16 @@ public class Cerca extends JFrame implements ActionListener {
 
             // Controllo dati nel file
 
+        }
 
         // Bottone Indietro
         if (e.getSource() == indietroButton) {
 
-            dispose();
+            this.setVisible(false);
             setFrame(new HomePage());
 
         }
 
-    }
 }
 
     private void setFrame(Tabella e) {
@@ -117,7 +117,7 @@ public class Cerca extends JFrame implements ActionListener {
     private void setFrame(HomePage e) {
 
         e.setTitle("HomePage");
-        // e.setVisible(true);
+        e.setVisible(true);
         e.setBounds(10, 10, 800, 600);
         e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageIcon image = new ImageIcon("Immagini/logo_png.png");
