@@ -15,7 +15,11 @@ public class Login extends JFrame implements ActionListener {
     private JPasswordField passwordField = new JPasswordField(10);
     private JLabel passwordLabel = new JLabel("Password");
     private JButton loginButton = new JButton("Accedi");
+    JButton indietroButton = new JButton("Indietro");
     Cursor cursoreReg = loginButton.getCursor();
+    ImageIcon icona = new ImageIcon("Immagini/icona_home.png");
+    JButton homeButton = new JButton(icona);
+
 
     Login() {
 
@@ -41,8 +45,12 @@ public class Login extends JFrame implements ActionListener {
         passwordLabel.setBounds(300, 340, 200, 30);
         passwordField.setBounds(300, 375, 200, 30);
         loginButton.setBounds(350, 450, 100, 30);
+        indietroButton.setBounds(670, 500, 80, 30);
+        homeButton.setBounds(635, 500, 30, 30);
 
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
 
@@ -54,12 +62,16 @@ public class Login extends JFrame implements ActionListener {
         container.add(passwordField);
         container.add(passwordLabel);
         container.add(loginButton);
+        container.add(indietroButton);
+        container.add(homeButton);
         add(container);
     }
 
     public void addActionEvent() {
 
         loginButton.addActionListener(this);
+        indietroButton.addActionListener(this);
+        homeButton.addActionListener(this);
     }
 
     @Override
@@ -73,11 +85,53 @@ public class Login extends JFrame implements ActionListener {
 
         }
 
+        // Bottone Indietro
+        if (e.getSource() == indietroButton) {
+
+            this.setVisible(false);
+            setFrame(new AreaOperatore());
+
+        }
+
+        // Bottone Home
+        if (e.getSource() == homeButton) {
+
+            this.setVisible(false);
+            setFrame(new SchermataIniziale());
+
+        }
+
+
     }
 
     private void setFrame(Data e) {
 
         e.setTitle("Cerca");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
+    }
+
+    
+    private void setFrame(AreaOperatore e) {
+
+        e.setTitle("Area Operatore");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
+    }
+
+    private void setFrame(SchermataIniziale e) {
+
+        e.setTitle("Schermata Iniziale");
         e.setVisible(true);
         e.setBounds(10, 10, 800, 600);
         e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

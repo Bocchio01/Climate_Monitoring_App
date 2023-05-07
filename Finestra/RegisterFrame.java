@@ -29,6 +29,10 @@ class RegisterFrame extends JFrame implements ActionListener {
     JLabel campiObblabel = new JLabel("*Campi obbligatori");
 
     JButton registrati = new JButton("Registrati");
+    JButton indietroButton = new JButton("Indietro");
+    ImageIcon icona = new ImageIcon("Immagini/icona_home.png");
+    JButton homeButton = new JButton(icona);
+
 
     JLabel logo = new JLabel(new ImageIcon("Immagini/logo3.png"));
 
@@ -82,6 +86,11 @@ class RegisterFrame extends JFrame implements ActionListener {
 
         campiObblabel.setForeground(Color.RED);// colore testo
 
+        indietroButton.setBounds(670, 470, 80, 30);
+        homeButton.setBounds(635, 470, 30, 30);
+        indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
     }
 
     public void addComponentsToContainer() {
@@ -103,12 +112,16 @@ class RegisterFrame extends JFrame implements ActionListener {
         container.add(campiObblabel);
         container.add(registrati);
         container.add(logo);
+        container.add(indietroButton);
+        container.add(homeButton);
         add(container);
 
     }
 
     public void addActionEvent() {
 
+        indietroButton.addActionListener((this));
+        homeButton.addActionListener(this);
         // Aggiunta ActionListener ai bottoni
 
     }
@@ -188,7 +201,47 @@ class RegisterFrame extends JFrame implements ActionListener {
                 }
             }
         }
+    
+    // Bottone Indietro
+    if (e.getSource() == indietroButton) {
+
+        this.setVisible(false);
+        setFrame(new AreaOperatore());
+
     }
+
+    // Bottone Home
+    if (e.getSource() == homeButton) {
+
+        this.setVisible(false);
+        setFrame(new SchermataIniziale());
+
+    }
+}
+
+private void setFrame(AreaOperatore e) {
+
+    e.setTitle("Area Operatore");
+    e.setVisible(true);
+    e.setBounds(10, 10, 800, 600);
+    e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+    e.setIconImage(image.getImage());
+    e.setLocationRelativeTo(null);
+    e.setResizable(false);
+}
+
+private void setFrame(SchermataIniziale e) {
+
+    e.setTitle("Schermata Iniziale");
+    e.setVisible(true);
+    e.setBounds(10, 10, 800, 600);
+    e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+    e.setIconImage(image.getImage());
+    e.setLocationRelativeTo(null);
+    e.setResizable(false);
+}
 
 }
 
@@ -207,4 +260,5 @@ class Register {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
     }
+
 }

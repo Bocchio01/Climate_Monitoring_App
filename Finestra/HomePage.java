@@ -17,6 +17,8 @@ class HomePage extends JFrame implements ActionListener {
     JLabel logo = new JLabel(new ImageIcon("Immagini/logo3.png"));
     Cursor cursoreOp = areaOpButton.getCursor();
     Cursor cursoreOpsite = ospiteButton.getCursor();
+    ImageIcon icona = new ImageIcon("Immagini/icona_home.png");
+    JButton homeButton = new JButton(icona);
 
     HomePage() {
 
@@ -45,10 +47,12 @@ class HomePage extends JFrame implements ActionListener {
         logo.setBounds(290, 50, 200, 186);
         areaOpButton.setBounds(300, 320, 200, 30);
         indietroButton.setBounds(670, 500, 80, 30);
+        homeButton.setBounds(635, 500, 30, 30);
 
         ospiteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         areaOpButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
 
@@ -60,6 +64,7 @@ class HomePage extends JFrame implements ActionListener {
         container.add(logo);
         container.add(areaOpButton);
         container.add(indietroButton);
+        container.add(homeButton);
         add(container);
 
     }
@@ -71,6 +76,8 @@ class HomePage extends JFrame implements ActionListener {
         ospiteButton.addActionListener(this);
         areaOpButton.addActionListener(this);
         indietroButton.addActionListener(this);
+        homeButton.addActionListener(this);
+
 
     }
 
@@ -97,6 +104,14 @@ class HomePage extends JFrame implements ActionListener {
 
             dispose();
             setFrame(new SchermataIniziale());
+        }
+
+        // Bottone Home
+        if (e.getSource() == homeButton) {
+
+            this.setVisible(false);
+            setFrame(new SchermataIniziale());
+
         }
 
     }

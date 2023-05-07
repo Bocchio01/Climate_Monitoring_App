@@ -21,6 +21,8 @@ public class Cerca extends JFrame implements ActionListener {
     JButton cercaButton = new JButton("Cerca");
     Cursor cursoreReg = cercaButton.getCursor();
     JButton indietroButton = new JButton("Indietro");
+    ImageIcon icona = new ImageIcon("Immagini/icona_home.png");
+    JButton homeButton = new JButton(icona);
 
     Cerca() {
 
@@ -53,6 +55,8 @@ public class Cerca extends JFrame implements ActionListener {
         cercaButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         indietroButton.setBounds(670, 500, 80, 30);
         indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        homeButton.setBounds(635, 500, 30, 30);
+        homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
 
@@ -71,12 +75,14 @@ public class Cerca extends JFrame implements ActionListener {
         container.add(longField);
         container.add(cercaButton);
         container.add(indietroButton);
+        container.add(homeButton);
         add(container);
     }
 
     public void addActionEvent() {
         cercaButton.addActionListener(this);
         indietroButton.addActionListener(this);
+        homeButton.addActionListener(this);
 
     }
 
@@ -99,6 +105,13 @@ public class Cerca extends JFrame implements ActionListener {
 
         }
 
+         // Bottone Home
+         if (e.getSource() == homeButton) {
+
+            this.setVisible(false);
+            setFrame(new SchermataIniziale());
+
+        }
 }
 
     private void setFrame(Tabella1 e) {
@@ -116,6 +129,18 @@ public class Cerca extends JFrame implements ActionListener {
     private void setFrame(HomePage e) {
 
         e.setTitle("HomePage");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
+    }
+
+    private void setFrame(SchermataIniziale e) {
+
+        e.setTitle("SchermataIniziale");
         e.setVisible(true);
         e.setBounds(10, 10, 800, 600);
         e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

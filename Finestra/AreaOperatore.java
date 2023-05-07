@@ -20,9 +20,14 @@ public class AreaOperatore extends JFrame implements ActionListener {
 
     JButton registratiButton = new JButton("Registrati");
     JButton accediButton = new JButton("Accedi");
+    JButton indietroButton = new JButton("Indietro");
     JLabel logo = new JLabel(new ImageIcon("Immagini/logo3.png"));
     Cursor cursoreReg = registratiButton.getCursor();
     Cursor cursoreAcc = accediButton.getCursor();
+    Cursor cursoreInd = indietroButton.getCursor();
+
+    ImageIcon icona = new ImageIcon("Immagini/icona_home.png");
+    JButton homeButton = new JButton(icona);
 
     AreaOperatore() {
 
@@ -50,10 +55,15 @@ public class AreaOperatore extends JFrame implements ActionListener {
         registratiButton.setBounds(300, 270, 200, 30);
         logo.setBounds(290, 50, 200, 186);
         accediButton.setBounds(300, 320, 200, 30);
+        indietroButton.setBounds(670, 500, 80, 30);
+        homeButton.setBounds(635, 500, 30, 30);
+
+       // homeButton.setContentAreaFilled(false);   TRASPARENTE O NO???
 
         registratiButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         accediButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
+        indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
     public void addComponentsToContainer() {
@@ -63,6 +73,8 @@ public class AreaOperatore extends JFrame implements ActionListener {
         container.add(registratiButton);
         container.add(logo);
         container.add(accediButton);
+        container.add(indietroButton);
+        container.add(homeButton);
         add(container);
 
     }
@@ -73,6 +85,8 @@ public class AreaOperatore extends JFrame implements ActionListener {
 
         registratiButton.addActionListener(this);
         accediButton.addActionListener(this);
+        indietroButton.addActionListener(this);
+        homeButton.addActionListener(this);
 
     }
 
@@ -97,6 +111,22 @@ public class AreaOperatore extends JFrame implements ActionListener {
 
         }
 
+        // Bottone Indietro
+        if (e.getSource() == indietroButton) {
+
+            this.setVisible(false);
+            setFrame(new HomePage());
+
+        }
+
+        // Bottone Home
+        if (e.getSource() == homeButton) {
+
+            this.setVisible(false);
+            setFrame(new SchermataIniziale());
+
+        }
+
     }
 
     private void setFrame(RegisterFrame e) {
@@ -113,7 +143,31 @@ public class AreaOperatore extends JFrame implements ActionListener {
 
     private void setFrame(Login e) {
 
-        e.setTitle("Registrazione");
+        e.setTitle("Login");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
+    }
+
+    private void setFrame(HomePage e) {
+
+        e.setTitle("HomePage");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
+    }
+
+    private void setFrame(SchermataIniziale e) {
+
+        e.setTitle("Schermata Iniziale");
         e.setVisible(true);
         e.setBounds(10, 10, 800, 600);
         e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
