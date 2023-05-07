@@ -78,7 +78,6 @@ class HomePage extends JFrame implements ActionListener {
         indietroButton.addActionListener(this);
         homeButton.addActionListener(this);
 
-
     }
 
     @Override
@@ -99,7 +98,7 @@ class HomePage extends JFrame implements ActionListener {
             setFrame(new Cerca());
         }
 
-        // Bottone Indietro
+        // Bottone Indietro (inutile farlo due volte A.)
         if (e.getSource() == indietroButton) {
 
             dispose();
@@ -109,7 +108,7 @@ class HomePage extends JFrame implements ActionListener {
         // Bottone Home
         if (e.getSource() == homeButton) {
 
-            this.setVisible(false);
+            dispose();
             setFrame(new SchermataIniziale());
 
         }

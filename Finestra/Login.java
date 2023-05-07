@@ -20,7 +20,6 @@ public class Login extends JFrame implements ActionListener {
     ImageIcon icona = new ImageIcon("Immagini/icona_home.png");
     JButton homeButton = new JButton(icona);
 
-
     Login() {
 
         setLayoutManager();
@@ -88,7 +87,7 @@ public class Login extends JFrame implements ActionListener {
         // Bottone Indietro
         if (e.getSource() == indietroButton) {
 
-            this.setVisible(false);
+            dispose();
             setFrame(new AreaOperatore());
 
         }
@@ -96,11 +95,10 @@ public class Login extends JFrame implements ActionListener {
         // Bottone Home
         if (e.getSource() == homeButton) {
 
-            this.setVisible(false);
+            dispose();
             setFrame(new SchermataIniziale());
 
         }
-
 
     }
 
@@ -116,7 +114,6 @@ public class Login extends JFrame implements ActionListener {
         e.setResizable(false);
     }
 
-    
     private void setFrame(AreaOperatore e) {
 
         e.setTitle("Area Operatore");

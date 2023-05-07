@@ -33,7 +33,6 @@ class RegisterFrame extends JFrame implements ActionListener {
     ImageIcon icona = new ImageIcon("Immagini/icona_home.png");
     JButton homeButton = new JButton(icona);
 
-
     JLabel logo = new JLabel(new ImageIcon("Immagini/logo3.png"));
 
     RegisterFrame() {
@@ -201,47 +200,47 @@ class RegisterFrame extends JFrame implements ActionListener {
                 }
             }
         }
-    
-    // Bottone Indietro
-    if (e.getSource() == indietroButton) {
 
-        this.setVisible(false);
-        setFrame(new AreaOperatore());
+        // Bottone Indietro
+        if (e.getSource() == indietroButton) {
 
+            dispose();
+            setFrame(new AreaOperatore());
+
+        }
+
+        // Bottone Home
+        if (e.getSource() == homeButton) {
+
+            dispose();
+            setFrame(new SchermataIniziale());
+
+        }
     }
 
-    // Bottone Home
-    if (e.getSource() == homeButton) {
+    private void setFrame(AreaOperatore e) {
 
-        this.setVisible(false);
-        setFrame(new SchermataIniziale());
-
+        e.setTitle("Area Operatore");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
     }
-}
 
-private void setFrame(AreaOperatore e) {
+    private void setFrame(SchermataIniziale e) {
 
-    e.setTitle("Area Operatore");
-    e.setVisible(true);
-    e.setBounds(10, 10, 800, 600);
-    e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-    e.setIconImage(image.getImage());
-    e.setLocationRelativeTo(null);
-    e.setResizable(false);
-}
-
-private void setFrame(SchermataIniziale e) {
-
-    e.setTitle("Schermata Iniziale");
-    e.setVisible(true);
-    e.setBounds(10, 10, 800, 600);
-    e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-    e.setIconImage(image.getImage());
-    e.setLocationRelativeTo(null);
-    e.setResizable(false);
-}
+        e.setTitle("Schermata Iniziale");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
+    }
 
 }
 

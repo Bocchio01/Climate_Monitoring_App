@@ -96,23 +96,22 @@ public class Cerca extends JFrame implements ActionListener {
 
         }
 
-
         // Bottone Indietro
         if (e.getSource() == indietroButton) {
 
-            this.setVisible(false);
+            dispose();
             setFrame(new HomePage());
 
         }
 
-         // Bottone Home
-         if (e.getSource() == homeButton) {
+        // Bottone Home
+        if (e.getSource() == homeButton) {
 
-            this.setVisible(false);
+            dispose();
             setFrame(new SchermataIniziale());
 
         }
-}
+    }
 
     private void setFrame(Tabella1 e) {
 

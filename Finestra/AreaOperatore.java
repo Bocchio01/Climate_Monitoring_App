@@ -58,7 +58,7 @@ public class AreaOperatore extends JFrame implements ActionListener {
         indietroButton.setBounds(670, 500, 80, 30);
         homeButton.setBounds(635, 500, 30, 30);
 
-       // homeButton.setContentAreaFilled(false);   TRASPARENTE O NO???
+        // homeButton.setContentAreaFilled(false); TRASPARENTE O NO???
 
         registratiButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         accediButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -114,7 +114,7 @@ public class AreaOperatore extends JFrame implements ActionListener {
         // Bottone Indietro
         if (e.getSource() == indietroButton) {
 
-            this.setVisible(false);
+            dispose();
             setFrame(new HomePage());
 
         }
@@ -122,7 +122,7 @@ public class AreaOperatore extends JFrame implements ActionListener {
         // Bottone Home
         if (e.getSource() == homeButton) {
 
-            this.setVisible(false);
+            dispose();
             setFrame(new SchermataIniziale());
 
         }
