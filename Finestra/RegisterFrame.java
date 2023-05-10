@@ -136,7 +136,6 @@ class RegisterFrame extends JFrame implements ActionListener {
             String password = new String(passwordField.getPassword());
             String centroMon = centroMonField.getText();
 
-            if (nomeCognome.isEmpty() == true) {
                 if (nomeCognome.isEmpty() == true) {
                     JOptionPane.showMessageDialog(null, "inserisci un nome e cognome");
                 } else {
@@ -145,12 +144,9 @@ class RegisterFrame extends JFrame implements ActionListener {
                         if (codiceFisc.isEmpty() == true) {
                             JOptionPane.showMessageDialog(null, "inserisci un codice fiscale");
                         } else {
-
-                            /*
-                             * if (codiceFisc.length() <= 15) {
-                             * JOptionPane.showMessageDialog(null, "inserisci un codice fiscale valido");
-                             * } else
-                             */ {
+                              if (codiceFisc.length() <= 15) {
+                              JOptionPane.showMessageDialog(null, "inserisci un codice fiscale valido");
+                              } else{
                                 if (eMail.isEmpty() == true) {
                                     JOptionPane.showMessageDialog(null, "inserisci una email");
                                 } else {
@@ -199,7 +195,6 @@ class RegisterFrame extends JFrame implements ActionListener {
                     }
                 }
             }
-        }
 
         // Bottone Indietro
         if (e.getSource() == indietroButton) {
