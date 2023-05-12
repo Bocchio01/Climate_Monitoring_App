@@ -93,30 +93,20 @@ public class Cerca extends JFrame implements ActionListener {
 
             String s=null;
 
-            //cerca coordinate più vicine nel file e apre la finestra della tabella
             try {
                 s=null;
-                s = Find_coord.closest_coord(latField, longField);
+
+                // todo mettere nell'if la condizione del menù a tendina
+                if(true)s = Find_coord.closest_coord(latField, longField);//cerca coordinate più vicine nel file e apre la finestra della tabella
+
+                else s = Find_string.find(cittàField); // Cerca città nel file e se lo trova apre la finestra della tabella
+
                 if(s!=null){
                     dispose();
                     setFrame(new Tabella1());
                 }
                 else s="";
             } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-
-            // Cerca città nel file e se lo trova apre la finestra della tabella
-            try {
-                s=null;
-                s = Find_string.find(cittàField);
-                if(s!=null){
-                    dispose();
-                    setFrame(new Tabella1());
-                }
-                else s="";
-            } catch (IOException e1) {
-                // Auto-generated catch block
                 e1.printStackTrace();
             }
 
