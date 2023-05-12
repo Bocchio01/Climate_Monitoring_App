@@ -92,15 +92,17 @@ public class Cerca extends JFrame implements ActionListener {
         if (e.getSource() == cercaButton) {
 
             // Controllo dati nel file
-            String s;
+            String s=null;
             try {
                 s = Find_string.find(cittàField);
             } catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
-            dispose();
-            setFrame(new Tabella1());
+            if(s!=null){
+                dispose();
+                setFrame(new Tabella1());
+            }
 
         }
 
