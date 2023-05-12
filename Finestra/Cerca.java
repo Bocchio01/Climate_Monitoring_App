@@ -14,7 +14,7 @@ public class Cerca extends JFrame implements ActionListener {
     JLabel ricercaLabel = new JLabel("Tipo ricerca");
     JTextField cittaField = new JTextField(10);
     JLabel cittaLabel = new JLabel("Città");
-    JComboBox<String> ricercaBox = new JComboBox<String>(new String[] { "Cerca per nome", "Cerca per coordinate" });
+    JComboBox<String> ricercaBox = new JComboBox<String>(new String[] { "Metodo di ricerca", "Cerca per nome", "Cerca per coordinate" });
     JLabel latLabel = new JLabel("Latitudine");
     JTextField latField = new JTextField(10);
     JLabel longLabel = new JLabel("Longitudine");
@@ -22,9 +22,6 @@ public class Cerca extends JFrame implements ActionListener {
     JButton cercaButton = new JButton("Cerca");
     Cursor cursoreReg = cercaButton.getCursor();
     JButton indietroButton = new JButton("Indietro");
-
-    ImageIcon sun_moon = new ImageIcon("Immagini/tema.png");
-    JButton theme = new JButton(sun_moon);
 
     Cerca() {
 
@@ -39,7 +36,7 @@ public class Cerca extends JFrame implements ActionListener {
 
         // Set info Container
 
-        if (Theme.tema()) {
+        if (!Theme.tema()) {
             container.setBackground(new Color(153, 255, 255));
             cittaLabel.setForeground(Color.BLACK);
             ricercaLabel.setForeground(Color.BLACK);
@@ -75,12 +72,6 @@ public class Cerca extends JFrame implements ActionListener {
         indietroButton.setBounds(670, 500, 80, 30);
         indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        theme.setBounds(20, 20, 30, 30);
-        theme.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        theme.setBounds(20, 20, 30, 30);
-        theme.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
     }
 
     public void addComponentsToContainer() {
@@ -99,8 +90,6 @@ public class Cerca extends JFrame implements ActionListener {
         container.add(cercaButton);
         container.add(indietroButton);
 
-        container.add(theme);
-
         add(container);
     }
 
@@ -110,6 +99,9 @@ public class Cerca extends JFrame implements ActionListener {
         ricercaBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                cittaField.setEnabled(false);
+                latField.setEnabled(false);
+                longField.setEnabled(false);
                 JComboBox<String> combo = (JComboBox<String>) e.getSource();
                 String selectedSearchType = (String) combo.getSelectedItem();
                 if (selectedSearchType.equals("Cerca per nome")) {
@@ -144,10 +136,6 @@ public class Cerca extends JFrame implements ActionListener {
             }
         });
 
-        theme.addActionListener(this);
-
-        theme.addActionListener(this);
-
     }
 
     @Override
@@ -157,7 +145,8 @@ public class Cerca extends JFrame implements ActionListener {
             String s = null;
 
             try {
-                s = Find_string.find(cittaField);
+                if(cittaField.getText().isEmpty()) s = Find_coord.closest_coord(latField, longField);
+                else s = Find_string.find(cittaField);
             } catch (IOException e1) {
                 // Auto-generated catch block
                 e1.printStackTrace();
@@ -175,11 +164,6 @@ public class Cerca extends JFrame implements ActionListener {
             dispose();
             setFrame(new HomePage());
 
-        }
-
-        // Bottone tema
-        if (e.getSource() == theme) {
-            setLayoutManager();
         }
     }
 
