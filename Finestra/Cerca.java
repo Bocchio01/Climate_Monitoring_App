@@ -37,7 +37,11 @@ public class Cerca extends JFrame implements ActionListener {
 
         // Set info Container
 
-        container.setBackground(new Color(153, 255, 255));//azzurro 153 255 255     grigio discord 49, 51, 56
+        container.setBackground(new Color(49, 51, 56));//azzurro 153 255 255     grigio discord 49, 51, 56
+        cittàLabel.setForeground(Color.WHITE);
+        areaLabel.setForeground(Color.WHITE);
+        latLabel.setForeground(Color.WHITE);
+        longLabel.setForeground(Color.WHITE);
         container.setLayout(null);
     }
 
@@ -96,8 +100,8 @@ public class Cerca extends JFrame implements ActionListener {
             try {
                 s=null;
 
-                // todo mettere nell'if la condizione del menù a tendina
-                if(true)s = Find_coord.closest_coord(latField, longField);//cerca coordinate più vicine nel file e apre la finestra della tabella
+                // TODO mettere nell'if la condizione del menù a tendina
+                if(false)s = Find_coord.closest_coord(latField, longField);//cerca coordinate più vicine nel file e apre la finestra della tabella
 
                 else s = Find_string.find(cittàField); // Cerca città nel file e se lo trova apre la finestra della tabella
 

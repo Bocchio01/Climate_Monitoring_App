@@ -15,7 +15,7 @@ public class Find_string {
         b=new BufferedReader(f);
 
         //!in terminale chcp 850
-        //? forse funge anche senza     yep eventuale bugfix    chiedere alla rizz
+        //? forse funge anche senza     dipende dalla lingua ma i bytecode funzionana quindi va bene
 
         Console console = System.console();
         if (console == null) {
