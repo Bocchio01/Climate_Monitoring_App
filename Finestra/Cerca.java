@@ -25,6 +25,10 @@ public class Cerca extends JFrame implements ActionListener {
     ImageIcon icona = new ImageIcon("Immagini/icona_home.png");
     JButton homeButton = new JButton(icona);
 
+    ImageIcon sun_moon = new ImageIcon("Immagini/tema.png");
+    JButton theme = new JButton(sun_moon);
+    boolean dark_theme=false;
+
     Cerca() {
 
         setLayoutManager();
@@ -37,11 +41,21 @@ public class Cerca extends JFrame implements ActionListener {
 
         // Set info Container
 
-        container.setBackground(new Color(49, 51, 56));//azzurro 153 255 255     grigio discord 49, 51, 56
-        cittàLabel.setForeground(Color.WHITE);
-        areaLabel.setForeground(Color.WHITE);
-        latLabel.setForeground(Color.WHITE);
-        longLabel.setForeground(Color.WHITE);
+        if(dark_theme==false) {
+            container.setBackground(new Color(153, 255, 255));
+            cittàLabel.setForeground(Color.BLACK);
+            areaLabel.setForeground(Color.BLACK);
+            latLabel.setForeground(Color.BLACK);
+            longLabel.setForeground(Color.BLACK);
+        }
+        else {
+            container.setBackground(new Color(49, 51, 56));
+            cittàLabel.setForeground(Color.WHITE);
+            areaLabel.setForeground(Color.WHITE);
+            latLabel.setForeground(Color.WHITE);
+            longLabel.setForeground(Color.WHITE);
+        }
+        
         container.setLayout(null);
     }
 
@@ -63,6 +77,9 @@ public class Cerca extends JFrame implements ActionListener {
         homeButton.setBounds(635, 500, 30, 30);
         homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
+        theme.setBounds(20, 20, 30, 30);
+        theme.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
     }
 
     public void addComponentsToContainer() {
@@ -81,6 +98,9 @@ public class Cerca extends JFrame implements ActionListener {
         container.add(cercaButton);
         container.add(indietroButton);
         container.add(homeButton);
+
+        container.add(theme);
+
         add(container);
     }
 
@@ -88,6 +108,8 @@ public class Cerca extends JFrame implements ActionListener {
         cercaButton.addActionListener(this);
         indietroButton.addActionListener(this);
         homeButton.addActionListener(this);
+
+        theme.addActionListener(this);
 
     }
 
@@ -130,6 +152,11 @@ public class Cerca extends JFrame implements ActionListener {
             dispose();
             setFrame(new SchermataIniziale());
 
+        }
+
+        if(e.getSource()==theme){
+            dark_theme = !dark_theme;
+            setLayoutManager();
         }
     }
 
