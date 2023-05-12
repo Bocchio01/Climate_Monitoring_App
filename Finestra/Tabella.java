@@ -2,11 +2,6 @@ package Finestra;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.tree.DefaultTreeCellRenderer;
-
-import java.awt.*;
 
 class Tabella extends JFrame {
 
