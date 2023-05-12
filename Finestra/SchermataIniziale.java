@@ -1,23 +1,17 @@
 ﻿package Finestra;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.*;
+import java.awt.*;
 
 public class SchermataIniziale extends JFrame {
 
     Container container = getContentPane();
-    JLabel icona = new JLabel(new ImageIcon("Immagini/logo_png_home.png"));// !Sistemare i bordi dell'immagine
+    ImageIcon icona = new ImageIcon("Immagini/logo_png_home.png");// !Sistemare i bordi dell'immagine
+    JButton homeButton = new JButton();
     JLabel nomeLabel = new JLabel("Monitoraggio Climatico");
-    Timer timer = new Timer();
+    Cursor cursoreHome = homeButton.getCursor();
+    JProgressBar progressBar = new JProgressBar(0, 100); // Valore minimo 0, valore massimo 100
+    Timer timer;
 
     SchermataIniziale() {
 
@@ -25,40 +19,44 @@ public class SchermataIniziale extends JFrame {
         setLocationAndSize();
         addComponentsToContainer();
 
-        TimerTask task = new TimerTask() {
-            public void run() {
+        timer = new Timer(35, e -> {
+            int progress = progressBar.getValue();
+            if (progress < 100) {
+                progressBar.setValue(progress + 1);
+            } else {
+                timer.stop();
                 dispose();
-                setFrame(new HomePage()); // chiamata al metodo setFrame() dopo 3 secondi
+                setFrame(new HomePage());
             }
-        };
+        });
 
-        timer.schedule(task, 2000); // programma l'esecuzione del task dopo 3 secondi
-
+        timer.start();
     }
 
     public void setLayoutManager() {
-
         // Set info Container
-
         container.setBackground(new Color(224, 251, 255));
         container.setLayout(null);
     }
 
     public void setLocationAndSize() {
-
         // !Centrare i compnenti
-
-        icona.setBounds(150, 50, 420, 400);
+        homeButton.setBounds(150, 50, 420, 400);
+        homeButton.setIcon(icona);
+        homeButton.setBorder(null);
+        homeButton.setContentAreaFilled(false);
         nomeLabel.setBounds(210, 470, 405, 55);
         nomeLabel.setFont(new Font("Ink Free", Font.CENTER_BASELINE, 35));
-
+        homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        progressBar.setBounds(280, 520, 200, 20);
+        progressBar.setValue(0);
+        progressBar.setStringPainted(true); // Mostra il testo sull'indicatore
     }
 
     public void addComponentsToContainer() {
-
-        container.add(icona);
+        container.add(homeButton);
         container.add(nomeLabel);
-
+        container.add(progressBar);
     }
 
     private void setFrame(HomePage e) {
@@ -72,5 +70,4 @@ public class SchermataIniziale extends JFrame {
         e.setLocationRelativeTo(null);
         e.setResizable(false);
     }
-
 }

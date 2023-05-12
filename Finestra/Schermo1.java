@@ -19,7 +19,7 @@ public class Schermo1 extends JFrame {
         setLocationAndSize();
         addComponentsToContainer();
 
-        timer = new Timer(5, e -> {
+        timer = new Timer(35, e -> {
             int progress = progressBar.getValue();
             if (progress < 100) {
                 progressBar.setValue(progress + 1);
