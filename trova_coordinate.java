@@ -5,7 +5,7 @@ public class trova_coordinate {
     public static void main(String[] args)
             throws IOException {
         FileReader f;
-        f = new FileReader("./CoordinateMonitoraggi.dati.csv");// "./Dati_abbreviati.csv"
+        f = new FileReader("./geonames-and-coordinates.csv");
 
         BufferedReader b;
         b = new BufferedReader(f);
@@ -19,21 +19,23 @@ public class trova_coordinate {
         s = b.readLine() + ";";
 
         while (true) {
-            s = b.readLine() + ";";
-            l = s.length();
+            s=b.readLine();
+            if(s==null) break;
+            l=s.length();
             for (j = 0; j < l; j++) {
-                if (s.charAt(j) == ';') {
-                    riga[i] = s.substring(m, j);
-                    m = j + 1;
+                if(s.charAt(j)==';'){
+                    riga[i] = s.substring(m,j).toLowerCase();
+                    m=j+1;
                     i++;
                 }
             }
-            i = 0;
-            m = 0;
+            i=0;
+            m=0;
+            riga[5]=riga[5].replace(',', '.');
+            riga[6]=riga[6].replace(',', '.');
             data_latitude = Double.parseDouble(riga[5]);
             data_longitude = Double.parseDouble(riga[6]);
-            temp_distance = Math
-                    .sqrt(Math.pow(data_latitude - d_latitude, 2) + Math.pow(data_longitude - d_longitude, 2));
+            temp_distance = Math.sqrt(Math.pow(data_latitude - d_latitude, 2) + Math.pow(data_longitude - d_longitude, 2));
             if (distance > temp_distance) {
                 distance = temp_distance;
                 closest = s;

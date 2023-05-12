@@ -23,6 +23,10 @@ public class Cerca extends JFrame implements ActionListener {
     Cursor cursoreReg = cercaButton.getCursor();
     JButton indietroButton = new JButton("Indietro");
 
+    ImageIcon sun_moon = new ImageIcon("Immagini/tema.png");
+    JButton theme = new JButton(sun_moon);
+    boolean dark_theme = false;
+
     Cerca() {
 
         setLayoutManager();
@@ -36,7 +40,20 @@ public class Cerca extends JFrame implements ActionListener {
 
         // Set info Container
 
-        container.setBackground(new Color(153, 255, 255));
+        if (dark_theme == false) {
+            container.setBackground(new Color(153, 255, 255));
+            cittaLabel.setForeground(Color.BLACK);
+            ricercaLabel.setForeground(Color.BLACK);
+            latLabel.setForeground(Color.BLACK);
+            longLabel.setForeground(Color.BLACK);
+        } else {
+            container.setBackground(new Color(49, 51, 56));
+            cittaLabel.setForeground(Color.WHITE);
+            ricercaLabel.setForeground(Color.WHITE);
+            latLabel.setForeground(Color.WHITE);
+            longLabel.setForeground(Color.WHITE);
+        }
+
         container.setLayout(null);
     }
 
@@ -59,6 +76,12 @@ public class Cerca extends JFrame implements ActionListener {
         indietroButton.setBounds(670, 500, 80, 30);
         indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
+        theme.setBounds(20, 20, 30, 30);
+        theme.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        theme.setBounds(20, 20, 30, 30);
+        theme.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
     }
 
     public void addComponentsToContainer() {
@@ -76,6 +99,9 @@ public class Cerca extends JFrame implements ActionListener {
         container.add(longField);
         container.add(cercaButton);
         container.add(indietroButton);
+
+        container.add(theme);
+
         add(container);
     }
 
@@ -119,14 +145,18 @@ public class Cerca extends JFrame implements ActionListener {
             }
         });
 
+        theme.addActionListener(this);
+
+        theme.addActionListener(this);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cercaButton) {
 
-            // Controllo dati nel file
             String s = null;
+
             try {
                 s = Find_string.find(cittaField);
             } catch (IOException e1) {

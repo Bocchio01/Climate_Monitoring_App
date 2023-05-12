@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class Find_string {
 
-    public static String find(JTextField cittàField) 
+    public static String find(JTextField città) 
     throws IOException {
 
         FileReader f;
@@ -15,7 +15,7 @@ public class Find_string {
         b=new BufferedReader(f);
 
         //!in terminale chcp 850
-        //? forse funge anche senza     yep eventuale bugfix    chiedere alla rizz
+        //? forse funge anche senza     dipende dalla lingua ma i bytecode funzionana quindi va bene
 
         Console console = System.console();
         if (console == null) {
@@ -27,7 +27,7 @@ public class Find_string {
 
         String s, ricerca;
 
-        ricerca = cittàField.getText();
+        ricerca = città.getText();
         ricerca = ricerca.toLowerCase();
         String[] riga = new String[7];
         int j=0, m=0, i=0, l=0;
@@ -55,10 +55,12 @@ public class Find_string {
             for (int n = 0; n < 7; n++) {
                 if (riga[n].equals(ricerca)) {
                     System.out.println(s);
+                    f.close();
                     return s;
                 }
             }
         }
+        f.close();
         return s;
     }
 }
