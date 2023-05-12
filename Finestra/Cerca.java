@@ -27,7 +27,6 @@ public class Cerca extends JFrame implements ActionListener {
 
     ImageIcon sun_moon = new ImageIcon("Immagini/tema.png");
     JButton theme = new JButton(sun_moon);
-    boolean dark_theme=false;
 
     Cerca() {
 
@@ -41,7 +40,7 @@ public class Cerca extends JFrame implements ActionListener {
 
         // Set info Container
 
-        if(dark_theme==false) {
+        if(Theme.tema()) {
             container.setBackground(new Color(153, 255, 255));
             cittàLabel.setForeground(Color.BLACK);
             areaLabel.setForeground(Color.BLACK);
@@ -154,8 +153,8 @@ public class Cerca extends JFrame implements ActionListener {
 
         }
 
+        // Bottone tema
         if(e.getSource()==theme){
-            dark_theme = !dark_theme;
             setLayoutManager();
         }
     }

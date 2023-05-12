@@ -20,6 +20,9 @@ class HomePage extends JFrame implements ActionListener {
     ImageIcon icona = new ImageIcon("Immagini/icona_home.png");
     JButton homeButton = new JButton(icona);
 
+    ImageIcon sun_moon = new ImageIcon("Immagini/tema.png");
+    JButton theme = new JButton(sun_moon);
+
     HomePage() {
 
         // Formazione del frame+componenti
@@ -35,7 +38,13 @@ class HomePage extends JFrame implements ActionListener {
 
         // Set info Container
 
-        container.setBackground(new Color(153, 255, 255));
+        if(Theme.tema()) {
+            container.setBackground(new Color(153, 255, 255));
+        }
+        else {
+            container.setBackground(new Color(49, 51, 56));
+        }
+
         container.setLayout(null);
     }
 
@@ -54,6 +63,9 @@ class HomePage extends JFrame implements ActionListener {
         indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
+        theme.setBounds(20, 20, 30, 30);
+        theme.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
     }
 
     public void addComponentsToContainer() {
@@ -65,6 +77,9 @@ class HomePage extends JFrame implements ActionListener {
         container.add(areaOpButton);
         container.add(indietroButton);
         container.add(homeButton);
+
+        container.add(theme);
+
         add(container);
 
     }
@@ -77,6 +92,8 @@ class HomePage extends JFrame implements ActionListener {
         areaOpButton.addActionListener(this);
         indietroButton.addActionListener(this);
         homeButton.addActionListener(this);
+
+        theme.addActionListener(this);
 
     }
 
@@ -111,6 +128,11 @@ class HomePage extends JFrame implements ActionListener {
             dispose();
             setFrame(new SchermataIniziale());
 
+        }
+
+        // Bottone tema
+        if(e.getSource()==theme){
+            setLayoutManager();
         }
 
     }
