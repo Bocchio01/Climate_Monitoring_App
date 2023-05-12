@@ -37,7 +37,7 @@ public class Cerca extends JFrame implements ActionListener {
 
         // Set info Container
 
-        container.setBackground(new Color(153, 255, 255));
+        container.setBackground(new Color(153, 255, 255));//azzurro 153 255 255     grigio discord 49, 51, 56
         container.setLayout(null);
     }
 

@@ -19,8 +19,6 @@ public class Find_coord {
         double double_latitude = Double.parseDouble(string_latitude), double_longitude = Double.parseDouble(string_longitude);
         double data_latitude, data_longitude, distance = 400, temp_distance;
 
-        System.out.println(string_latitude+string_longitude);
-
         s = b.readLine();
 
         while (true) {
