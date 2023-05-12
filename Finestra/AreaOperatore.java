@@ -26,9 +26,6 @@ public class AreaOperatore extends JFrame implements ActionListener {
     Cursor cursoreAcc = accediButton.getCursor();
     Cursor cursoreInd = indietroButton.getCursor();
 
-    ImageIcon icona = new ImageIcon("Immagini/icona_home.png");
-    JButton homeButton = new JButton(icona);
-
     AreaOperatore() {
 
         // Formazione del frame+componenti
@@ -56,14 +53,12 @@ public class AreaOperatore extends JFrame implements ActionListener {
         logo.setBounds(290, 50, 200, 186);
         accediButton.setBounds(300, 320, 200, 30);
         indietroButton.setBounds(670, 500, 80, 30);
-        homeButton.setBounds(635, 500, 30, 30);
 
         // homeButton.setContentAreaFilled(false); TRASPARENTE O NO???
 
         registratiButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         accediButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
     public void addComponentsToContainer() {
@@ -74,7 +69,6 @@ public class AreaOperatore extends JFrame implements ActionListener {
         container.add(logo);
         container.add(accediButton);
         container.add(indietroButton);
-        container.add(homeButton);
         add(container);
 
     }
@@ -86,7 +80,6 @@ public class AreaOperatore extends JFrame implements ActionListener {
         registratiButton.addActionListener(this);
         accediButton.addActionListener(this);
         indietroButton.addActionListener(this);
-        homeButton.addActionListener(this);
 
     }
 
@@ -119,14 +112,6 @@ public class AreaOperatore extends JFrame implements ActionListener {
 
         }
 
-        // Bottone Home
-        if (e.getSource() == homeButton) {
-
-            dispose();
-            setFrame(new SchermataIniziale());
-
-        }
-
     }
 
     private void setFrame(RegisterFrame e) {
@@ -156,18 +141,6 @@ public class AreaOperatore extends JFrame implements ActionListener {
     private void setFrame(HomePage e) {
 
         e.setTitle("HomePage");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
-    }
-
-    private void setFrame(SchermataIniziale e) {
-
-        e.setTitle("Schermata Iniziale");
         e.setVisible(true);
         e.setBounds(10, 10, 800, 600);
         e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

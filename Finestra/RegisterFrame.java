@@ -29,7 +29,6 @@ class RegisterFrame extends JFrame implements ActionListener {
     JLabel campiObblabel = new JLabel("*Campi obbligatori");
 
     JButton registrati = new JButton("Registrati");
-    JButton indietroButton = new JButton("Indietro");
     ImageIcon icona = new ImageIcon("Immagini/icona_home.png");
     JButton homeButton = new JButton(icona);
 
@@ -85,9 +84,7 @@ class RegisterFrame extends JFrame implements ActionListener {
 
         campiObblabel.setForeground(Color.RED);// colore testo
 
-        indietroButton.setBounds(670, 470, 80, 30);
         homeButton.setBounds(635, 470, 30, 30);
-        indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
@@ -111,7 +108,6 @@ class RegisterFrame extends JFrame implements ActionListener {
         container.add(campiObblabel);
         container.add(registrati);
         container.add(logo);
-        container.add(indietroButton);
         container.add(homeButton);
         add(container);
 
@@ -119,7 +115,6 @@ class RegisterFrame extends JFrame implements ActionListener {
 
     public void addActionEvent() {
 
-        indietroButton.addActionListener((this));
         homeButton.addActionListener(this);
         // Aggiunta ActionListener ai bottoni
 
@@ -136,55 +131,54 @@ class RegisterFrame extends JFrame implements ActionListener {
             String password = new String(passwordField.getPassword());
             String centroMon = centroMonField.getText();
 
-                if (nomeCognome.isEmpty() == true) {
-                    JOptionPane.showMessageDialog(null, "inserisci un nome e cognome");
+            if (nomeCognome.isEmpty() == true) {
+                JOptionPane.showMessageDialog(null, "inserisci un nome e cognome");
+            } else {
+                if (codiceFisc.isEmpty() == true) {
                 } else {
                     if (codiceFisc.isEmpty() == true) {
+                        JOptionPane.showMessageDialog(null, "inserisci un codice fiscale");
                     } else {
-                        if (codiceFisc.isEmpty() == true) {
-                            JOptionPane.showMessageDialog(null, "inserisci un codice fiscale");
+                        if (codiceFisc.length() <= 15) {
+                            JOptionPane.showMessageDialog(null, "inserisci un codice fiscale valido");
                         } else {
-                              if (codiceFisc.length() <= 15) {
-                              JOptionPane.showMessageDialog(null, "inserisci un codice fiscale valido");
-                              } else{
-                                if (eMail.isEmpty() == true) {
-                                    JOptionPane.showMessageDialog(null, "inserisci una email");
+                            if (eMail.isEmpty() == true) {
+                                JOptionPane.showMessageDialog(null, "inserisci una email");
+                            } else {
+                                if (eMail.contains("@") == false) {
+                                    JOptionPane.showMessageDialog(null, "inserisci una email valida");
                                 } else {
-                                    if (eMail.contains("@") == false) {
-                                        JOptionPane.showMessageDialog(null, "inserisci una email valida");
+                                    if (userId.isEmpty() == true) {
+                                        JOptionPane.showMessageDialog(null, "inserisci un id");
                                     } else {
-                                        if (userId.isEmpty() == true) {
-                                            JOptionPane.showMessageDialog(null, "inserisci un id");
+                                        if (password.isEmpty() == true) {
+                                            JOptionPane.showMessageDialog(null, "inserisci una password");
                                         } else {
-                                            if (password.isEmpty() == true) {
-                                                JOptionPane.showMessageDialog(null, "inserisci una password");
+                                            if (password.length() < 8) {
+                                                JOptionPane.showMessageDialog(null,
+                                                        "la password deve essere lunga almeno 8 cartteri");
+                                            } else if (!password.matches(".*[A-Z].*")) {
+                                                JOptionPane.showMessageDialog(null,
+                                                        "la password deve contenere almeno una lettera maiuscola");
                                             } else {
-                                                if (password.length() < 8) {
-                                                    JOptionPane.showMessageDialog(null,
-                                                            "la password deve essere lunga almeno 8 cartteri");
-                                                } else if (!password.matches(".*[A-Z].*")) {
-                                                    JOptionPane.showMessageDialog(null,
-                                                            "la password deve contenere almeno una lettera maiuscola");
-                                                } else {
-                                                    if (centroMon.isEmpty() == true) {
-                                                        centroMon = null;
-                                                    }
+                                                if (centroMon.isEmpty() == true) {
+                                                    centroMon = null;
+                                                }
 
-                                                    // Creare una stringa con i dati inseriti
-                                                    String dati = nomeCognome + "," + codiceFisc.toUpperCase() + ","
-                                                            + eMail
-                                                            + "," + userId + "," + password + "," + centroMon + "\n";
+                                                // Creare una stringa con i dati inseriti
+                                                String dati = nomeCognome + "," + codiceFisc.toUpperCase() + ","
+                                                        + eMail
+                                                        + "," + userId + "," + password + "," + centroMon + "\n";
 
-                                                    // Salvare i dati su file txt
-                                                    try {
-                                                        FileWriter fileWriter = new FileWriter("dati_utente.txt", true);
-                                                        fileWriter.write(dati);
-                                                        fileWriter.close();
-                                                        JOptionPane.showMessageDialog(null,
-                                                                "Profilo registrato con successo");
-                                                    } catch (IOException ex) {
-                                                        ex.printStackTrace();
-                                                    }
+                                                // Salvare i dati su file txt
+                                                try {
+                                                    FileWriter fileWriter = new FileWriter("dati_utente.txt", true);
+                                                    fileWriter.write(dati);
+                                                    fileWriter.close();
+                                                    JOptionPane.showMessageDialog(null,
+                                                            "Profilo registrato con successo");
+                                                } catch (IOException ex) {
+                                                    ex.printStackTrace();
                                                 }
                                             }
                                         }
@@ -195,27 +189,20 @@ class RegisterFrame extends JFrame implements ActionListener {
                     }
                 }
             }
-
-        // Bottone Indietro
-        if (e.getSource() == indietroButton) {
-
-            dispose();
-            setFrame(new AreaOperatore());
-
         }
 
         // Bottone Home
         if (e.getSource() == homeButton) {
 
             dispose();
-            setFrame(new SchermataIniziale());
+            setFrame(new HomePage());
 
         }
     }
 
-    private void setFrame(AreaOperatore e) {
+    private void setFrame(HomePage e) {
 
-        e.setTitle("Area Operatore");
+        e.setTitle("Home Page");
         e.setVisible(true);
         e.setBounds(10, 10, 800, 600);
         e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -223,36 +210,6 @@ class RegisterFrame extends JFrame implements ActionListener {
         e.setIconImage(image.getImage());
         e.setLocationRelativeTo(null);
         e.setResizable(false);
-    }
-
-    private void setFrame(SchermataIniziale e) {
-
-        e.setTitle("Schermata Iniziale");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
-    }
-
-}
-
-class Register {
-    public static void main(String[] args) {
-
-        // Creazione frame con i suoi parametri
-
-        RegisterFrame frame = new RegisterFrame();
-        frame.setTitle("Register Form");
-        frame.setVisible(true);
-        frame.setBounds(10, 10, 800, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        frame.setIconImage(image.getImage());
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
     }
 
 }

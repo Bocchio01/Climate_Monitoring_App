@@ -4,28 +4,36 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class SchermataIniziale extends JFrame implements ActionListener {
+public class SchermataIniziale extends JFrame {
 
     Container container = getContentPane();
-    ImageIcon icona = new ImageIcon("Immagini/logo_png_home.png");// !Sistemare i bordi dell'immagine
-    JButton homeButton = new JButton();
+    JLabel icona = new JLabel(new ImageIcon("Immagini/logo_png_home.png"));// !Sistemare i bordi dell'immagine
     JLabel nomeLabel = new JLabel("Monitoraggio Climatico");
-    Cursor cursoreHome = homeButton.getCursor();
+    Timer timer = new Timer();
 
     SchermataIniziale() {
 
         setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
-        addActionEvent();
+
+        TimerTask task = new TimerTask() {
+            public void run() {
+                dispose();
+                setFrame(new HomePage()); // chiamata al metodo setFrame() dopo 3 secondi
+            }
+        };
+
+        timer.schedule(task, 2000); // programma l'esecuzione del task dopo 3 secondi
+
     }
 
     public void setLayoutManager() {
@@ -39,39 +47,17 @@ public class SchermataIniziale extends JFrame implements ActionListener {
     public void setLocationAndSize() {
 
         // !Centrare i compnenti
-        homeButton.setBounds(150, 50, 420, 400);
-        homeButton.setIcon(icona);
-        homeButton.setBorder(null);
-        homeButton.setContentAreaFilled(false);
+
+        icona.setBounds(150, 50, 420, 400);
         nomeLabel.setBounds(210, 470, 405, 55);
         nomeLabel.setFont(new Font("Ink Free", Font.CENTER_BASELINE, 35));
-        homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
 
     public void addComponentsToContainer() {
 
-        container.add(homeButton);
+        container.add(icona);
         container.add(nomeLabel);
-
-    }
-
-    public void addActionEvent() {
-
-        // ActionListener per il bottone
-
-        homeButton.addActionListener(this);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        // Bottone homeButton
-        if (e.getSource() == homeButton) {
-            setFrame(new HomePage());
-            dispose();// Chiude il frame dopo l'apertura del secondo
-
-        }
 
     }
 

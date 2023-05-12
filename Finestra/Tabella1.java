@@ -1,6 +1,9 @@
 ﻿package Finestra;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -8,14 +11,26 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Tabella1 extends JFrame {
+public class Tabella1 extends JFrame implements ActionListener {
 
     private JTable table;
     private JScrollPane scrollPane;
     private DefaultTableModel model;
+    private JButton indietroButton, homeButton;
+    private ImageIcon icona;
+    private Cursor cursoreInd, cursoreHome;
 
     public Tabella1() {
+
+        indietroButton = new JButton("Indietro");
+        icona = new ImageIcon("Immagini/icona_home.png");
+        homeButton = new JButton(icona);
+        cursoreInd = indietroButton.getCursor();
+        cursoreHome = homeButton.getCursor();
 
         Object[][] data = {
                 { "Vento", "Velocità del vento (km/h), suddivisa in fasce", 1, "commento" },
@@ -55,10 +70,6 @@ public class Tabella1 extends JFrame {
         table.getColumnModel().getColumn(2).setPreferredWidth(50);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
 
-        // table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        // for (int i = 0; i < columnNames.length; i++) {
-        // table.getColumnModel().getColumn(i).setPreferredWidth(150);
-        // }
         table.getTableHeader().setResizingAllowed(false);
         table.getTableHeader().setReorderingAllowed(false);
 
@@ -71,10 +82,58 @@ public class Tabella1 extends JFrame {
         // Modifica x,y per spostare la tabella
         scrollPane.setBounds(50, 200, 700, 135);
 
+        homeButton.setBounds(635, 500, 30, 30);
+        homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        indietroButton.setBounds(670, 500, 80, 30);
+        indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        homeButton.addActionListener(this);
+        indietroButton.addActionListener(this);
+
         // Aggiunta della tabella allo scroll pane e dello scroll pane al pannello
         container.add(scrollPane);
+        container.add(homeButton);
+        container.add(indietroButton);
         add(container);
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == homeButton) {
+            dispose();
+            setFrame(new HomePage());
+        }
+
+        if (e.getSource() == indietroButton) {
+            dispose();
+            setFrame(new Cerca());
+        }
+    }
+
+    private void setFrame(HomePage e) {
+
+        e.setTitle("HomePage");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
+    }
+
+    private void setFrame(Cerca e) {
+
+        e.setTitle("Cerca");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
     }
 
 }
