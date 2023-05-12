@@ -16,8 +16,6 @@ class HomePage extends JFrame implements ActionListener {
     JLabel logo = new JLabel(new ImageIcon("Immagini/logo3.png"));
     Cursor cursoreOp = areaOpButton.getCursor();
     Cursor cursoreOpsite = ospiteButton.getCursor();
-    ImageIcon icona = new ImageIcon("Immagini/icona_home.png");
-    JButton homeButton = new JButton(icona);
 
     ImageIcon sun_moon = new ImageIcon("Immagini/tema.png");
     JButton theme = new JButton(sun_moon);
@@ -56,8 +54,6 @@ class HomePage extends JFrame implements ActionListener {
 
         ospiteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         areaOpButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         theme.setBounds(20, 20, 30, 30);
         theme.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -71,8 +67,6 @@ class HomePage extends JFrame implements ActionListener {
         container.add(ospiteButton);
         container.add(logo);
         container.add(areaOpButton);
-        container.add(indietroButton);
-        container.add(homeButton);
 
         container.add(theme);
 
@@ -86,8 +80,6 @@ class HomePage extends JFrame implements ActionListener {
 
         ospiteButton.addActionListener(this);
         areaOpButton.addActionListener(this);
-        indietroButton.addActionListener(this);
-        homeButton.addActionListener(this);
 
         theme.addActionListener(this);
 
@@ -109,21 +101,6 @@ class HomePage extends JFrame implements ActionListener {
 
             dispose();
             setFrame(new Cerca());
-        }
-
-        // Bottone Indietro (inutile farlo due volte A.)
-        if (e.getSource() == indietroButton) {
-
-            dispose();
-            setFrame(new SchermataIniziale());
-        }
-
-        // Bottone Home
-        if (e.getSource() == homeButton) {
-
-            dispose();
-            setFrame(new SchermataIniziale());
-
         }
 
         // Bottone tema

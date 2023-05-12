@@ -177,14 +177,6 @@ public class Cerca extends JFrame implements ActionListener {
 
         }
 
-        // Bottone Home
-        if (e.getSource() == homeButton) {
-
-            dispose();
-            setFrame(new SchermataIniziale());
-
-        }
-
         // Bottone tema
         if (e.getSource() == theme) {
             setLayoutManager();
