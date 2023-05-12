@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 public class Cerca extends JFrame implements ActionListener {
 
@@ -87,12 +88,19 @@ public class Cerca extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e){
         if (e.getSource() == cercaButton) {
-            dispose();
-            setFrame(new Tabella1());
 
             // Controllo dati nel file
+            String s;
+            try {
+                s = Find_string.find(cittàField);
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            dispose();
+            setFrame(new Tabella1());
 
         }
 
