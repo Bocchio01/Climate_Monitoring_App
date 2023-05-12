@@ -1,5 +1,4 @@
 package Finestra;
-import java.awt.Label;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import javax.swing.*;

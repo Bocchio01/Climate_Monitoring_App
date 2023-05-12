@@ -96,7 +96,7 @@ public class Cerca extends JFrame implements ActionListener {
             try {
                 s = Find_string.find(cittàField);
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
+                // Auto-generated catch block
                 e1.printStackTrace();
             }
             if(s!=null){
