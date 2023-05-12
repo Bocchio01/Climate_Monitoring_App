@@ -32,7 +32,7 @@ public class Data extends JFrame implements ActionListener {
                 { "Temperatura", "In C°, suddivisa in fasce", 1, "commento" },
                 { "Precipitazioni", "In mm di pioggia, suddivisa in fasce", 1, "commento" },
                 { "Altitudine dei ghiacciai", "In m, suddivisa in piogge", 1, "commento" },
-                { "Massa dei ghiacciai", "in kg, suddivisa in fasce", 1, "commento" }
+                { "Massa dei ghiacciai", "In kg, suddivisa in fasce", 1, "commento" }
         };
 
         String[] columnNames = { "Categoria climatica", "Spiegazione", "Punteggio", "Commento" };
