@@ -6,10 +6,8 @@ import java.awt.*;
 public class SchermataIniziale extends JFrame {
 
     Container container = getContentPane();
-    ImageIcon icona = new ImageIcon("Immagini/logo_png_home.png");// !Sistemare i bordi dell'immagine
-    JButton homeButton = new JButton();
+    JLabel icona = new JLabel(new ImageIcon("Immagini/logo_png_home.png"));// !Sistemare i bordi dell'immagine
     JLabel nomeLabel = new JLabel("Monitoraggio Climatico");
-    Cursor cursoreHome = homeButton.getCursor();
     JProgressBar progressBar = new JProgressBar(0, 100); // Valore minimo 0, valore massimo 100
     Timer timer;
 
@@ -41,20 +39,16 @@ public class SchermataIniziale extends JFrame {
 
     public void setLocationAndSize() {
         // !Centrare i compnenti
-        homeButton.setBounds(150, 50, 420, 400);
-        homeButton.setIcon(icona);
-        homeButton.setBorder(null);
-        homeButton.setContentAreaFilled(false);
+        icona.setBounds(150, 50, 420, 400);
         nomeLabel.setBounds(210, 470, 405, 55);
         nomeLabel.setFont(new Font("Ink Free", Font.CENTER_BASELINE, 35));
-        homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         progressBar.setBounds(280, 520, 200, 20);
         progressBar.setValue(0);
         progressBar.setStringPainted(true); // Mostra il testo sull'indicatore
     }
 
     public void addComponentsToContainer() {
-        container.add(homeButton);
+        container.add(icona);
         container.add(nomeLabel);
         container.add(progressBar);
     }

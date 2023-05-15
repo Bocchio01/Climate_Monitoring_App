@@ -14,7 +14,8 @@ public class Cerca extends JFrame implements ActionListener {
     JLabel ricercaLabel = new JLabel("Tipo ricerca");
     JTextField cittaField = new JTextField(10);
     JLabel cittaLabel = new JLabel("Città");
-    JComboBox<String> ricercaBox = new JComboBox<String>(new String[] { "Metodo di ricerca", "Cerca per nome", "Cerca per coordinate" });
+    JComboBox<String> ricercaBox = new JComboBox<String>(
+            new String[] { "Cerca per nome", "Cerca per coordinate" });
     JLabel latLabel = new JLabel("Latitudine");
     JTextField latField = new JTextField(10);
     JLabel longLabel = new JLabel("Longitudine");
@@ -65,6 +66,10 @@ public class Cerca extends JFrame implements ActionListener {
         latField.setBounds(430, 305, 100, 30);
         longLabel.setBounds(550, 270, 100, 30);
         longField.setBounds(550, 305, 100, 30);
+
+        cittaField.setEnabled(true);
+        latField.setEnabled(false);
+        longField.setEnabled(false);
 
         cercaButton.setBounds(340, 400, 100, 30);
         cercaButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -145,8 +150,10 @@ public class Cerca extends JFrame implements ActionListener {
             String s = null;
 
             try {
-                if(cittaField.getText().isEmpty()) s = Find_coord.closest_coord(latField, longField);
-                else s = Find_string.find(cittaField);
+                if (cittaField.getText().isEmpty())
+                    s = Find_coord.closest_coord(latField, longField);
+                else
+                    s = Find_string.find(cittaField);
             } catch (IOException e1) {
                 // Auto-generated catch block
                 e1.printStackTrace();
