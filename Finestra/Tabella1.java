@@ -7,9 +7,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.undo.StateEditable;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
@@ -23,6 +26,7 @@ public class Tabella1 extends JFrame implements ActionListener {
     private JButton indietroButton, homeButton;
     private ImageIcon icona;
     private Cursor cursoreInd, cursoreHome;
+    private JTextArea datiArea;
 
     public Tabella1() {
 
@@ -31,6 +35,12 @@ public class Tabella1 extends JFrame implements ActionListener {
         homeButton = new JButton(icona);
         cursoreInd = indietroButton.getCursor();
         cursoreHome = homeButton.getCursor();
+
+        // Dati dell'area
+        String testo = "Dati da inserire";
+        datiArea = new JTextArea(testo);
+        datiArea.setBackground(new Color(153, 255, 255));
+        datiArea.setEditable(false);
 
         Object[][] data = {
                 { "Vento", "Velocità del vento (km/h), suddivisa in fasce", 1, "commento" },
@@ -82,7 +92,7 @@ public class Tabella1 extends JFrame implements ActionListener {
             container.setBackground(new Color(49, 51, 56));
         }
 
-        //container.setBackground(new Color(153, 255, 255));
+        // container.setBackground(new Color(153, 255, 255));
         container.setLayout(null);
         scrollPane = new JScrollPane(table);
 
@@ -95,6 +105,8 @@ public class Tabella1 extends JFrame implements ActionListener {
         indietroButton.setBounds(670, 500, 80, 30);
         indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
+        datiArea.setBounds(350, 100, 400, 50);
+
         homeButton.addActionListener(this);
         indietroButton.addActionListener(this);
 
@@ -102,6 +114,7 @@ public class Tabella1 extends JFrame implements ActionListener {
         container.add(scrollPane);
         container.add(homeButton);
         container.add(indietroButton);
+        container.add(datiArea);
         add(container);
 
     }
