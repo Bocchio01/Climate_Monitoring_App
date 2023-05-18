@@ -3,7 +3,6 @@
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -11,7 +10,6 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.undo.StateEditable;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -43,7 +41,7 @@ public class Tabella1 extends JFrame implements ActionListener {
         datiArea.setEditable(false);
 
         Object[][] data = {
-                { "Vento", "Velocità del vento (km/h), suddivisa in fasce", 1, "commento" },
+                { "Vento", "Velocità del vento (km/h), suddivisa in fasce", 1, "Commento" },
                 { "Umidità", "% di Umidità, suddivisa in fasce", 1, "commento" },
                 { "Pressione", "In hPa, suddivisa in fasce", 1, "commento" },
                 { "Temperatura", "In C°, suddivisa in fasce", 1, "commento" },
@@ -80,6 +78,8 @@ public class Tabella1 extends JFrame implements ActionListener {
         table.getColumnModel().getColumn(2).setPreferredWidth(50);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
 
+        table.setRowHeight(50);
+
         table.getTableHeader().setResizingAllowed(false);
         table.getTableHeader().setReorderingAllowed(false);
 
@@ -97,7 +97,7 @@ public class Tabella1 extends JFrame implements ActionListener {
         scrollPane = new JScrollPane(table);
 
         // Modifica x,y per spostare la tabella
-        scrollPane.setBounds(50, 200, 700, 135);
+        scrollPane.setBounds(50, 180, 700, 250);
 
         homeButton.setBounds(635, 500, 30, 30);
         homeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
