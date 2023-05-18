@@ -37,7 +37,7 @@ public class Cerca extends JFrame implements ActionListener {
 
         // Set info Container
 
-        if (!Theme.tema()) {
+        if (Theme.theme()) {
             container.setBackground(new Color(153, 255, 255));
             cittaLabel.setForeground(Color.BLACK);
             ricercaLabel.setForeground(Color.BLACK);

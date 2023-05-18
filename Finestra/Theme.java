@@ -2,10 +2,15 @@ package Finestra;
 
 public class Theme {
 
-    public static boolean dark_theme=false;
+    public static boolean b=true;
 
     public static boolean tema(){
-        dark_theme = !dark_theme;
-        return dark_theme;
+        b=!b;
+        return b;
+    }
+    public static boolean theme(){
+        tema();
+        boolean t = tema();
+        return t;
     }
 }

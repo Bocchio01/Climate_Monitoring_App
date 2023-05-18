@@ -25,7 +25,7 @@ public class Find_string {
         //String ricerca = console.readLine("Che citta' vuoi cercare? %n");
         //System.out.format("ricerca: %s%n", ricerca);
 
-        String s, ricerca;
+        String s, ricerca, nomeFileCSV="../Ricerca.csv";
 
         ricerca = città.getText();
         ricerca = ricerca.toLowerCase();
@@ -54,6 +54,7 @@ public class Find_string {
             //System.out.println(riga[0]);
             for (int n = 0; n < 7; n++) {
                 if (riga[n].equals(ricerca)) {
+                    Save_string.saveStringToCSV("Paese cercato: "+riga[2]+"\tStato: "+riga[4], nomeFileCSV);
                     System.out.println(s);
                     f.close();
                     return s;

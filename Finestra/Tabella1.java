@@ -13,8 +13,13 @@ import javax.swing.table.TableCellRenderer;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Toolkit;
+import java.awt.Dimension;
+
+import java.io.*;
 
 public class Tabella1 extends JFrame implements ActionListener {
 
@@ -34,11 +39,21 @@ public class Tabella1 extends JFrame implements ActionListener {
         cursoreInd = indietroButton.getCursor();
         cursoreHome = homeButton.getCursor();
 
-        // Dati dell'area
-        String testo = "Dati da inserire";
-        datiArea = new JTextArea(testo);
-        datiArea.setBackground(new Color(153, 255, 255));
-        datiArea.setEditable(false);
+        try {
+            FileReader f;
+            f=new FileReader("../Ricerca.csv");
+    
+            BufferedReader b;
+            b=new BufferedReader(f);
+
+            // Dati dell'area
+            String testo = b.readLine();
+            datiArea = new JTextArea(testo);
+            datiArea.setEditable(false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Object[][] data = {
                 { "Vento", "Velocità del vento (km/h), suddivisa in fasce", 1, "Commento" },
@@ -86,10 +101,14 @@ public class Tabella1 extends JFrame implements ActionListener {
         // Creazione del pannello contenitore e dello scroll pane per la tabella
         JPanel container = new JPanel();
 
-        if (Theme.tema()) {
+        if (Theme.theme()) {
             container.setBackground(new Color(153, 255, 255));
+            datiArea.setBackground(new Color(153, 255, 255));
+            datiArea.setForeground(Color.BLACK);
         } else {
             container.setBackground(new Color(49, 51, 56));
+            datiArea.setBackground(new Color(49, 51, 56));
+            datiArea.setForeground(Color.WHITE);
         }
 
         // container.setBackground(new Color(153, 255, 255));
@@ -105,7 +124,7 @@ public class Tabella1 extends JFrame implements ActionListener {
         indietroButton.setBounds(670, 500, 80, 30);
         indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        datiArea.setBounds(350, 100, 400, 50);
+        datiArea.setBounds(250, 100, 400, 50);
 
         homeButton.addActionListener(this);
         indietroButton.addActionListener(this);

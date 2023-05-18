@@ -13,7 +13,7 @@ public class Find_coord {
         BufferedReader b;
         b = new BufferedReader(f);
 
-        String s, string_latitude = la.getText(), string_longitude = lo.getText(), closest = "";
+        String s, string_latitude = la.getText(), string_longitude = lo.getText(), closest = "", nomeFileCSV="../Ricerca.csv";
         String[] line_elements = new String[7];
         int j = 0, m = 0, i = 0, l = 0;
         double double_latitude = Double.parseDouble(string_latitude), double_longitude = Double.parseDouble(string_longitude);
@@ -47,6 +47,15 @@ public class Find_coord {
                 break;
         }
         System.out.println(closest);
+        l=closest.length();
+        for (j = 0; j < l; j++) {
+            if(closest.charAt(j)==';'){
+                line_elements[i] = closest.substring(m,j);
+                m=j+1;
+                i++;
+            }
+        }
+        Save_string.saveStringToCSV("Paese cercato: "+line_elements[2]+"\tStato: "+line_elements[4], nomeFileCSV);
         f.close();
         return closest;
     }

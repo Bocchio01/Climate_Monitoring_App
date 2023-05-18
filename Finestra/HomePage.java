@@ -34,8 +34,7 @@ class HomePage extends JFrame implements ActionListener {
     public void setLayoutManager() {
 
         // Set info Container
-
-        if (Theme.tema()) {
+        if (Theme.theme()) {
             container.setBackground(new Color(153, 255, 255));
         } else {
             container.setBackground(new Color(49, 51, 56));
@@ -105,6 +104,7 @@ class HomePage extends JFrame implements ActionListener {
 
         // Bottone tema
         if (e.getSource() == theme) {
+            Theme.tema();
             setLayoutManager();
         }
 
