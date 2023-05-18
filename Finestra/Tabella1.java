@@ -75,7 +75,14 @@ public class Tabella1 extends JFrame implements ActionListener {
 
         // Creazione del pannello contenitore e dello scroll pane per la tabella
         JPanel container = new JPanel();
-        container.setBackground(new Color(153, 255, 255));
+
+        if (Theme.tema()) {
+            container.setBackground(new Color(153, 255, 255));
+        } else {
+            container.setBackground(new Color(49, 51, 56));
+        }
+
+        //container.setBackground(new Color(153, 255, 255));
         container.setLayout(null);
         scrollPane = new JScrollPane(table);
 
