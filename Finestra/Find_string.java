@@ -54,7 +54,7 @@ public class Find_string {
             //System.out.println(riga[0]);
             for (int n = 0; n < 7; n++) {
                 if (riga[n].equals(ricerca)) {
-                    Save_string.saveStringToCSV("Paese cercato: "+riga[2]+"\tStato: "+riga[4], nomeFileCSV);
+                    Save_string.saveStringToCSV("Paese cercato: "+riga[2]+"\tStato: "+riga[4]+"\tCoordinate: "+riga[5]+", "+riga[6], nomeFileCSV);
                     System.out.println(s);
                     f.close();
                     return s;

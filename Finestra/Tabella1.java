@@ -39,6 +39,7 @@ public class Tabella1 extends JFrame implements ActionListener {
         cursoreInd = indietroButton.getCursor();
         cursoreHome = homeButton.getCursor();
 
+        String testo="";
         try {
             FileReader f;
             f=new FileReader("../Ricerca.csv");
@@ -47,13 +48,14 @@ public class Tabella1 extends JFrame implements ActionListener {
             b=new BufferedReader(f);
 
             // Dati dell'area
-            String testo = b.readLine();
+            testo = b.readLine();
             datiArea = new JTextArea(testo);
             datiArea.setEditable(false);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        int offset=testo.length()*7/2;
 
         Object[][] data = {
                 { "Vento", "Velocità del vento (km/h), suddivisa in fasce", 1, "Commento" },
@@ -124,7 +126,7 @@ public class Tabella1 extends JFrame implements ActionListener {
         indietroButton.setBounds(670, 500, 80, 30);
         indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        datiArea.setBounds(250, 100, 400, 50);
+        datiArea.setBounds(400-offset, 100, 400, 50);
 
         homeButton.addActionListener(this);
         indietroButton.addActionListener(this);

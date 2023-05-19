@@ -55,7 +55,7 @@ public class Find_coord {
                 i++;
             }
         }
-        Save_string.saveStringToCSV("Paese cercato: "+line_elements[2]+"\tStato: "+line_elements[4], nomeFileCSV);
+        Save_string.saveStringToCSV("Paese cercato: "+line_elements[2]+"\tStato: "+line_elements[4]+"\tCoordinate: "+line_elements[5]+", "+line_elements[6], nomeFileCSV);
         f.close();
         return closest;
     }
