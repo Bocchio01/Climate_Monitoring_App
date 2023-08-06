@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Registrazione {
+public class RegistrazioneFunc {
 
     public static void registrazione(JTextField nomeCognomeField, JTextField codiceFiscField, JTextField eMailField,
             JTextField userIdField, JPasswordField passwordField, JTextField centroMonField) {

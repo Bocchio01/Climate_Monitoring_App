@@ -151,9 +151,9 @@ public class Cerca extends JFrame implements ActionListener {
 
             try {
                 if (cittaField.getText().isEmpty())
-                    s = Find_coord.closest_coord(latField, longField);
+                    s = CercaFunc.coordFind(latField, longField);
                 else
-                    s = Find_string.find(cittaField);
+                    s = CercaFunc.nameFind(cittaField);
             } catch (IOException e1) {
                 // Auto-generated catch block
                 e1.printStackTrace();

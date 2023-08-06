@@ -122,7 +122,7 @@ class RegisterFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Ottenere i valori inseriti dall'utente
         if (e.getSource() == registrati) {
-            Registrazione.registrazione(nomeCognomeField, codiceFiscField, eMailField, userIdField, passwordField,
+            RegistrazioneFunc.registrazione(nomeCognomeField, codiceFiscField, eMailField, userIdField, passwordField,
                     centroMonField);
         }
 
