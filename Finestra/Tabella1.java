@@ -39,13 +39,13 @@ public class Tabella1 extends JFrame implements ActionListener {
         cursoreInd = indietroButton.getCursor();
         cursoreHome = homeButton.getCursor();
 
-        String testo="";
+        String testo = "";
         try {
             FileReader f;
-            f=new FileReader("../Ricerca.csv");
-    
+            f = new FileReader("../Ricerca.csv");
+
             BufferedReader b;
-            b=new BufferedReader(f);
+            b = new BufferedReader(f);
 
             // Dati dell'area
             testo = b.readLine();
@@ -55,7 +55,7 @@ public class Tabella1 extends JFrame implements ActionListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int offset=testo.length()*7/2;
+        int offset = testo.length() * 7 / 2;
 
         Object[][] data = {
                 { "Vento", "Velocità del vento (km/h), suddivisa in fasce", 1, "Commento" },
@@ -126,7 +126,7 @@ public class Tabella1 extends JFrame implements ActionListener {
         indietroButton.setBounds(670, 500, 80, 30);
         indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        datiArea.setBounds(400-offset, 100, 400, 50);
+        datiArea.setBounds(400 - offset, 100, 400, 50);
 
         homeButton.addActionListener(this);
         indietroButton.addActionListener(this);
@@ -144,37 +144,13 @@ public class Tabella1 extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == homeButton) {
             dispose();
-            setFrame(new HomePage());
+            SetFrameFunc.setFrame(new HomePage());
         }
 
         if (e.getSource() == indietroButton) {
             dispose();
-            setFrame(new Cerca());
+            SetFrameFunc.setFrame(new Cerca());
         }
-    }
-
-    private void setFrame(HomePage e) {
-
-        e.setTitle("HomePage");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
-    }
-
-    private void setFrame(Cerca e) {
-
-        e.setTitle("Cerca");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
     }
 
 }

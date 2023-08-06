@@ -24,7 +24,7 @@ public class SchermataIniziale extends JFrame {
             } else {
                 timer.stop();
                 dispose();
-                setFrame(new HomePage());
+                SetFrameFunc.setFrame(new HomePage());
             }
         });
 
@@ -53,15 +53,4 @@ public class SchermataIniziale extends JFrame {
         container.add(progressBar);
     }
 
-    private void setFrame(HomePage e) {
-
-        e.setTitle("Home Page");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
-    }
 }

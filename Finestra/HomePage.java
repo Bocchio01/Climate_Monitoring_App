@@ -91,7 +91,7 @@ class HomePage extends JFrame implements ActionListener {
         if (e.getSource() == areaOpButton) {
             // Apre la finestra per l'accesso
             this.setVisible(false);
-            setFrame(new AreaOperatore());
+            SetFrameFunc.setFrame(new AreaOperatore());
 
         }
 
@@ -99,7 +99,7 @@ class HomePage extends JFrame implements ActionListener {
         if (e.getSource() == ospiteButton) {
 
             dispose();
-            setFrame(new Cerca());
+            SetFrameFunc.setFrame(new Cerca());
         }
 
         // Bottone tema
@@ -108,30 +108,6 @@ class HomePage extends JFrame implements ActionListener {
             setLayoutManager();
         }
 
-    }
-
-    private void setFrame(AreaOperatore e) {
-
-        e.setTitle("Area Operatore");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
-    }
-
-    private void setFrame(Cerca e) {
-
-        e.setTitle("Cerca");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
     }
 
 }

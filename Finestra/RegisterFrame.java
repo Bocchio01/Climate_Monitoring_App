@@ -130,21 +130,9 @@ class RegisterFrame extends JFrame implements ActionListener {
         if (e.getSource() == homeButton) {
 
             dispose();
-            setFrame(new HomePage());
+            SetFrameFunc.setFrame(new HomePage());
 
         }
-    }
-
-    private void setFrame(HomePage e) {
-
-        e.setTitle("Home Page");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
     }
 
 }

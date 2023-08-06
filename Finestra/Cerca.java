@@ -160,7 +160,7 @@ public class Cerca extends JFrame implements ActionListener {
             }
             if (s != null) {
                 dispose();
-                setFrame(new Tabella1());
+                SetFrameFunc.setFrame(new Tabella1());
             }
 
         }
@@ -169,33 +169,9 @@ public class Cerca extends JFrame implements ActionListener {
         if (e.getSource() == indietroButton) {
 
             dispose();
-            setFrame(new HomePage());
+            SetFrameFunc.setFrame(new HomePage());
 
         }
-    }
-
-    private void setFrame(Tabella1 e) {
-
-        e.setTitle("Tabella");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
-    }
-
-    private void setFrame(HomePage e) {
-
-        e.setTitle("HomePage");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
     }
 
 }

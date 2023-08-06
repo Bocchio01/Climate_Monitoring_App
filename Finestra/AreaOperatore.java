@@ -90,7 +90,7 @@ public class AreaOperatore extends JFrame implements ActionListener {
         if (e.getSource() == registratiButton) {
             // Apre la finestra per l'accesso
             dispose();
-            setFrame(new RegisterFrame());
+            SetFrameFunc.setFrame(new RegisterFrame());
 
         }
 
@@ -100,7 +100,7 @@ public class AreaOperatore extends JFrame implements ActionListener {
         {
             // Apre la finestra per la ricerca della zona
             dispose();
-            setFrame(new Login());
+            SetFrameFunc.setFrame(new Login());
 
         }
 
@@ -108,46 +108,10 @@ public class AreaOperatore extends JFrame implements ActionListener {
         if (e.getSource() == indietroButton) {
 
             dispose();
-            setFrame(new HomePage());
+            SetFrameFunc.setFrame(new HomePage());
 
         }
 
-    }
-
-    private void setFrame(RegisterFrame e) {
-
-        e.setTitle("Registrazione");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
-    }
-
-    private void setFrame(Login e) {
-
-        e.setTitle("Login");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
-    }
-
-    private void setFrame(HomePage e) {
-
-        e.setTitle("HomePage");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
     }
 
 }
