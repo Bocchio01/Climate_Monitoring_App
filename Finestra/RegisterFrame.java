@@ -124,6 +124,8 @@ class RegisterFrame extends JFrame implements ActionListener {
         if (e.getSource() == registrati) {
             RegistrazioneFunc.registrazione(nomeCognomeField, codiceFiscField, eMailField, userIdField, passwordField,
                     centroMonField);
+            dispose();
+            SetFrameFunc.setFrame(new AreaOperatore());
         }
 
         // Bottone Home
