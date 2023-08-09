@@ -47,7 +47,7 @@ public class LoginFunc {
             l = s.length();
             for (j = 0; j < l; j++) {
                 if (s.charAt(j) == ',') {
-                    riga[i] = s.substring(m, j).toLowerCase();
+                    riga[i] = s.substring(m, j);
                     m = j + 1;
                     i++;
                 }
