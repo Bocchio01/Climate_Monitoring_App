@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class Login extends JFrame implements ActionListener {
 
@@ -67,11 +68,14 @@ public class Login extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
+            try {
+                LoginFunc.login(userIDField, passwordField);
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
 
-            // Controllo dati nel file
-            JOptionPane.showMessageDialog(this, "Login avvenuto con successo!");
-            dispose();
-            SetFrameFunc.setFrame(new Data());
+            // JOptionPane.showMessageDialog(this, "Login avvenuto con successo!");
 
         }
 
