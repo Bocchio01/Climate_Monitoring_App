@@ -79,7 +79,7 @@ public class SetFrameFunc {
 
     static void setFrame(Data e) {
 
-        e.setTitle("Cerca");
+        e.setTitle("Data");
         e.setVisible(true);
         e.setBounds(10, 10, 800, 600);
         e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,4 +89,15 @@ public class SetFrameFunc {
         e.setResizable(false);
     }
 
+    static void setFrame(Comment e) {
+
+        e.setTitle("Cerca");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
+    }
 }

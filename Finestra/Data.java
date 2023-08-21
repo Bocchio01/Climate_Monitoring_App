@@ -1,15 +1,14 @@
 ﻿package Finestra;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -19,26 +18,48 @@ import java.io.IOException;
 public class Data extends JFrame implements ActionListener {
 
     private JTable table;
-    private JScrollPane scrollPane;
+    private JScrollPane scrollPaneTable;
     private DefaultTableModel model;
     private JButton salvaButton;
+    private JTextArea commentoVento;
+    private JScrollPane barVento;
+    private JTextArea commentoUmidita;
+    private JScrollPane barUmidita;
+    private JTextArea commentoPres;
+    private JScrollPane barPres;
+    private JTextArea commentoTemp;
+    private JScrollPane barTemp;
+    private JTextArea commentoPrec;
+    private JScrollPane barPrec;
+    private JTextArea commentoAlt;
+    private JScrollPane barAlt;
+    private JTextArea commentoGhiac;
+    private JScrollPane barGhiac;
+    private JTextArea commento;
+    private JTextArea[] commenti;
 
     public Data() {
 
         Object[][] data = {
-                { "Vento", "Velocità del vento (km/h), suddivisa in fasce", 1, "commento" },
-                { "Umidita'", "% di Umidità, suddivisa in fasce", 1, "commento" },
-                { "Pressione", "In hPa, suddivisa in fasce", 1, "commento" },
-                { "Temperatura", "In C°, suddivisa in fasce", 1, "commento" },
-                { "Precipitazioni", "In mm di pioggia, suddivisa in fasce", 1, "commento" },
-                { "Altitudine dei ghiacciai", "In m, suddivisa in piogge", 1, "commento" },
-                { "Massa dei ghiacciai", "In kg, suddivisa in fasce", 1, "commento" }
+                { "Vento", "Velocità del vento (km/h)", 1 },
+                { "Umidita'", "% di Umidità", 1 },
+                { "Pressione", "In hPa", 1 },
+                { "Temperatura", "In C°", 1 },
+                { "Precipitazioni", "In mm di pioggia", 1 },
+                { "Altitudine dei ghiacciai", "In m", 1 },
+                { "Massa dei ghiacciai", "In kg", 1 }
         };
 
-        String[] columnNames = { "Categoria climatica", "Spiegazione", "Punteggio", "Commento" };
+        String[] columnNames = { "Categoria climatica", "Spiegazione", "Punteggio" };
 
-        // Creazione del modello della tabella con 7 righe e 4 colonne
-        model = new DefaultTableModel(data, columnNames);
+        // Creazione del modello della tabella con 7 righe e 3 colonne
+        model = new DefaultTableModel(data, columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Rendi modificabili solo l'ultima colonna (indice 2)
+                return column == 2;
+            }
+        };
 
         // Creazione della tabella con il modello creato
         table = new JTable(model);
@@ -51,18 +72,7 @@ public class Data extends JFrame implements ActionListener {
 
         // Impostazione delle dimensioni delle colonne per impedire all'utente di
         // modificarle
-        table.getColumnModel().getColumn(0).setPreferredWidth(100);
-        table.getColumnModel().getColumn(1).setPreferredWidth(250);
-        table.getColumnModel().getColumn(2).setPreferredWidth(50);
-        table.getColumnModel().getColumn(3).setPreferredWidth(100);
 
-        // Impostazione della larghezza massima delle celle della colonna a 256
-        table.getColumnModel().getColumn(3).setMaxWidth(256);
-
-        // table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        // for (int i = 0; i < columnNames.length; i++) {
-        // table.getColumnModel().getColumn(i).setPreferredWidth(150);
-        // }
         table.getTableHeader().setResizingAllowed(false);
         table.getTableHeader().setReorderingAllowed(false);
 
@@ -70,26 +80,121 @@ public class Data extends JFrame implements ActionListener {
         JPanel container = new JPanel();
         container.setBackground(new Color(153, 255, 255));
         container.setLayout(null);
-        scrollPane = new JScrollPane(table);
+        scrollPaneTable = new JScrollPane(table);
 
         // Modifica x,y per spostare gli oggetti
-        scrollPane.setBounds(50, 200, 700, 135);
-        salvaButton.setBounds(340, 370, 100, 30);
+        scrollPaneTable.setBounds(45, 120, 600, 303);
+
+        salvaButton.setBounds(340, 440, 100, 30);
+
+        int columnWidth = 200; // Larghezza desiderata delle colonne (esempio: 100 pixel)
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setMinWidth(columnWidth);
+            table.getColumnModel().getColumn(i).setMaxWidth(columnWidth);
+        }
+
+        // Creazione del renderer delle celle personalizzato per impostare la grandezza
+        // del carattere
+        TableCellRenderer customRenderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                    boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                // Impostazione della grandezza del carattere per le celle
+                c.setFont(new Font("Arial", Font.PLAIN, 14)); // Esempio: Arial, stile normale, dimensione 14
+                ((DefaultTableCellRenderer) c).setHorizontalAlignment(SwingConstants.CENTER);
+
+                table.setRowHeight(row, 40);
+
+                return c;
+            }
+        };
+
+        // Applica il renderer personalizzato a tutte le colonne della tabella
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(customRenderer);
+        }
+
+        commentoAlt = new JTextArea();
+        commentoGhiac = new JTextArea();
+        commentoPrec = new JTextArea();
+        commentoPres = new JTextArea();
+        commentoTemp = new JTextArea();
+        commentoUmidita = new JTextArea();
+        commentoVento = new JTextArea();
+        commento = new JTextArea("         Commenti");
+        commento.setEditable(false);
+        commento.setBackground(new Color(239, 238, 238));
+        commenti = new JTextArea[7];
+
+        commentoAlt.setLineWrap(true);
+        commentoGhiac.setLineWrap(true);
+        commentoPrec.setLineWrap(true);
+        commentoPres.setLineWrap(true);
+        commentoTemp.setLineWrap(true);
+        commentoUmidita.setLineWrap(true);
+        commentoVento.setLineWrap(true);
+
+        commentoAlt.setWrapStyleWord(true);
+        commentoGhiac.setWrapStyleWord(true);
+        commentoPrec.setWrapStyleWord(true);
+        commentoPres.setWrapStyleWord(true);
+        commentoTemp.setWrapStyleWord(true);
+        commentoUmidita.setWrapStyleWord(true);
+        commentoVento.setWrapStyleWord(true);
+
+        barAlt = new JScrollPane(commentoAlt);
+        barGhiac = new JScrollPane(commentoGhiac);
+        barPrec = new JScrollPane(commentoPrec);
+        barPres = new JScrollPane(commentoPres);
+        barTemp = new JScrollPane(commentoTemp);
+        barUmidita = new JScrollPane(commentoUmidita);
+        barVento = new JScrollPane(commentoVento);
+
+        barAlt.setBounds(644, 140, 120, 41);
+        barGhiac.setBounds(644, 180, 120, 41);
+        barPrec.setBounds(644, 220, 120, 41);
+        barPres.setBounds(644, 260, 120, 41);
+        barTemp.setBounds(644, 300, 120, 41);
+        barUmidita.setBounds(644, 340, 120, 41);
+        barVento.setBounds(644, 380, 120, 42);
+        commento.setBounds(644, 120, 120, 20);
+
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 0);
+        commento.setBorder(border);
+
+        commenti[0] = commentoVento;
+        commenti[1] = commentoUmidita;
+        commenti[2] = commentoPres;
+        commenti[3] = commentoTemp;
+        commenti[4] = commentoPrec;
+        commenti[5] = commentoAlt;
+        commenti[6] = commentoGhiac;
 
         // Azione bottone Salva
         salvaButton.addActionListener(this);
 
         // Aggiunta della tabella allo scroll pane e dello scroll pane al pannello
-        container.add(scrollPane);
+        container.add(scrollPaneTable);
+        container.add(barAlt);
+        container.add(barGhiac);
+        container.add(barPrec);
+        container.add(barPres);
+        container.add(barTemp);
+        container.add(barUmidita);
+        container.add(barVento);
         container.add(salvaButton);
+        container.add(commento);
+
         add(container);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        salvaFile();
-
+        if (e.getSource() == salvaButton) {
+            salvaFile();
+        }
     }
 
     private void salvaFile() {
@@ -97,7 +202,7 @@ public class Data extends JFrame implements ActionListener {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("tabella.txt", true));
             for (int i = 0; i < model.getRowCount(); i++) {
-                String row = model.getValueAt(i, 0) + "," + model.getValueAt(i, 2) + "," + model.getValueAt(i, 3);
+                String row = model.getValueAt(i, 0) + "," + model.getValueAt(i, 2) + "," + commenti[i].getText().trim();
                 writer.write(row);
                 writer.newLine();
             }
