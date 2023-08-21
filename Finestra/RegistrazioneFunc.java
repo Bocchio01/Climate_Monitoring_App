@@ -45,7 +45,7 @@ public class RegistrazioneFunc {
 
             // Salvare i dati su file txt
             try {
-                FileWriter fileWriter = new FileWriter("OperatoriRegistrati.dati.txt", true);
+                FileWriter fileWriter = new FileWriter("OperatoriRegistrati.dati.csv", true);
                 fileWriter.write(dati);
                 fileWriter.close();
                 JOptionPane.showMessageDialog(null, "Profilo registrato con successo");

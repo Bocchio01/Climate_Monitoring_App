@@ -1,4 +1,5 @@
 package Finestra;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import javax.swing.JTextField;
@@ -8,37 +9,41 @@ public class Find_coord {
             throws IOException {
 
         FileReader f;
-        f = new FileReader("./geonames-and-coordinates.csv", StandardCharsets.UTF_8);
+        f = new FileReader("./CoordinateMonitoraggio.dati.csv", StandardCharsets.UTF_8);
 
         BufferedReader b;
         b = new BufferedReader(f);
 
-        String s, string_latitude = la.getText(), string_longitude = lo.getText(), closest = "", nomeFileCSV="../Ricerca.csv";
+        String s, string_latitude = la.getText(), string_longitude = lo.getText(), closest = "",
+                nomeFileCSV = "../Ricerca.csv";
         String[] line_elements = new String[7];
         int j = 0, m = 0, i = 0, l = 0;
-        double double_latitude = Double.parseDouble(string_latitude), double_longitude = Double.parseDouble(string_longitude);
+        double double_latitude = Double.parseDouble(string_latitude),
+                double_longitude = Double.parseDouble(string_longitude);
         double data_latitude, data_longitude, distance = 400, temp_distance;
 
         s = b.readLine();
 
         while (true) {
-            s=b.readLine();
-            if(s==null) break;
-            l=s.length();
+            s = b.readLine();
+            if (s == null)
+                break;
+            l = s.length();
             for (j = 0; j < l; j++) {
-                if(s.charAt(j)==';'){
-                    line_elements[i] = s.substring(m,j).toLowerCase();
-                    m=j+1;
+                if (s.charAt(j) == ';') {
+                    line_elements[i] = s.substring(m, j).toLowerCase();
+                    m = j + 1;
                     i++;
                 }
             }
-            i=0;
-            m=0;
-            line_elements[5]=line_elements[5].replace(',', '.');
-            line_elements[6]=line_elements[6].replace(',', '.');
+            i = 0;
+            m = 0;
+            line_elements[5] = line_elements[5].replace(',', '.');
+            line_elements[6] = line_elements[6].replace(',', '.');
             data_latitude = Double.parseDouble(line_elements[5]);
             data_longitude = Double.parseDouble(line_elements[6]);
-            temp_distance = Math.sqrt(Math.pow(data_latitude - double_latitude, 2) + Math.pow(data_longitude - double_longitude, 2));
+            temp_distance = Math.sqrt(
+                    Math.pow(data_latitude - double_latitude, 2) + Math.pow(data_longitude - double_longitude, 2));
             if (distance > temp_distance) {
                 distance = temp_distance;
                 closest = s;
@@ -47,15 +52,16 @@ public class Find_coord {
                 break;
         }
         System.out.println(closest);
-        l=closest.length();
+        l = closest.length();
         for (j = 0; j < l; j++) {
-            if(closest.charAt(j)==';'){
-                line_elements[i] = closest.substring(m,j);
-                m=j+1;
+            if (closest.charAt(j) == ';') {
+                line_elements[i] = closest.substring(m, j);
+                m = j + 1;
                 i++;
             }
         }
-        Save_string.saveStringToCSV("Paese cercato: "+line_elements[2]+"\tStato: "+line_elements[4]+"\tCoordinate: "+line_elements[5]+", "+line_elements[6], nomeFileCSV);
+        Save_string.saveStringToCSV("Paese cercato: " + line_elements[2] + "\tStato: " + line_elements[4]
+                + "\tCoordinate: " + line_elements[5] + ", " + line_elements[6], nomeFileCSV);
         f.close();
         return closest;
     }
