@@ -100,4 +100,16 @@ public class SetFrameFunc {
         e.setLocationRelativeTo(null);
         e.setResizable(false);
     }
+
+    static void setFrame(CreaCentro e) {
+        e.setTitle("CreaCentro");
+        e.setVisible(true);
+        e.setBounds(10, 10, 800, 600);
+        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
+        e.setIconImage(image.getImage());
+        e.setLocationRelativeTo(null);
+        e.setResizable(false);
+    }
+
 }

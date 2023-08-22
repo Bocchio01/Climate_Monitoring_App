@@ -69,10 +69,11 @@ public class Login extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
             try {
-                boolean flag = LoginFunc.login(userIDField, passwordField);
-                if (flag) {
+                int[] flag = LoginFunc.login(userIDField, passwordField);
+
+                if (flag[0] == 1) {
                     dispose();
-                    SetFrameFunc.setFrame(new Data());
+                    SetFrameFunc.setFrame(new CreaCentro(flag[1]));
                 } else
                     JOptionPane.showMessageDialog(null, "Password o ID errati");
 
