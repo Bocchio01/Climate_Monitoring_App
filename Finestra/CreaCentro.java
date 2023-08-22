@@ -3,6 +3,8 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,13 +25,13 @@ public class CreaCentro extends JFrame implements ActionListener {
     private JComboBox<String> ricercaBox;
     private JButton creaButton = new JButton("Crea");
     private JButton inserisciButton = new JButton("Inserisci dati");
-    private JTextField nomeArea = new JTextField("Area d'interesse");
-    private JTextField nomeCentro = new JTextField("Centro di monitoraggio");
-    private JTextField piaField = new JTextField("Via/Piazza");
-    private JTextField numerocivField = new JTextField("Numero civico");
-    private JTextField capField = new JTextField("CAP");
-    private JTextField comuneField = new JTextField("Comune");
-    private JTextField provField = new JTextField("Provincia");
+    private JTextField nomeArea = new JTextField();
+    private JTextField nomeCentro = new JTextField();
+    private JTextField piaField = new JTextField();
+    private JTextField numerocivField = new JTextField();
+    private JTextField capField = new JTextField();
+    private JTextField comuneField = new JTextField();
+    private JTextField provField = new JTextField();
     private int i;
 
     CreaCentro(int i) throws IOException {
@@ -66,7 +68,7 @@ public class CreaCentro extends JFrame implements ActionListener {
         System.out.println(s);
         if (!(s.equals("null"))) {
             nomeCentro.setText(s);
-            nomeCentro.setEditable(false);
+            nomeCentro.setEnabled(false);
 
             try (BufferedReader br = new BufferedReader(new FileReader("./CentroMonitoraggio.dati.txt"))) {
                 String linea;
@@ -85,6 +87,52 @@ public class CreaCentro extends JFrame implements ActionListener {
         }
 
         ricercaBox.setBounds(380, 100, 150, 30);
+
+        JTextField[] textFields = new JTextField[7];
+        textFields[0] = nomeCentro;
+        textFields[1] = piaField;
+        textFields[2] = numerocivField;
+        textFields[3] = capField;
+        textFields[4] = comuneField;
+        textFields[5] = provField;
+        textFields[6] = nomeArea;
+
+        String[] placeHolderTexts = {
+                "Centro di Monitoraggio",
+                "Via/Piazza",
+                "Numero Civico",
+                "CAP",
+                "Comune",
+                "Provincia",
+                "Area d'interesse"
+        };
+
+        for (int k = 0; k < textFields.length; k++) {
+
+            textFields[k].setForeground(Color.GRAY);
+            textFields[k].setText(placeHolderTexts[k]);
+
+            int index = k;
+            textFields[k].addFocusListener(new FocusListener() {
+
+                @Override
+                public void focusGained(FocusEvent e) {
+                    if (textFields[index].getText().equals(placeHolderTexts[index])) {
+                        textFields[index].setText("");
+                        textFields[index].setForeground(Color.BLACK);
+                    }
+                }
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (textFields[index].getText().isEmpty()) {
+                        textFields[index].setText(placeHolderTexts[index]);
+                        textFields[index].setForeground(Color.GRAY);
+                    }
+                }
+            });
+
+        }
 
     }
 
