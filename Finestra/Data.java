@@ -5,6 +5,7 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.text.AbstractDocument;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -143,23 +144,6 @@ public class Data extends JFrame implements ActionListener {
         commentoUmidita.setWrapStyleWord(true);
         commentoVento.setWrapStyleWord(true);
 
-        barAlt = new JScrollPane(commentoAlt);
-        barGhiac = new JScrollPane(commentoGhiac);
-        barPrec = new JScrollPane(commentoPrec);
-        barPres = new JScrollPane(commentoPres);
-        barTemp = new JScrollPane(commentoTemp);
-        barUmidita = new JScrollPane(commentoUmidita);
-        barVento = new JScrollPane(commentoVento);
-
-        barAlt.setBounds(644, 140, 120, 41);
-        barGhiac.setBounds(644, 180, 120, 41);
-        barPrec.setBounds(644, 220, 120, 41);
-        barPres.setBounds(644, 260, 120, 41);
-        barTemp.setBounds(644, 300, 120, 41);
-        barUmidita.setBounds(644, 340, 120, 41);
-        barVento.setBounds(644, 380, 120, 42);
-        commento.setBounds(644, 120, 120, 20);
-
         Border border = BorderFactory.createLineBorder(Color.BLACK, 0);
         commento.setBorder(border);
 
@@ -171,6 +155,29 @@ public class Data extends JFrame implements ActionListener {
         commenti[5] = commentoAlt;
         commenti[6] = commentoGhiac;
 
+        int limite = 256;
+        for (int i = 0; i < commenti.length; i++) {
+            JTextArea commentoArea = commenti[i];
+            AbstractDocument doc = (AbstractDocument) commentoArea.getDocument();
+            doc.setDocumentFilter(new CharacterLimitFilter(limite));
+        }
+
+        barAlt = new JScrollPane(commentoAlt);
+        barGhiac = new JScrollPane(commentoGhiac);
+        barPrec = new JScrollPane(commentoPrec);
+        barPres = new JScrollPane(commentoPres);
+        barTemp = new JScrollPane(commentoTemp);
+        barUmidita = new JScrollPane(commentoUmidita);
+        barVento = new JScrollPane(commentoVento);
+
+        barAlt.setBounds(644, 140, 120, 41);
+        barVento.setBounds(644, 180, 120, 41);
+        barUmidita.setBounds(644, 220, 120, 41);
+        barTemp.setBounds(644, 260, 120, 41);
+        barPres.setBounds(644, 300, 120, 41);
+        barPrec.setBounds(644, 340, 120, 41);
+        barGhiac.setBounds(644, 380, 120, 42);
+        commento.setBounds(644, 120, 120, 20);
         // Azione bottone Salva
         salvaButton.addActionListener(this);
 
