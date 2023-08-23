@@ -1,3 +1,5 @@
 qwdqd,EEEEEEE21E21ECRRF,ergegr@,123,Ciaoblu0.,Centro,
-qwdqd,EEEEEEE21E21ECRRF,ergegr@,125,Ciaoblu2.,rosso,
+qwdqd,EEEEEEE21E21ECRRF,ergegr@,125,Ciaoblu2.,null,
 qwdqd,EEEEEEE21E21ECRRF,ergegr@,124,Ciaoblu1.,null,
+
+

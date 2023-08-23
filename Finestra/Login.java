@@ -73,6 +73,7 @@ public class Login extends JFrame implements ActionListener {
 
                 if (flag[0] == 1) {
                     dispose();
+
                     SetFrameFunc.setFrame(new CreaCentro(flag[1]));
                 } else
                     JOptionPane.showMessageDialog(null, "Password o ID errati");

@@ -18,7 +18,6 @@ import javax.swing.JTextField;
 public class CreaCentro extends JFrame implements ActionListener {
 
     JPanel container = new JPanel();
-    // Da fare il focus listener
     private JComboBox<String> ricercaBox;
     private JButton creaButton = new JButton("Crea");
     private JButton inserisciButton = new JButton("Inserisci dati");
@@ -30,8 +29,9 @@ public class CreaCentro extends JFrame implements ActionListener {
     private JTextField comuneField = new JTextField();
     private JTextField provField = new JTextField();
     private int i;
+    private String s = "null";
 
-    CreaCentro(int i) throws IOException {
+    public CreaCentro(int i) throws IOException {
 
         this.i = i;
 
@@ -39,6 +39,13 @@ public class CreaCentro extends JFrame implements ActionListener {
         setLocationAndSize();
         addComponentsToContainer();
         addActionEvent();
+
+        ricercaCentro();
+
+        if (!s.equals("null")) {
+            nomeCentro.setText(s);
+            nomeCentro.setEnabled(false);
+        }
     }
 
     public void setLayoutManager() {
@@ -61,7 +68,6 @@ public class CreaCentro extends JFrame implements ActionListener {
         inserisciButton.setBounds(550, 100, 125, 30);
         ricercaBox = new JComboBox<String>();
 
-        String s = new String(ricercaCentro());
         System.out.println(s);
         if (!(s.equals("null"))) {
             nomeCentro.setText(s);
@@ -156,20 +162,24 @@ public class CreaCentro extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == creaButton) {
-            registraCentroAreeFunc.registraCentroAree(nomeCentro, piaField, numerocivField, capField, capField,
-                    provField, nomeArea);
-            dispose();
-            try {
-                SetFrameFunc.setFrame(new CreaCentro(i));
-            } catch (IOException e1) {
+            int flag = registraCentroAreeFunc.registraCentroAree(nomeCentro, piaField, numerocivField, capField,
+                    capField,
+                    provField, nomeArea, i);
+            if (flag == 1) {
+                dispose();
+                try {
 
-                e1.printStackTrace();
+                    SetFrameFunc.setFrame(new CreaCentro(i));
+                } catch (IOException e1) {
+
+                    e1.printStackTrace();
+                }
             }
         }
 
     }
 
-    public String ricercaCentro() throws IOException {
+    public void ricercaCentro() throws IOException {
 
         try (BufferedReader br = new BufferedReader(new FileReader("./OperatoriRegistrati.dati.txt"))) {
             String linea;
@@ -185,10 +195,9 @@ public class CreaCentro extends JFrame implements ActionListener {
             }
             if (!(parole[5].equals("null"))) {
 
-                return parole[5];
-            }
-
-            return "null";
+                s = parole[5];
+            } else
+                s = "null";
 
         }
     }

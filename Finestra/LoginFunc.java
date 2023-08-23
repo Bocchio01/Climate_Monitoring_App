@@ -35,6 +35,7 @@ public class LoginFunc {
             valori = new int[2];
             valori[0] = trovato;
             valori[1] = count;
+
         }
         return valori;
 
