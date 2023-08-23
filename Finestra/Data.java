@@ -12,9 +12,14 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class Data extends JFrame implements ActionListener {
 
@@ -38,8 +43,43 @@ public class Data extends JFrame implements ActionListener {
     private JScrollPane barGhiac;
     private JTextArea commento;
     private JTextArea[] commenti;
+    private JLabel area;
+    private JLabel nomeCentro;
+    private JFormattedTextField dateTextField;
+    private String dateToString;
+    private DateFormat dateFormat;
+    private long milliseconds;
 
-    public Data() {
+    public Data(String s, String n) {
+
+        area = new JLabel();
+        nomeCentro = new JLabel();
+        dateTextField = new JFormattedTextField();
+        milliseconds = System.currentTimeMillis();
+        Date date = new Date(milliseconds);
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateToString = dateFormat.format(date);
+        dateTextField.setText(dateToString);
+
+        dateTextField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (dateTextField.getText().equals(dateToString)) {
+                    dateTextField.setText("");
+                    dateTextField.setForeground(Color.BLACK); // Cambia il colore del testo quando prende il focus
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (dateTextField.getText().isEmpty()) {
+                    dateTextField.setText(dateToString);
+                    dateTextField.setForeground(Color.GRAY); // Ripristina il colore del testo quando perde il focus
+                }
+            }
+        });
+        this.area.setText(s);
+        this.nomeCentro.setText(n);
 
         Object[][] data = {
                 { "Vento", "Velocità del vento (km/h)", 1 },
@@ -65,6 +105,15 @@ public class Data extends JFrame implements ActionListener {
         // Creazione della tabella con il modello creato
         table = new JTable(model);
         salvaButton = new JButton("Salva");
+        // Timer per togliere il focus da cella data
+        Timer timer = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                salvaButton.requestFocusInWindow();
+            }
+        });
+        timer.setRepeats(false); // Esegui il timer solo una volta
+        timer.start();
 
         // Impostazione del renderer delle celle per centrare il testo
         TableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -178,6 +227,11 @@ public class Data extends JFrame implements ActionListener {
         barPrec.setBounds(644, 340, 120, 41);
         barGhiac.setBounds(644, 380, 120, 42);
         commento.setBounds(644, 120, 120, 20);
+
+        nomeCentro.setBounds(150, 50, 125, 30);
+        area.setBounds(380, 50, 125, 30);
+        dateTextField.setBounds(550, 55, 125, 25);
+
         // Azione bottone Salva
         salvaButton.addActionListener(this);
 
@@ -192,6 +246,9 @@ public class Data extends JFrame implements ActionListener {
         container.add(barVento);
         container.add(salvaButton);
         container.add(commento);
+        container.add(area);
+        container.add(nomeCentro);
+        container.add(dateTextField);
 
         add(container);
 
@@ -208,6 +265,10 @@ public class Data extends JFrame implements ActionListener {
         // Creazione del file e scrittura nel file
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("tabella.txt", true));
+
+            writer.write(area.getText() + "," + nomeCentro.getText() + "," + dateTextField.getText());
+            writer.newLine();
+
             for (int i = 0; i < model.getRowCount(); i++) {
                 String row = model.getValueAt(i, 0) + "," + model.getValueAt(i, 2) + "," + commenti[i].getText().trim();
                 writer.write(row);

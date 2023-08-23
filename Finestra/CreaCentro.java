@@ -12,6 +12,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -175,6 +176,17 @@ public class CreaCentro extends JFrame implements ActionListener {
                     e1.printStackTrace();
                 }
             }
+        }
+        if (e.getSource() == inserisciButton) {
+            Object selectedItem = ricercaBox.getSelectedItem();
+            if (selectedItem != null) {
+                String focusedWord = selectedItem.toString();
+                dispose();
+                SetFrameFunc.setFrame(new Data(focusedWord, s));
+            } else {
+                JOptionPane.showMessageDialog(null, "Selezionare un'area");
+            }
+
         }
 
     }
