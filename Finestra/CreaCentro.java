@@ -12,10 +12,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class CreaCentro extends JFrame implements ActionListener {
@@ -153,12 +150,23 @@ public class CreaCentro extends JFrame implements ActionListener {
     }
 
     public void addActionEvent() {
+        creaButton.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+        if (e.getSource() == creaButton) {
+            registraCentroAreeFunc.registraCentroAree(nomeCentro, piaField, numerocivField, capField, capField,
+                    provField, nomeArea);
+            dispose();
+            try {
+                SetFrameFunc.setFrame(new CreaCentro(i));
+            } catch (IOException e1) {
+
+                e1.printStackTrace();
+            }
+        }
+
     }
 
     public String ricercaCentro() throws IOException {
