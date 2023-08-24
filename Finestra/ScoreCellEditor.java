@@ -3,17 +3,9 @@
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.table.*;
-import javax.swing.text.MaskFormatter;
-
 import java.awt.*;
 import java.awt.event.*;
-import java.text.ParseException;
-
-import javax.swing.*;
 import javax.swing.table.TableCellEditor;
-import java.awt.*;
-import java.awt.event.*;
 import java.util.EventObject;
 
 public class ScoreCellEditor extends AbstractCellEditor implements TableCellEditor {

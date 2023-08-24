@@ -48,6 +48,7 @@ public class Tabella1 extends JFrame implements ActionListener {
             testo = b.readLine();
             datiArea = new JTextArea(testo);
             datiArea.setEditable(false);
+            b.close();
 
         } catch (IOException e) {
             e.printStackTrace();
