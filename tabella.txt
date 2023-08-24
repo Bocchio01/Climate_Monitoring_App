@@ -142,3 +142,11 @@ Temperatura,1,
 Precipitazioni,1,
 Altitudine dei ghiacciai,1,
 Massa dei ghiacciai,1,
+Como,Comasco,24/08/2023
+Vento,1,tanto vento
+Umidita',1,tanto umido
+Pressione,1,pentola a pressione
+Temperatura,1,sole più o meno
+Precipitazioni,1,arca di Noè
+Altitudine dei ghiacciai,1,estinti
+Massa dei ghiacciai,1,estinta
