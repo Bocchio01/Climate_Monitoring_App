@@ -36,12 +36,12 @@ public class CreaCentro extends JFrame implements ActionListener {
 
         this.i = i;
 
+        ricercaCentro();
+
         setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
         addActionEvent();
-
-        ricercaCentro();
 
         if (!s.equals("null")) {
             nomeCentro.setText(s);
@@ -79,7 +79,7 @@ public class CreaCentro extends JFrame implements ActionListener {
                 while ((linea = br.readLine()) != null) {
                     String[] parole = linea.split(",");
                     if (parole[0].equals(s)) {
-                        for (int h = 7; h < parole.length; h++) {
+                        for (int h = 6; h < parole.length; h++) {
                             System.out.println(parole[h]);
                             ricercaBox.addItem(parole[h]);
                         }
