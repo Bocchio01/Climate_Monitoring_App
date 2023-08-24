@@ -80,6 +80,7 @@ public class CreaCentro extends JFrame implements ActionListener {
                     String[] parole = linea.split(",");
                     if (parole[0].equals(s)) {
                         for (int h = 7; h < parole.length; h++) {
+                            System.out.println(parole[h]);
                             ricercaBox.addItem(parole[h]);
                         }
                     }

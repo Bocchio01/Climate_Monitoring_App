@@ -1,19 +1,11 @@
 ﻿package Finestra;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.MaskFormatter;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyledDocument;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-
-//import org.w3c.dom.events.MouseEvent;
-//import java.awt.event.MouseAdapter;
 
 import java.text.ParseException;
 
@@ -22,11 +14,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -52,7 +45,6 @@ public class Data extends JFrame implements ActionListener {
     private JScrollPane barAlt;
     private JTextArea commentoGhiac;
     private JScrollPane barGhiac;
-    private JTextArea commento;
     private JTextArea[] commenti;
     private JLabel area;
     private JLabel nomeCentro;
@@ -60,7 +52,6 @@ public class Data extends JFrame implements ActionListener {
     private String dateToString;
     private DateFormat dateFormat;
     private long milliseconds;
-    private String cleanDate;
 
     public Data(String s, String n) {
 
@@ -118,6 +109,9 @@ public class Data extends JFrame implements ActionListener {
 
             // Creazione della tabella con il modello creato
             table = new JTable(model);
+
+            // table.getColumnModel().getColumn(2).setCellEditor(new ScoreCellEditor());
+
             salvaButton = new JButton("Salva");
             // Timer per togliere il focus da cella data
             Timer timer = new Timer(100, new ActionListener() {
@@ -287,15 +281,29 @@ public class Data extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == salvaButton) {
+
             salvaFile();
+
         }
     }
 
     private void salvaFile() {
         String data = dateTextField.getText();
+        boolean flag = true;
+        String score;
+
+        for (int j = 0; j < model.getRowCount(); j++) {
+            score = model.getValueAt(j, 2) + "";
+            int punteggio = Integer.parseInt(score);
+            if (punteggio < 1 || punteggio > 5)
+                flag = false;
+
+        }
 
         if (!isValidDate(data)) {
             JOptionPane.showMessageDialog(this, "Data non valida");
+        } else if (!flag) {
+            JOptionPane.showMessageDialog(this, "Almeno un punteggio nella tabella \u00E8 fuori intervallo (1-5).");
         } else {
             // Creazione del file e scrittura nel file
             try {
@@ -304,14 +312,23 @@ public class Data extends JFrame implements ActionListener {
                 writer.write(area.getText() + "," + nomeCentro.getText() + "," + dateTextField.getText());
                 writer.newLine();
 
+                boolean hasInvalidScore = false; // Flag per tenere traccia di punteggi non validi
+
                 for (int i = 0; i < model.getRowCount(); i++) {
-                    String row = model.getValueAt(i, 0) + "," + model.getValueAt(i, 2) + ","
-                            + commenti[i].getText().trim();
+                    String category = (String) model.getValueAt(i, 0);
+                    score = model.getValueAt(i, 2) + "";
+                    String row = category + "," + score + "," + commenti[i].getText().trim();
                     writer.write(row);
                     writer.newLine();
                 }
+
                 writer.close();
-                JOptionPane.showMessageDialog(this, "Dati salvati con successo!");
+
+                if (hasInvalidScore) {
+                    JOptionPane.showMessageDialog(this, "Almeno un punteggio nella tabella è fuori intervallo (1-5).");
+                } // else {
+                  // JOptionPane.showMessageDialog(this, "Dati salvati con successo!");
+                  // }
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Errore nella scrittura dei dati!");
             }

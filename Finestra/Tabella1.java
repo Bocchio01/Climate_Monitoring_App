@@ -13,11 +13,8 @@ import javax.swing.table.TableCellRenderer;
 
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Toolkit;
-import java.awt.Dimension;
 
 import java.io.*;
 
@@ -58,13 +55,13 @@ public class Tabella1 extends JFrame implements ActionListener {
         int offset = testo.length() * 7 / 2;
 
         Object[][] data = {
-                { "Vento", "Velocità del vento (km/h), suddivisa in fasce", 1, "Commento" },
-                { "Umidità", "% di Umidità, suddivisa in fasce", 1, "commento" },
-                { "Pressione", "In hPa, suddivisa in fasce", 1, "commento" },
-                { "Temperatura", "In C°, suddivisa in fasce", 1, "commento" },
-                { "Precipitazioni", "In mm di pioggia, suddivisa in fasce", 1, "commento" },
-                { "Altitudine dei ghiacciai", "In m, suddivisa in piogge", 1, "commento" },
-                { "Massa dei ghiacciai", "in kg, suddivisa in fasce", 1, "commento" }
+                { "Vento", "Velocità del vento (km/h)", 1, "Commento" },
+                { "Umidità", "% di Umidità", 1, "commento" },
+                { "Pressione", "In hPa", 1, "commento" },
+                { "Temperatura", "In C°", 1, "commento" },
+                { "Precipitazioni", "In mm di pioggia", 1, "commento" },
+                { "Altitudine dei ghiacciai", "In m", 1, "commento" },
+                { "Massa dei ghiacciai", "in kg", 1, "commento" }
         };
 
         String[] columnNames = { "Categoria climatica", "Spiegazione", "Punteggio", "Commento" };
@@ -126,7 +123,7 @@ public class Tabella1 extends JFrame implements ActionListener {
         indietroButton.setBounds(670, 500, 80, 30);
         indietroButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        datiArea.setBounds(400 - offset, 100, 400, 50);
+        datiArea.setBounds(400 - offset, 100, 500, 50);
 
         homeButton.addActionListener(this);
         indietroButton.addActionListener(this);

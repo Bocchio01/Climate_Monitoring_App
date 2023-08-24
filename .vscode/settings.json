@@ -17,6 +17,14 @@
         "Librerie/prog-4ed.jar",
         "Librerie/junidecode-0.4.1.jar",
         "Librerie/junidecode-0.4.1-javadoc.jar",
-        "Librerie/commons-io-2.11.0.jar"
+        "Librerie/commons-io-2.11.0.jar",
+        "Librerie/javafx.base.jar",
+        "Librerie/javafx.controls.jar",
+        "Librerie/javafx.fxml.jar",
+        "Librerie/javafx.graphics.jar",
+        "Librerie/javafx.media.jar",
+        "Librerie/javafx.swing.jar",
+        "Librerie/javafx.web.jar",
+        "Librerie/javafx-swt.jar"
     ]
 }
