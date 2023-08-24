@@ -17,7 +17,6 @@ import javax.swing.text.StyleConstants;
 
 import java.text.ParseException;
 
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,6 +30,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 public class Data extends JFrame implements ActionListener {
 
@@ -196,9 +196,11 @@ public class Data extends JFrame implements ActionListener {
             label.setHorizontalAlignment(JLabel.CENTER);
             label.setVerticalAlignment(JLabel.CENTER);
             commento.add(label);
-            /*commento = new JTextArea("             Commenti");
-            commento.setEditable(false);
-            commento.setBackground(new Color(239, 238, 238));*/
+            /*
+             * commento = new JTextArea("             Commenti");
+             * commento.setEditable(false);
+             * commento.setBackground(new Color(239, 238, 238));
+             */
 
             commenti = new JTextArea[7];
 
@@ -218,8 +220,8 @@ public class Data extends JFrame implements ActionListener {
             commentoUmidita.setWrapStyleWord(true);
             commentoVento.setWrapStyleWord(true);
 
-            //Border border = BorderFactory.createLineBorder(Color.BLACK, 0);
-            //commento.setBorder(border);
+            // Border border = BorderFactory.createLineBorder(Color.BLACK, 0);
+            // commento.setBorder(border);
 
             commenti[0] = commentoVento;
             commenti[1] = commentoUmidita;
@@ -290,24 +292,63 @@ public class Data extends JFrame implements ActionListener {
     }
 
     private void salvaFile() {
-        // Creazione del file e scrittura nel file
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("tabella.txt", true));
+        String data = dateTextField.getText();
 
-            writer.write(area.getText() + "," + nomeCentro.getText() + "," + dateTextField.getText());
-            writer.newLine();
+        if (!isValidDate(data)) {
+            JOptionPane.showMessageDialog(this, "Data non valida");
+        } else {
+            // Creazione del file e scrittura nel file
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter("tabella.txt", true));
 
-            for (int i = 0; i < model.getRowCount(); i++) {
-                String row = model.getValueAt(i, 0) + "," + model.getValueAt(i, 2) + "," + commenti[i].getText().trim();
-                writer.write(row);
+                writer.write(area.getText() + "," + nomeCentro.getText() + "," + dateTextField.getText());
                 writer.newLine();
+
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    String row = model.getValueAt(i, 0) + "," + model.getValueAt(i, 2) + ","
+                            + commenti[i].getText().trim();
+                    writer.write(row);
+                    writer.newLine();
+                }
+                writer.close();
+                JOptionPane.showMessageDialog(this, "Dati salvati con successo!");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Errore nella scrittura dei dati!");
             }
-            writer.close();
-            JOptionPane.showMessageDialog(this, "Dati salvati con successo!");
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Errore nella scrittura dei dati!");
+        }
+    }
+
+    private boolean isValidDate(String date) {
+        // Verifica che la data abbia il formato "dd/MM/yyyy"
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false);
+
+        try {
+            dateFormat.parse(date);
+        } catch (ParseException e) {
+            return false;
         }
 
+        // Estrai i componenti della data
+        String[] components = date.split("/");
+        int day = Integer.parseInt(components[0]);
+        int month = Integer.parseInt(components[1]);
+        int year = Integer.parseInt(components[2]);
+
+        LocalDate currentDate = LocalDate.now();
+
+        // Verifica i limiti per giorno, mese e anno
+        if (year < 1 || month < 1 || month > 12 || day < 1 || day > 31) {
+            return false;
+        }
+
+        // Verifica se la data è nel passato
+        LocalDate inputDate = LocalDate.of(year, month, day);
+        if (inputDate.isAfter(currentDate)) {
+            return false;
+        }
+
+        return true;
     }
 
 }
