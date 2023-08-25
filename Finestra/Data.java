@@ -84,13 +84,13 @@ public class Data extends JFrame implements ActionListener {
             this.nomeCentro.setText(n);
 
             Object[][] data = {
-                    { "Vento", "Velocità del vento (km/h)", 1 },
-                    { "Umidita'", "% di Umidità", 1 },
-                    { "Pressione", "In hPa", 1 },
-                    { "Temperatura", "In C°", 1 },
-                    { "Precipitazioni", "In mm di pioggia", 1 },
-                    { "Altitudine dei ghiacciai", "In m", 1 },
-                    { "Massa dei ghiacciai", "In kg", 1 }
+                    { "Vento", "Velocità del vento (km/h)", null },
+                    { "Umidita'", "% di Umidità", null },
+                    { "Pressione", "In hPa", null },
+                    { "Temperatura", "In C°", null },
+                    { "Precipitazioni", "In mm di pioggia", null },
+                    { "Altitudine dei ghiacciai", "In m", null },
+                    { "Massa dei ghiacciai", "In kg", null }
             };
 
             String[] columnNames = { "Categoria climatica", "Spiegazione", "Punteggio" };
@@ -101,6 +101,15 @@ public class Data extends JFrame implements ActionListener {
                 public boolean isCellEditable(int row, int column) {
                     // Rendi modificabili solo l'ultima colonna (indice 2)
                     return column == 2;
+                }
+
+                @Override
+                public Class<?> getColumnClass(int columnIndex) {
+
+                    if (columnIndex == 2) {
+                        return Integer.class;
+                    }
+                    return super.getColumnClass(columnIndex);
                 }
             };
 
@@ -287,20 +296,34 @@ public class Data extends JFrame implements ActionListener {
     private void salvaFile() {
         String data = dateTextField.getText();
         boolean flag = true;
-        String score;
+        boolean hasValidScore = false; // Nuova variabile per tenere traccia dei punteggi validi
 
-        for (int j = 0; j < model.getRowCount(); j++) {
-            score = model.getValueAt(j, 2) + "";
-            int punteggio = Integer.parseInt(score);
-            if (punteggio < 1 || punteggio > 5)
-                flag = false;
+        // Verifica se almeno una cella contiene un punteggio valido
+        for (int i = 0; i < model.getRowCount(); i++) {
+            Object scoreObject = model.getValueAt(i, 2);
+            String score = scoreObject != null ? scoreObject.toString().trim() : "null"; // Converti in "null" se
+                                                                                         // scoreObject è null e rimuovi
+                                                                                         // spazi vuoti
 
+            if (!"null".equals(score)) {
+                try {
+                    int punteggio = Integer.parseInt(score);
+                    if (punteggio >= 1 && punteggio <= 5) {
+                        hasValidScore = true; // Se almeno un punteggio è valido, imposta a true
+                    }
+                } catch (NumberFormatException e) {
+                    flag = false;
+                }
+            }
         }
 
         if (!isValidDate(data)) {
             JOptionPane.showMessageDialog(this, "Data non valida");
+        } else if (!hasValidScore) {
+            JOptionPane.showMessageDialog(this,
+                    "Almeno una cella nella colonna 'Punteggio' deve contenere un numero valido.");
         } else if (!flag) {
-            JOptionPane.showMessageDialog(this, "Almeno un punteggio nella tabella \u00E8 fuori intervallo (1-5).");
+            JOptionPane.showMessageDialog(this, "Almeno un punteggio nella tabella è fuori intervallo (1-5).");
         } else {
             // Creazione del file e scrittura nel file
             try {
@@ -309,23 +332,24 @@ public class Data extends JFrame implements ActionListener {
                 writer.write(area.getText() + "," + nomeCentro.getText() + "," + dateTextField.getText());
                 writer.newLine();
 
-                boolean hasInvalidScore = false; // Flag per tenere traccia di punteggi non validi
-
                 for (int i = 0; i < model.getRowCount(); i++) {
                     String category = (String) model.getValueAt(i, 0);
-                    score = model.getValueAt(i, 2) + "";
-                    String row = category + "," + score + "," + commenti[i].getText().trim();
+                    Object scoreObject = model.getValueAt(i, 2);
+                    String score = scoreObject != null ? scoreObject.toString().trim() : "null"; // Converti in "null"
+                                                                                                 // se scoreObject è
+                                                                                                 // null e rimuovi spazi
+                                                                                                 // vuoti
+
+                    commenti[i].setText(commenti[i].getText().trim()); // Rimuovi spazi vuoti dai commenti
+
+                    String row = category + "," + score + "," + commenti[i].getText();
                     writer.write(row);
                     writer.newLine();
                 }
 
                 writer.close();
 
-                if (hasInvalidScore) {
-                    JOptionPane.showMessageDialog(this, "Almeno un punteggio nella tabella è fuori intervallo (1-5).");
-                } // else {
-                  // JOptionPane.showMessageDialog(this, "Dati salvati con successo!");
-                  // }
+                JOptionPane.showMessageDialog(this, "Dati salvati con successo!");
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Errore nella scrittura dei dati!");
             }
