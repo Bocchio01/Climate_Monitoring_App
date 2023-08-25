@@ -69,7 +69,6 @@ public class CreaCentro extends JFrame implements ActionListener {
         inserisciButton.setBounds(550, 100, 125, 30);
         ricercaBox = new JComboBox<String>();
 
-        System.out.println(s);
         if (!(s.equals("null"))) {
             nomeCentro.setText(s);
             nomeCentro.setEnabled(false);
@@ -80,7 +79,6 @@ public class CreaCentro extends JFrame implements ActionListener {
                     String[] parole = linea.split(",");
                     if (parole[0].equals(s)) {
                         for (int h = 6; h < parole.length; h++) {
-                            System.out.println(parole[h]);
                             ricercaBox.addItem(parole[h]);
                         }
                     }
@@ -159,6 +157,7 @@ public class CreaCentro extends JFrame implements ActionListener {
 
     public void addActionEvent() {
         creaButton.addActionListener(this);
+        inserisciButton.addActionListener(this);
     }
 
     @Override

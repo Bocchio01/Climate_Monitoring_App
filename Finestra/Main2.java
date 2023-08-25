@@ -3,7 +3,7 @@
 class Main2 extends FrameSettings {
     public static void main(String[] args) {
 
-        setFrame(new Data("Como", "comasco"));
+        SetFrameFunc.setFrame(new Tabella1());
 
     }
 
