@@ -17,7 +17,7 @@ public class SchermataIniziale extends JFrame {
         setLocationAndSize();
         addComponentsToContainer();
 
-        timer = new Timer(35, e -> {
+        timer = new Timer(0, e -> {
             int progress = progressBar.getValue();
             if (progress < 100) {
                 progressBar.setValue(progress + 1);

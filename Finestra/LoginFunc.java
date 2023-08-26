@@ -18,7 +18,7 @@ public class LoginFunc {
             throws IOException {
         int trovato = 0;
         int[] valori;
-        try (BufferedReader br = new BufferedReader(new FileReader("./OperatoriRegistrati.dati.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("./OperatoriRegistrati.dati.csv"))) {
 
             String linea;
             int count = 0;

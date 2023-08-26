@@ -48,7 +48,7 @@ public class CalcolaMediaPunteggi {
         Map<String, Integer> mediaPunteggi = new LinkedHashMap<>(); // Usiamo LinkedHashMap per mantenere l'ordine
         Map<String, StringBuilder> commentiPerCategoria = new LinkedHashMap<>(); // Mappa per i commenti
 
-        String filePath = "tabella2.csv"; // Sostituire con il percorso del tuo file CSV
+        String filePath = "DatiRegistrati.csv"; // Sostituire con il percorso del tuo file CSV
 
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;

@@ -1,6 +1,5 @@
 ﻿package Finestra;
 
-import javax.swing.JFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -26,32 +25,15 @@ public class Cerca extends JFrame implements ActionListener {
 
     Cerca() {
 
-        setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
         addActionEvent();
+        Theme.applyThemeToContainer(container);
+        Theme.applyThemeToLabel(cittaLabel);
+        Theme.applyThemeToLabel(ricercaLabel);
+        Theme.applyThemeToLabel(latLabel);
+        Theme.applyThemeToLabel(longLabel);
 
-    }
-
-    public void setLayoutManager() {
-
-        // Set info Container
-
-        if (Theme.theme()) {
-            container.setBackground(new Color(153, 255, 255));
-            cittaLabel.setForeground(Color.BLACK);
-            ricercaLabel.setForeground(Color.BLACK);
-            latLabel.setForeground(Color.BLACK);
-            longLabel.setForeground(Color.BLACK);
-        } else {
-            container.setBackground(new Color(49, 51, 56));
-            cittaLabel.setForeground(Color.WHITE);
-            ricercaLabel.setForeground(Color.WHITE);
-            latLabel.setForeground(Color.WHITE);
-            longLabel.setForeground(Color.WHITE);
-        }
-
-        container.setLayout(null);
     }
 
     public void setLocationAndSize() {
@@ -160,7 +142,7 @@ public class Cerca extends JFrame implements ActionListener {
             }
             if (s != null) {
                 dispose();
-                SetFrameFunc.setFrame(new Tabella1());
+                SetFrameFunc.setFrame(new Tabella(s));
             }
 
         }

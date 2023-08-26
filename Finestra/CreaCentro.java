@@ -193,7 +193,7 @@ public class CreaCentro extends JFrame implements ActionListener {
 
     public void ricercaCentro() throws IOException {
 
-        try (BufferedReader br = new BufferedReader(new FileReader("./OperatoriRegistrati.dati.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("./OperatoriRegistrati.dati.csv"))) {
             String linea;
             int count = 0;
             String[] parole = new String[6];

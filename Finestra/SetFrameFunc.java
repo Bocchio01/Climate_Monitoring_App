@@ -5,9 +5,9 @@ import javax.swing.JFrame;
 
 public class SetFrameFunc {
 
-    static void setFrame(HomePage e) {
+    private static void setCommonFrameProperties(JFrame e, String title) {
 
-        e.setTitle("Home Page");
+        e.setTitle(title);
         e.setVisible(true);
         e.setBounds(10, 10, 800, 600);
         e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -15,101 +15,66 @@ public class SetFrameFunc {
         e.setIconImage(image.getImage());
         e.setLocationRelativeTo(null);
         e.setResizable(false);
+    }
+
+    public static void setFrame(JFrame e) {
+
+        setCommonFrameProperties(e, "Schermata Iniziale");
+
+    }
+
+    public static void setFrame(HomePage e) {
+
+        setCommonFrameProperties(e, "Home Page");
+
     }
 
     static void setFrame(AreaOperatore e) {
 
-        e.setTitle("Area Operatore");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
+        setCommonFrameProperties(e, "Area Operatore");
+
     }
 
     static void setFrame(Cerca e) {
 
-        e.setTitle("Cerca");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
+        setCommonFrameProperties(e, "Cerca");
+
     }
 
-    static void setFrame(Tabella1_2 e) {
+    static void setFrame(Tabella e) {
 
-        e.setTitle("Tabella");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
+        setCommonFrameProperties(e, "Tabella");
+
     }
 
     static void setFrame(RegisterFrame e) {
 
-        e.setTitle("Registrazione");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
+        setCommonFrameProperties(e, "Registrazione");
+
     }
 
     static void setFrame(Login e) {
 
-        e.setTitle("Login");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
+        setCommonFrameProperties(e, "Login");
+
     }
 
     static void setFrame(Data e) {
 
-        e.setTitle("Data");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
+        setCommonFrameProperties(e, "Data");
+
     }
 
     static void setFrame(Comment e) {
 
-        e.setTitle("Cerca");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
+        setCommonFrameProperties(e, "Cerca");
+
     }
 
     static void setFrame(CreaCentro e) {
-        e.setTitle("CreaCentro");
-        e.setVisible(true);
-        e.setBounds(10, 10, 800, 600);
-        e.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ImageIcon image = new ImageIcon("Immagini/logo_png.png");
-        e.setIconImage(image.getImage());
-        e.setLocationRelativeTo(null);
-        e.setResizable(false);
+
+        setCommonFrameProperties(e, "CreaCentro");
+
     }
 
 }

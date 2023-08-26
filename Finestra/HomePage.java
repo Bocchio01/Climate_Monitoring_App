@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
 
 class HomePage extends JFrame implements ActionListener {
 
@@ -23,24 +22,11 @@ class HomePage extends JFrame implements ActionListener {
     HomePage() {
 
         // Formazione del frame+componenti
-
-        setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
         addActionEvent();
+        Theme.applyThemeToContainer(container);
 
-    }
-
-    public void setLayoutManager() {
-
-        // Set info Container
-        if (Theme.theme()) {
-            container.setBackground(new Color(153, 255, 255));
-        } else {
-            container.setBackground(new Color(49, 51, 56));
-        }
-
-        container.setLayout(null);
     }
 
     public void setLocationAndSize() {
@@ -104,8 +90,8 @@ class HomePage extends JFrame implements ActionListener {
 
         // Bottone tema
         if (e.getSource() == theme) {
-            Theme.tema();
-            setLayoutManager();
+            Theme.toggleTheme();
+            Theme.applyThemeToContainer(container);
         }
 
     }

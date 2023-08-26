@@ -58,7 +58,7 @@ public class registraCentroAreeFunc {
             }
             // sovrascrive il nome del centro appena creato
             try {
-                BufferedReader reader = new BufferedReader(new FileReader("OperatoriRegistrati.dati.txt"));
+                BufferedReader reader = new BufferedReader(new FileReader("OperatoriRegistrati.dati.csv"));
                 StringBuilder fileContent = new StringBuilder();
                 String line;
                 int currentLine = 0;
@@ -75,7 +75,7 @@ public class registraCentroAreeFunc {
                 }
                 reader.close();
 
-                BufferedWriter writer = new BufferedWriter(new FileWriter("OperatoriRegistrati.dati.txt"));
+                BufferedWriter writer = new BufferedWriter(new FileWriter("OperatoriRegistrati.dati.csv"));
                 writer.write(fileContent.toString());
 
                 writer.close();

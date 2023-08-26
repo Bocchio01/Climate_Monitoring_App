@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class Tabella1_2 extends JFrame {
+public class Tabella extends JFrame {
 
     private JScrollPane scrollPane;
     private JButton indietroButton, homeButton;
@@ -25,7 +25,7 @@ public class Tabella1_2 extends JFrame {
     private JTextArea idArea;
     private JTextArea datiArea = new JTextArea();
 
-    public Tabella1_2(String nomeCitta) {
+    public Tabella(String nomeCitta) {
 
         indietroButton = new JButton("Indietro");
         icona = new ImageIcon("Immagini/icona_home.png");
@@ -35,7 +35,7 @@ public class Tabella1_2 extends JFrame {
 
         String testo = "";
         try {
-            FileReader f = new FileReader("../Ricerca.csv");
+            FileReader f = new FileReader("OperatoriRegistrati.dati.csv");
             BufferedReader b = new BufferedReader(f);
 
             // Intestazione area
@@ -51,8 +51,8 @@ public class Tabella1_2 extends JFrame {
         int offset = testo.length() * 7 / 2;
 
         try {
-            Map<String, MediaCommenti> mediaPunteggi = calcolaMediaPunteggiPerCitta(nomeCitta);// passato nel
-                                                                                               // costruttore
+            Map<String, MediaCommenti> mediaPunteggi = calculateAverageScoresByCategory(nomeCitta);// passato nel
+            // costruttore
 
             if (mediaPunteggi.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Non sono ancora presenti dati per questo luogo");
@@ -118,71 +118,133 @@ public class Tabella1_2 extends JFrame {
 
     }
 
-    public static Map<String, MediaCommenti> calcolaMediaPunteggiPerCitta(String nomeCitta) throws IOException {
+    // public static Map<String, MediaCommenti> calcolaMediaPunteggiPerCitta(String
+    // nomeCitta) throws IOException {
 
-        Map<String, Integer> mediaPunteggi = new LinkedHashMap<>();// Uso LinkedHashMap per mantenere l'ordine
-        Map<String, StringBuilder> commentiPerCategoria = new LinkedHashMap<>();// Mappa per i commenti
+    // Map<String, Integer> mediaPunteggi = new LinkedHashMap<>();// Uso
+    // LinkedHashMap per mantenere l'ordine
+    // Map<String, StringBuilder> commentiPerCategoria = new LinkedHashMap<>();//
+    // Mappa per i commenti
 
-        String filePath = "tabella2.csv";
+    // String filePath = "DatiRegistrati.csv";
+
+    // BufferedReader reader = new BufferedReader(new FileReader(filePath));
+    // String line;
+    // int count = 0, tot = 1;
+
+    // while ((line = reader.readLine()) != null) {
+    // String[] parts = line.split(",");
+    // String nomeCittaNelFile = parts[0].trim();
+
+    // if (nomeCittaNelFile.equalsIgnoreCase(nomeCitta.trim())) {
+    // String categoria = parts[3].trim(); // rimozione spazi bianchi
+    // int punteggio = Integer.parseInt(parts[4].trim());
+    // String commento = parts[5].trim();
+
+    // if (mediaPunteggi.containsKey(categoria)) {
+    // int mediaAttuale = mediaPunteggi.get(categoria);
+    // mediaPunteggi.put(categoria, mediaAttuale + punteggio);
+    // } else {
+    // mediaPunteggi.put(categoria, punteggio);
+    // }
+
+    // // Aggiunta dei commenti alla mappa dei commenti, vedere con cosa sostituire
+    // la
+    // // stringa vuota
+    // if (!commento.equalsIgnoreCase("0")) {
+    // if (commentiPerCategoria.containsKey(categoria)) {
+    // commentiPerCategoria.get(categoria).append(" | " + commento);
+    // } else {
+    // commentiPerCategoria.put(categoria, new StringBuilder(commento));
+    // }
+    // }
+
+    // count++;
+    // if (count % 8 == 0) {
+    // tot++;
+    // }
+    // }
+    // }
+
+    // reader.close();
+
+    // if (count == 0) {
+    // return new LinkedHashMap<>();// Nessuna corrispondenza trovata, restituisci
+    // una mappa vuota
+    // }
+    // // Calcola la media dei punteggi per ogni categoria
+    // for (Map.Entry<String, Integer> entry : mediaPunteggi.entrySet()) {
+    // String categoria = entry.getKey();
+    // int media = Math.round(entry.getValue() / tot);
+    // mediaPunteggi.put(categoria, media);
+    // }
+    // // Crea una mappa finale che contiene la media e i commenti
+    // Map<String, MediaCommenti> mediaCommentiMap = new LinkedHashMap<>();
+    // for (String categoria : mediaPunteggi.keySet()) {
+    // Integer media = mediaPunteggi.get(categoria);
+    // StringBuilder commenti = commentiPerCategoria.get(categoria);
+    // mediaCommentiMap.put(categoria, new MediaCommenti(media,
+    // commenti.toString()));
+    // }
+
+    // return mediaCommentiMap;
+
+    // }
+
+    public static Map<String, MediaCommenti> calculateAverageScoresByCategory(String cityName) throws IOException {
+
+        Map<String, Integer> averageScores = new LinkedHashMap<>();
+        Map<String, StringBuilder> commentsByCategory = new LinkedHashMap<>();
+        String filePath = "DatiRegistrati.csv";
 
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
-        int count = 0, tot = 1;
+        int count = 0, totalRecords = 1;
 
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split(",");
-            String nomeCittaNelFile = parts[0].trim();
+            String cityInFile = parts[0].trim();
 
-            if (nomeCittaNelFile.equalsIgnoreCase(nomeCitta.trim())) {
-                String categoria = parts[3].trim(); // rimozione spazi bianchi
-                int punteggio = Integer.parseInt(parts[4].trim());
-                String commento = parts[5].trim();
+            if (cityInFile.equalsIgnoreCase(cityName.trim())) {
+                String category = parts[3].trim();
+                int score = Integer.parseInt(parts[4].trim());
+                String comment = parts[5].trim();
 
-                if (mediaPunteggi.containsKey(categoria)) {
-                    int mediaAttuale = mediaPunteggi.get(categoria);
-                    mediaPunteggi.put(categoria, mediaAttuale + punteggio);
-                } else {
-                    mediaPunteggi.put(categoria, punteggio);
-                }
+                averageScores.merge(category, score, Integer::sum);
 
-                // Aggiunta dei commenti alla mappa dei commenti, vedere con cosa sostituire la
-                // stringa vuota
-                if (!commento.equalsIgnoreCase("0")) {
-                    if (commentiPerCategoria.containsKey(categoria)) {
-                        commentiPerCategoria.get(categoria).append(" | ");
-                    } else {
-                        commentiPerCategoria.put(categoria, new StringBuilder(commento));
-                    }
+                if (!comment.equalsIgnoreCase("0")) {
+                    commentsByCategory.computeIfAbsent(category, k -> new StringBuilder()).append(" | " + comment);
                 }
 
                 count++;
                 if (count % 8 == 0) {
-                    tot++;
+                    totalRecords++;
                 }
             }
         }
 
         reader.close();
 
-        if (count == 0) {
-            return new LinkedHashMap<>();// Nessuna corrispondenza trovata, restituisci una mappa vuota
-        }
-        // Calcola la media dei punteggi per ogni categoria
-        for (Map.Entry<String, Integer> entry : mediaPunteggi.entrySet()) {
-            String categoria = entry.getKey();
-            int media = Math.round(entry.getValue() / tot);
-            mediaPunteggi.put(categoria, media);
-        }
-        // Crea una mappa finale che contiene la media e i commenti
-        Map<String, MediaCommenti> mediaCommentiMap = new LinkedHashMap<>();
-        for (String categoria : mediaPunteggi.keySet()) {
-            Integer media = mediaPunteggi.get(categoria);
-            StringBuilder commenti = commentiPerCategoria.get(categoria);
-            mediaCommentiMap.put(categoria, new MediaCommenti(media, commenti.toString()));
+        if (averageScores.isEmpty()) {
+            return new LinkedHashMap<>();
         }
 
-        return mediaCommentiMap;
+        // Calculate the average scores for each category
+        for (Map.Entry<String, Integer> entry : averageScores.entrySet()) {
+            String category = entry.getKey();
+            int average = Math.round(entry.getValue() / totalRecords);
+            averageScores.put(category, average);
+        }
 
+        // Create a final map containing the averages and comments
+        Map<String, MediaCommenti> mediaCommentMap = new LinkedHashMap<>();
+        for (String category : averageScores.keySet()) {
+            Integer average = averageScores.get(category);
+            StringBuilder comments = commentsByCategory.get(category);
+            mediaCommentMap.put(category, new MediaCommenti(average, comments.toString()));
+        }
+
+        return mediaCommentMap;
     }
 
     public static class MediaCommenti {

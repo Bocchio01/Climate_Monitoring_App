@@ -1,16 +1,35 @@
 package Finestra;
 
+import java.awt.Color;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 public class Theme {
 
-    public static boolean b=true;
+    private static boolean darkMode = false;
+    private static Color lightBlue = new Color(153, 255, 255);
+    private static Color darkGray = new Color(49, 51, 56);
 
-    public static boolean tema(){
-        b=!b;
-        return b;
+    public static boolean toggleTheme() {
+        darkMode = !darkMode;
+        return darkMode;
     }
-    public static boolean theme(){
-        tema();
-        boolean t = tema();
-        return t;
+
+    public static boolean isDarkMode() {
+        return darkMode;
+    }
+
+    public static void applyThemeToContainer(JPanel container) {
+        if (isDarkMode()) {
+            container.setBackground(darkGray);
+        } else {
+            container.setBackground(lightBlue);
+        }
+        container.setLayout(null);
+    }
+
+    public static void applyThemeToLabel(JLabel label) {
+
     }
 }
