@@ -23,12 +23,9 @@ public class Tabella1_2 extends JFrame {
     private Cursor cursoreInd, cursoreHome;
     private ImageIcon icona;
     private JTextArea idArea;
-    private JTextArea datiArea = new JTextArea();;
-    private String nomeCitta;
+    private JTextArea datiArea = new JTextArea();
 
     public Tabella1_2(String nomeCitta) {
-
-        this.nomeCitta = nomeCitta;
 
         indietroButton = new JButton("Indietro");
         icona = new ImageIcon("Immagini/icona_home.png");
