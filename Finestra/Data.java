@@ -325,12 +325,11 @@ public class Data extends JFrame implements ActionListener {
         } else if (!flag) {
             JOptionPane.showMessageDialog(this, "Almeno un punteggio nella tabella è fuori intervallo (1-5).");
         } else {
-            // Creazione del file e scrittura nel file
+            // Creazione del file e scrittura nel file //! salvare un csv
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter("tabella.txt", true));
 
-                writer.write(area.getText() + "," + nomeCentro.getText() + "," + dateTextField.getText());
-                writer.newLine();
+                writer.write(area.getText() + "," + nomeCentro.getText() + "," + dateTextField.getText() + ",");
 
                 for (int i = 0; i < model.getRowCount(); i++) {
                     String category = (String) model.getValueAt(i, 0);
@@ -341,6 +340,9 @@ public class Data extends JFrame implements ActionListener {
                                                                                                  // vuoti
 
                     commenti[i].setText(commenti[i].getText().trim()); // Rimuovi spazi vuoti dai commenti
+                    if (commenti[i].equals(null)) {
+                        commenti[i].setText("null");
+                    }
 
                     String row = category + "," + score + "," + commenti[i].getText();
                     writer.write(row);

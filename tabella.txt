@@ -54,5 +54,3 @@ Temperatura,1,
 Precipitazioni,1,
 Altitudine dei ghiacciai,1,
 Massa dei ghiacciai,1,
-Como,comasco,25/08/2023
-
