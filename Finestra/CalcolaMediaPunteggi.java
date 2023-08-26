@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class CalcolaMediaPunteggi {
     public static void main(String[] args) {
-        String nomeCittaDaCercare = "Como"; // Sostituire con il nome della città desiderata
+        String nomeCittaDaCercare = "Milano"; // Sostituire con il nome della città desiderata
         try {
             Map<String, MediaCommenti> mediaPunteggi = calcolaMediaPunteggiPerCitta(nomeCittaDaCercare);
 

@@ -6,10 +6,24 @@ Como,comasco,25/08/2023,Temperatura,1,creazione
 Como,comasco,25/08/2023,Precipitazioni,1,boh
 Como,comasco,25/08/2023,Altitudine dei ghiacciai,1,fa freddo
 Como,comasco,25/08/2023,Massa dei ghiacciai,1,null
-Como,comasco,25/08/2023,Vento,5,null
-Como,comasco,25/08/2023,Umidita',1,niente
-Como,comasco,25/08/2023,Pressione,3,null
-Como,comasco,25/08/2023,Temperatura,1,creazione
-Como,comasco,25/08/2023,Precipitazioni,1,boh
-Como,comasco,25/08/2023,Altitudine dei ghiacciai,1,fa freddo
-Como,comasco,25/08/2023,Massa dei ghiacciai,1,null
+Firenze,comasco,25/08/2023,Vento,4,null1
+Firenze,comasco,25/08/2023,Umidita',2,niente1
+Firenze,comasco,25/08/2023,Pressione,2,null1
+Firenze,comasco,25/08/2023,Temperatura,3,creazione1
+Firenze,comasco,25/08/2023,Precipitazioni,1,boh1
+Firenze,comasco,25/08/2023,Altitudine dei ghiacciai,2,fa freddo1
+Firenze,comasco,25/08/2023,Massa dei ghiacciai,5,null1
+Milano,comasco,25/08/2023,Vento,3,null2
+Milano,comasco,25/08/2023,Umidita',1,niente2
+Milano,comasco,25/08/2023,Pressione,1,null2
+Milano,comasco,25/08/2023,Temperatura,2,creazione2
+Milano,comasco,25/08/2023,Precipitazioni,5,boh2
+Milano,comasco,25/08/2023,Altitudine dei ghiacciai,1,fa freddo2
+Milano,comasco,25/08/2023,Massa dei ghiacciai,4,null2
+Milano,comasco,25/08/2023,Vento,4,null3
+Milano,comasco,25/08/2023,Umidita',2,niente3
+Milano,comasco,25/08/2023,Pressione,2,null3
+Milano,comasco,25/08/2023,Temperatura,3,creazione3
+Milano,comasco,25/08/2023,Precipitazioni,1,boh3
+Milano,comasco,25/08/2023,Altitudine dei ghiacciai,2,fa freddo3
+Milano,comasco,25/08/2023,Massa dei ghiacciai,5,null3

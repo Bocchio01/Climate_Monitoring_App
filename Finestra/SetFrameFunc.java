@@ -41,7 +41,7 @@ public class SetFrameFunc {
         e.setResizable(false);
     }
 
-    static void setFrame(Tabella1 e) {
+    static void setFrame(Tabella1_2 e) {
 
         e.setTitle("Tabella");
         e.setVisible(true);

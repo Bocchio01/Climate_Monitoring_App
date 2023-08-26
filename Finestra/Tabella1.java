@@ -30,12 +30,6 @@ public class Tabella1 extends JFrame implements ActionListener {
 
     public Tabella1() {
 
-        indietroButton = new JButton("Indietro");
-        icona = new ImageIcon("Immagini/icona_home.png");
-        homeButton = new JButton(icona);
-        cursoreInd = indietroButton.getCursor();
-        cursoreHome = homeButton.getCursor();
-
         String testo = "";
         try {
             FileReader f;
