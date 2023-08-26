@@ -2,9 +2,12 @@
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -16,7 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class Tabella extends JFrame {
+import javax.swing.*;
+
+public class Tabella extends JFrame implements ActionListener {
 
     private JScrollPane scrollPane;
     private JButton indietroButton, homeButton;
@@ -35,14 +40,14 @@ public class Tabella extends JFrame {
 
         String testo = "";
         try {
-            FileReader f = new FileReader("OperatoriRegistrati.dati.csv");
-            BufferedReader b = new BufferedReader(f);
+            FileReader fin = new FileReader("OperatoriRegistrati.dati.csv");
+            BufferedReader fbuffer = new BufferedReader(fin);
 
             // Intestazione area
-            testo = b.readLine();
+            testo = fbuffer.readLine();
             idArea = new JTextArea(testo);
             idArea.setEditable(false);
-            b.close();
+            fbuffer.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -50,49 +55,66 @@ public class Tabella extends JFrame {
 
         int offset = testo.length() * 7 / 2;
 
-        try {
-            Map<String, MediaCommenti> mediaPunteggi = calculateAverageScoresByCategory(nomeCitta);// passato nel
-            // costruttore
+        if (CercaFunc.nameFind(nomeCitta, "DatiRegistrati.csv", 0)) {
+            // Città popolata da operatore
 
-            if (mediaPunteggi.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Non sono ancora presenti dati per questo luogo");
+            try {
+                Map<String, MediaCommenti> mediaPunteggi = calculateAverageScoresByCategory(nomeCitta);// passato nel
+                // costruttore
 
-            } else {
-                // Ordine delle categorie
-                String[] categorie = { "Vento", "Umidita'", "Pressione", "Temperatura", "Precipitazioni",
-                        "Altitudine dei ghiacciai", "Massa dei ghiacciai" };
+                if (mediaPunteggi.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Non sono ancora presenti dati per questo luogo");
 
-                // Dichiarazione di un StringBuilder per accumulare i dati
-                StringBuilder datiBuilder = new StringBuilder();
+                } else {
+                    // Ordine delle categorie
+                    String[] categorie = { "Vento", "Umidita'", "Pressione", "Temperatura", "Precipitazioni",
+                            "Altitudine dei ghiacciai", "Massa dei ghiacciai" };
 
-                for (String categoria : categorie) {
-                    MediaCommenti mediaCommenti = mediaPunteggi.get(categoria);
-                    if (mediaCommenti != null) {
-                        Integer media = mediaCommenti.getMedia();
-                        String commenti = mediaCommenti.getComment();
+                    // Dichiarazione di un StringBuilder per accumulare i dati
+                    StringBuilder datiBuilder = new StringBuilder();
 
-                        if (media != null) {
-                            // arrotonda la media ai punti più vicini tra 1 e 5
-                            media = Math.round(media);
+                    for (String categoria : categorie) {
+                        MediaCommenti mediaCommenti = mediaPunteggi.get(categoria);
+                        if (mediaCommenti != null) {
+                            Integer media = mediaCommenti.getMedia();
+                            String commenti = mediaCommenti.getComment();
+
+                            if (media != null) {
+                                // arrotonda la media ai punti più vicini tra 1 e 5
+                                media = Math.round(media);
+                            } else {
+                                media = 0;// se la categoria non è presente imposta la media a 0
+                            }
+
+                            // Accumula i dati nel StringBuilder
+                            datiBuilder.append("Categoria: ").append(categoria)
+                                    .append(", Media Punteggi: ").append(media)
+                                    .append(", Commenti: ").append(commenti)
+                                    .append("\n"); // Aggiungi un salto di riga per separare le voci
                         } else {
-                            media = 0;// se la categoria non è presente imposta la media a 0
+                            JOptionPane.showMessageDialog(this, "Non sono ancora presenti dati per questo luogo");
                         }
-
-                        // Accumula i dati nel StringBuilder
-                        datiBuilder.append("Categoria: ").append(categoria)
-                                .append(", Media Punteggi: ").append(media)
-                                .append(", Commenti: ").append(commenti)
-                                .append("\n"); // Aggiungi un salto di riga per separare le voci
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Non sono ancora presenti dati per questo luogo");
                     }
-                }
-                // Imposta il testo accumulato nella datiArea
-                datiArea.setText(datiBuilder.toString());
+                    // Imposta il testo accumulato nella datiArea
+                    datiArea.setText(datiBuilder.toString());
 
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            JOptionPane.showMessageDialog(this, "L'operatore non ha ancora inserito dati per la città selezionata.");
+
+            Timer timer = new Timer(1000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    SetFrameFunc.setFrame(new Cerca());
+                }
+            });
+
+            timer.setRepeats(false);
+            timer.start();
         }
 
         JPanel container = new JPanel();
@@ -110,6 +132,8 @@ public class Tabella extends JFrame {
 
         idArea.setBounds(400 - offset, 100, 500, 50);
 
+        indietroButton.addActionListener((ActionListener) this);
+
         container.add(scrollPane);
         container.add(homeButton);
         container.add(indietroButton);
@@ -118,90 +142,18 @@ public class Tabella extends JFrame {
 
     }
 
-    // public static Map<String, MediaCommenti> calcolaMediaPunteggiPerCitta(String
-    // nomeCitta) throws IOException {
-
-    // Map<String, Integer> mediaPunteggi = new LinkedHashMap<>();// Uso
-    // LinkedHashMap per mantenere l'ordine
-    // Map<String, StringBuilder> commentiPerCategoria = new LinkedHashMap<>();//
-    // Mappa per i commenti
-
-    // String filePath = "DatiRegistrati.csv";
-
-    // BufferedReader reader = new BufferedReader(new FileReader(filePath));
-    // String line;
-    // int count = 0, tot = 1;
-
-    // while ((line = reader.readLine()) != null) {
-    // String[] parts = line.split(",");
-    // String nomeCittaNelFile = parts[0].trim();
-
-    // if (nomeCittaNelFile.equalsIgnoreCase(nomeCitta.trim())) {
-    // String categoria = parts[3].trim(); // rimozione spazi bianchi
-    // int punteggio = Integer.parseInt(parts[4].trim());
-    // String commento = parts[5].trim();
-
-    // if (mediaPunteggi.containsKey(categoria)) {
-    // int mediaAttuale = mediaPunteggi.get(categoria);
-    // mediaPunteggi.put(categoria, mediaAttuale + punteggio);
-    // } else {
-    // mediaPunteggi.put(categoria, punteggio);
-    // }
-
-    // // Aggiunta dei commenti alla mappa dei commenti, vedere con cosa sostituire
-    // la
-    // // stringa vuota
-    // if (!commento.equalsIgnoreCase("0")) {
-    // if (commentiPerCategoria.containsKey(categoria)) {
-    // commentiPerCategoria.get(categoria).append(" | " + commento);
-    // } else {
-    // commentiPerCategoria.put(categoria, new StringBuilder(commento));
-    // }
-    // }
-
-    // count++;
-    // if (count % 8 == 0) {
-    // tot++;
-    // }
-    // }
-    // }
-
-    // reader.close();
-
-    // if (count == 0) {
-    // return new LinkedHashMap<>();// Nessuna corrispondenza trovata, restituisci
-    // una mappa vuota
-    // }
-    // // Calcola la media dei punteggi per ogni categoria
-    // for (Map.Entry<String, Integer> entry : mediaPunteggi.entrySet()) {
-    // String categoria = entry.getKey();
-    // int media = Math.round(entry.getValue() / tot);
-    // mediaPunteggi.put(categoria, media);
-    // }
-    // // Crea una mappa finale che contiene la media e i commenti
-    // Map<String, MediaCommenti> mediaCommentiMap = new LinkedHashMap<>();
-    // for (String categoria : mediaPunteggi.keySet()) {
-    // Integer media = mediaPunteggi.get(categoria);
-    // StringBuilder commenti = commentiPerCategoria.get(categoria);
-    // mediaCommentiMap.put(categoria, new MediaCommenti(media,
-    // commenti.toString()));
-    // }
-
-    // return mediaCommentiMap;
-
-    // }
-
     public static Map<String, MediaCommenti> calculateAverageScoresByCategory(String cityName) throws IOException {
 
         Map<String, Integer> averageScores = new LinkedHashMap<>();
         Map<String, StringBuilder> commentsByCategory = new LinkedHashMap<>();
         String filePath = "DatiRegistrati.csv";
 
-        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        BufferedReader reader = new BufferedReader(new FileReader(filePath, StandardCharsets.UTF_8));
         String line;
         int count = 0, totalRecords = 1;
 
         while ((line = reader.readLine()) != null) {
+            line = line.replace("\uFEFF", "");
             String[] parts = line.split(",");
             String cityInFile = parts[0].trim();
 
@@ -264,4 +216,17 @@ public class Tabella extends JFrame {
             return commenti != null ? commenti : "Nessun commento disponibile";
         }
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        // Bottone Indietro
+        if (e.getSource() == indietroButton) {
+
+            dispose();
+            SetFrameFunc.setFrame(new Cerca());
+
+        }
+    }
+
 }

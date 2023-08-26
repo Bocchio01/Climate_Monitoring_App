@@ -129,21 +129,44 @@ public class Cerca extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == cercaButton) {
 
-            String s = null;
+            String città = "";
 
-            try {
-                if (cittaField.getText().isEmpty())
-                    s = CercaFunc.coordFind(latField, longField);
-                else
-                    s = CercaFunc.nameFind(cittaField);
-            } catch (IOException e1) {
-                // Auto-generated catch block
-                e1.printStackTrace();
+            switch (ricercaBox.getSelectedIndex()) {
+                case 0:
+                    città = cittaField.getText();
+                    if (CercaFunc.nameFind(città, "./geonames-and-coordinates.csv", 1)) {
+                        dispose();
+                        SetFrameFunc.setFrame(new Tabella(città));
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Città non trovata.");
+                    }
+                    break;
+
+                case 1:
+                    città = CercaFunc.coordFind(latField.getText(), longField.getText(),
+                            "./geonames-and-coordinates.csv", 1);
+                    dispose();
+                    SetFrameFunc.setFrame(new Tabella(città));
+                    break;
+
+                default:
+                    break;
             }
-            if (s != null) {
-                dispose();
-                SetFrameFunc.setFrame(new Tabella(s));
-            }
+
+            // try {
+            // if (cittaField.getText().isEmpty())
+            // s = CercaFunc.coordFind(latField, longField);
+            // else
+            // s = CercaFunc.nameFind(cittaField);
+            // } catch (IOException e1) {
+            // // Auto-generated catch block
+            // e1.printStackTrace();
+            // }
+            // if (s != null) {
+
+            // dispose();
+            // SetFrameFunc.setFrame(new Tabella(cittaField.getText()));
+            // }
 
         }
 
