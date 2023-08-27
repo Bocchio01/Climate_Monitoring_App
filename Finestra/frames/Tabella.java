@@ -28,7 +28,6 @@ public class Tabella extends JFrame implements ActionListener {
 
     private JScrollPane scrollPane;
     private JButton indietroButton, homeButton;
-    private Cursor cursoreInd, cursoreHome;
     private ImageIcon icona;
     private JTextArea idArea;
     private JTextArea datiArea = new JTextArea();
@@ -38,8 +37,8 @@ public class Tabella extends JFrame implements ActionListener {
         indietroButton = new JButton("Indietro");
         icona = new ImageIcon("Immagini/icona_home.png");
         homeButton = new JButton(icona);
-        cursoreInd = indietroButton.getCursor();
-        cursoreHome = homeButton.getCursor();
+        indietroButton.getCursor();
+        homeButton.getCursor();
 
         String testo = "";
         try {
