@@ -1,4 +1,4 @@
-﻿package Finestra.utils;
+package Finestra.utils;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;

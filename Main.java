@@ -1,4 +1,3 @@
-﻿
 import Finestra.frames.SchermataIniziale;
 import Finestra.utils.SetFrameFunc;
 

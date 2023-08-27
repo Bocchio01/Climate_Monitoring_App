@@ -1,4 +1,4 @@
-﻿package Finestra.frames;
+package Finestra.frames;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;

@@ -1,4 +1,4 @@
-﻿package Finestra.functions;
+package Finestra.functions;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

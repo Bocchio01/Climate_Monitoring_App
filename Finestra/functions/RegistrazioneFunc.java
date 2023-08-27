@@ -1,4 +1,4 @@
-﻿package Finestra.functions;
+package Finestra.functions;
 
 import javax.swing.*;
 import java.io.FileWriter;

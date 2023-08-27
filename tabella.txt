@@ -1,7 +1,0 @@
-Como,CentroDiBocchio,27/08/2023,Vento,null,
-Umidita',null,
-Pressione,3,
-Temperatura,null,
-Precipitazioni,null,
-Altitudine dei ghiacciai,null,
-Massa dei ghiacciai,null,

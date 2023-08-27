@@ -1,4 +1,4 @@
-﻿package Finestra.utils;
+package Finestra.utils;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
