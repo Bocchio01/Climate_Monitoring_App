@@ -118,8 +118,8 @@ public class Tabella extends JFrame implements ActionListener {
         }
 
         JPanel container = new JPanel();
-        container.setBackground(new Color(153, 255, 255));
-        container.setLayout(null);
+        Theme.applyThemeToContainer(container);
+
         datiArea.setEditable(false);
         scrollPane = new JScrollPane(datiArea);
 
@@ -133,6 +133,7 @@ public class Tabella extends JFrame implements ActionListener {
         idArea.setBounds(400 - offset, 100, 500, 50);
 
         indietroButton.addActionListener((ActionListener) this);
+        homeButton.addActionListener((ActionListener) this);
 
         container.add(scrollPane);
         container.add(homeButton);
@@ -227,6 +228,13 @@ public class Tabella extends JFrame implements ActionListener {
             SetFrameFunc.setFrame(new Cerca());
 
         }
+        if (e.getSource() == homeButton) {
+
+            dispose();
+            SetFrameFunc.setFrame(new HomePage());
+
+        }
+
     }
 
 }
