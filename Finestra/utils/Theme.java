@@ -1,4 +1,4 @@
-package Finestra;
+package Finestra.utils;
 
 import java.awt.Color;
 

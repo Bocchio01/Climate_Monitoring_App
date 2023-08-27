@@ -1,0 +1,21 @@
+Bologna,Centro,27/08/2023,Vento,5,Commento 1
+Umidita',4,Commento 2
+Pressione,3,Commento 3
+Temperatura,1,Commento 4
+Precipitazioni,-1,Commento 5
+Altitudine dei ghiacciai,2,Commento 6
+Massa dei ghiacciai,10,Commento 7
+Bologna,Centro,27/08/2023,Vento,5,Commento 1
+Umidita',4,Commento 2
+Pressione,3,Commento 3
+Temperatura,1,Commento 4
+Precipitazioni,-1,Commento 5
+Altitudine dei ghiacciai,2,Commento 6
+Massa dei ghiacciai,10,Commento 7
+Bologna,Centro,27/08/2023,Vento,5,Commento 1
+Umidita',4,Commento 2
+Pressione,3,Commento 3
+Temperatura,1,Commento 4
+Precipitazioni,2,Commento 5
+Altitudine dei ghiacciai,2,Commento 6
+Massa dei ghiacciai,5,Commento 7

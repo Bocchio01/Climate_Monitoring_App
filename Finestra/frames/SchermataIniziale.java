@@ -1,6 +1,9 @@
-﻿package Finestra;
+﻿package Finestra.frames;
 
 import javax.swing.*;
+
+import Finestra.utils.SetFrameFunc;
+
 import java.awt.*;
 
 public class SchermataIniziale extends JFrame {
@@ -11,7 +14,7 @@ public class SchermataIniziale extends JFrame {
     JProgressBar progressBar = new JProgressBar(0, 100); // Valore minimo 0, valore massimo 100
     Timer timer;
 
-    SchermataIniziale() {
+    public SchermataIniziale() {
 
         setLayoutManager();
         setLocationAndSize();

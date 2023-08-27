@@ -1,4 +1,4 @@
-﻿package Finestra;
+﻿package Finestra.frames;
 
 import java.awt.Color;
 
@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Finestra.utils.SetFrameFunc;
+
 public class AreaOperatore extends JFrame implements ActionListener {
     // Oggetti da inserire nel frame
 
@@ -26,7 +28,7 @@ public class AreaOperatore extends JFrame implements ActionListener {
     Cursor cursoreAcc = accediButton.getCursor();
     Cursor cursoreInd = indietroButton.getCursor();
 
-    AreaOperatore() {
+    public AreaOperatore() {
 
         // Formazione del frame+componenti
 

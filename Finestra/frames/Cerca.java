@@ -1,9 +1,13 @@
-﻿package Finestra;
+﻿package Finestra.frames;
 
 import javax.swing.*;
+
+import Finestra.functions.CercaFunc;
+import Finestra.utils.SetFrameFunc;
+import Finestra.utils.Theme;
+
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 
 public class Cerca extends JFrame implements ActionListener {
 
@@ -23,7 +27,7 @@ public class Cerca extends JFrame implements ActionListener {
     Cursor cursoreReg = cercaButton.getCursor();
     JButton indietroButton = new JButton("Indietro");
 
-    Cerca() {
+    public Cerca() {
 
         setLocationAndSize();
         addComponentsToContainer();

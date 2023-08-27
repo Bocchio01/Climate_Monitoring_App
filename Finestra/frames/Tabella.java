@@ -1,4 +1,4 @@
-﻿package Finestra;
+﻿package Finestra.frames;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -18,6 +18,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import Finestra.functions.CercaFunc;
+import Finestra.utils.SetFrameFunc;
+import Finestra.utils.Theme;
 
 import javax.swing.*;
 

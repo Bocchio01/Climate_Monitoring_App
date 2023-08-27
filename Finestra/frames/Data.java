@@ -1,4 +1,4 @@
-﻿package Finestra;
+﻿package Finestra.frames;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -6,6 +6,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.MaskFormatter;
+
+import Finestra.utils.CharacterLimitFilter;
 
 import java.text.ParseException;
 

@@ -1,7 +1,16 @@
-﻿package Finestra;
+﻿package Finestra.utils;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
+import Finestra.frames.AreaOperatore;
+import Finestra.frames.Cerca;
+import Finestra.frames.CreaCentro;
+import Finestra.frames.Data;
+import Finestra.frames.HomePage;
+import Finestra.frames.Login;
+import Finestra.frames.RegisterFrame;
+import Finestra.frames.Tabella;
 
 public class SetFrameFunc {
 
@@ -62,12 +71,6 @@ public class SetFrameFunc {
     static void setFrame(Data e) {
 
         setCommonFrameProperties(e, "Data");
-
-    }
-
-    static void setFrame(Comment e) {
-
-        setCommonFrameProperties(e, "Cerca");
 
     }
 

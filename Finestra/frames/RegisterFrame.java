@@ -1,4 +1,4 @@
-﻿package Finestra;
+﻿package Finestra.frames;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 
-class RegisterFrame extends JFrame implements ActionListener {
+import Finestra.functions.RegistrazioneFunc;
+import Finestra.utils.SetFrameFunc;
+
+public class RegisterFrame extends JFrame implements ActionListener {
 
     // Oggetti da inserire nel frame
 
@@ -32,7 +35,7 @@ class RegisterFrame extends JFrame implements ActionListener {
 
     JLabel logo = new JLabel(new ImageIcon("Immagini/logo3.png"));
 
-    RegisterFrame() {
+    public RegisterFrame() {
         // Costruttore: formazione del frame+componenti
 
         setLayoutManager();

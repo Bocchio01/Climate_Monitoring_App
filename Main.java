@@ -1,4 +1,6 @@
-﻿package Finestra;
+﻿
+import Finestra.frames.SchermataIniziale;
+import Finestra.utils.SetFrameFunc;
 
 class Main {
     public static void main(String[] args) {

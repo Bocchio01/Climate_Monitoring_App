@@ -1,11 +1,15 @@
-﻿package Finestra;
+﻿package Finestra.frames;
 
 import javax.swing.*;
+
+import Finestra.utils.SetFrameFunc;
+import Finestra.utils.Theme;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class HomePage extends JFrame implements ActionListener {
+public class HomePage extends JFrame implements ActionListener {
 
     // Oggetti da inserire nel frame
 
@@ -19,7 +23,7 @@ class HomePage extends JFrame implements ActionListener {
     ImageIcon sun_moon = new ImageIcon("Immagini/tema.png");
     JButton theme = new JButton(sun_moon);
 
-    HomePage() {
+    public HomePage() {
 
         // Formazione del frame+componenti
         setLocationAndSize();

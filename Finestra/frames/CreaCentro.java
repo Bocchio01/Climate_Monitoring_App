@@ -1,4 +1,4 @@
-﻿package Finestra;
+﻿package Finestra.frames;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -15,6 +15,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import Finestra.functions.registraCentroAreeFunc;
+import Finestra.utils.SetFrameFunc;
 
 public class CreaCentro extends JFrame implements ActionListener {
 

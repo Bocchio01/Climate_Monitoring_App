@@ -1,6 +1,10 @@
-﻿package Finestra;
+﻿package Finestra.frames;
 
 import javax.swing.*;
+
+import Finestra.functions.LoginFunc;
+import Finestra.utils.SetFrameFunc;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,7 +22,7 @@ public class Login extends JFrame implements ActionListener {
     private JButton loginButton = new JButton("Accedi");
     Cursor cursoreReg = loginButton.getCursor();
 
-    Login() {
+    public Login() {
 
         setLayoutManager();
         setLocationAndSize();
