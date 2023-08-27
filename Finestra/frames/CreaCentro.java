@@ -7,7 +7,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,8 +15,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Finestra.functions.LoginFunc;
 import Finestra.functions.registraCentroAreeFunc;
 import Finestra.utils.SetFrameFunc;
+import Finestra.utils.Theme;
 
 public class CreaCentro extends JFrame implements ActionListener {
 
@@ -32,35 +33,55 @@ public class CreaCentro extends JFrame implements ActionListener {
     private JTextField capField = new JTextField();
     private JTextField comuneField = new JTextField();
     private JTextField provField = new JTextField();
-    private int i;
-    private String s = "null";
+    String[] userData;
 
-    public CreaCentro(int i) throws IOException {
+    JTextField[] textFields;
 
-        this.i = i;
+    public CreaCentro(String userString) {
 
-        ricercaCentro();
+        // ricercaCentro();
 
-        setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
         addActionEvent();
+        Theme.applyThemeToContainer(container);
 
-        if (!s.equals("null")) {
-            nomeCentro.setText(s);
+        userData = userString.split("[,;]");
+
+        if (userData.length == 6 && !(userData[5].equals("null"))) {
+            nomeCentro.setText(userData[5]);
             nomeCentro.setEnabled(false);
+
+            try {
+                FileReader fin = new FileReader("./CentroMonitoraggio.dati.csv");
+                BufferedReader fbuffer = new BufferedReader(fin);
+                String line;
+
+                while ((line = fbuffer.readLine()) != null) {
+                    String[] parole = line.split("[,;]");
+
+                    if (parole[0].equals(userData[5])) {
+                        for (int h = 6; h < parole.length; h++) {
+                            ricercaBox.addItem(parole[h]);
+                        }
+                        break;
+                    }
+
+                }
+
+                fbuffer.close();
+
+            } catch (Exception e) {
+                // TODO jsnck
+
+            }
+        } else {
+            nomeCentro.setEnabled(true);
         }
+
     }
 
-    public void setLayoutManager() {
-
-        // Set info Container
-
-        container.setBackground(new Color(153, 255, 255));
-        container.setLayout(null);
-    }
-
-    public void setLocationAndSize() throws IOException {
+    public void setLocationAndSize() {
         nomeCentro.setBounds(50, 100, 125, 30);
         piaField.setBounds(50, 140, 125, 30);
         numerocivField.setBounds(50, 180, 125, 30);
@@ -72,29 +93,9 @@ public class CreaCentro extends JFrame implements ActionListener {
         inserisciButton.setBounds(550, 100, 125, 30);
         ricercaBox = new JComboBox<String>();
 
-        if (!(s.equals("null"))) {
-            nomeCentro.setText(s);
-            nomeCentro.setEnabled(false);
-
-            try (BufferedReader br = new BufferedReader(new FileReader("./CentroMonitoraggio.dati.txt"))) {
-                String linea;
-                while ((linea = br.readLine()) != null) {
-                    String[] parole = linea.split(",");
-                    if (parole[0].equals(s)) {
-                        for (int h = 6; h < parole.length; h++) {
-                            ricercaBox.addItem(parole[h]);
-                        }
-                    }
-
-                }
-
-            }
-
-        }
-
         ricercaBox.setBounds(380, 100, 150, 30);
 
-        JTextField[] textFields = new JTextField[7];
+        textFields = new JTextField[7];
         textFields[0] = nomeCentro;
         textFields[1] = piaField;
         textFields[2] = numerocivField;
@@ -166,55 +167,32 @@ public class CreaCentro extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == creaButton) {
-            int flag = registraCentroAreeFunc.registraCentroAree(nomeCentro, piaField, numerocivField, capField,
-                    capField,
-                    provField, nomeArea, i);
-            if (flag == 1) {
-                dispose();
-                try {
 
-                    SetFrameFunc.setFrame(new CreaCentro(i));
-                } catch (IOException e1) {
-
-                    e1.printStackTrace();
-                }
+            String[] datiInseriti = new String[textFields.length];
+            for (int i = 0; i < textFields.length; i++) {
+                datiInseriti[i] = textFields[i].getText();
             }
+
+            if (registraCentroAreeFunc.checkInputRegister(datiInseriti)) {
+                registraCentroAreeFunc.registraCentroAree(datiInseriti, userData);
+                String userString = LoginFunc.login(userData[3], userData[4]);
+                dispose();
+                SetFrameFunc.setFrame(new CreaCentro(userString));
+            }
+
         }
+
         if (e.getSource() == inserisciButton) {
             Object selectedItem = ricercaBox.getSelectedItem();
             if (selectedItem != null) {
-                String focusedWord = selectedItem.toString();
                 dispose();
-                SetFrameFunc.setFrame(new Data(focusedWord, s));
+                SetFrameFunc.setFrame(new Data(selectedItem.toString(), textFields[0].getText()));
             } else {
                 JOptionPane.showMessageDialog(null, "Selezionare un'area");
             }
 
         }
 
-    }
-
-    public void ricercaCentro() throws IOException {
-
-        try (BufferedReader br = new BufferedReader(new FileReader("./OperatoriRegistrati.dati.csv"))) {
-            String linea;
-            int count = 0;
-            String[] parole = new String[6];
-            while ((linea = br.readLine()) != null) {
-                if (count == i) {
-                    parole = linea.split(",");
-                    break;
-                }
-                count++;
-
-            }
-            if (!(parole[5].equals("null"))) {
-
-                s = parole[5];
-            } else
-                s = "null";
-
-        }
     }
 
 }

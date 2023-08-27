@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
 
 import Finestra.functions.RegistrazioneFunc;
 import Finestra.utils.SetFrameFunc;
+import Finestra.utils.Theme;
 
 public class RegisterFrame extends JFrame implements ActionListener {
 
@@ -38,19 +38,18 @@ public class RegisterFrame extends JFrame implements ActionListener {
     public RegisterFrame() {
         // Costruttore: formazione del frame+componenti
 
-        setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
         addActionEvent();
+        Theme.applyThemeToContainer(container);
+        Theme.applyThemeToLabel(nomeCognomeLabel);
+        Theme.applyThemeToLabel(codiceFiscLabel);
+        Theme.applyThemeToLabel(eMailLabel);
+        Theme.applyThemeToLabel(userIdLabel);
+        Theme.applyThemeToLabel(passwordLabel);
+        Theme.applyThemeToLabel(centroMonLabel);
+        // Theme.applyThemeToLabel(campiObblabel);
 
-    }
-
-    public void setLayoutManager() {
-
-        // Set info Container
-
-        container.setBackground(new Color(153, 255, 255));
-        container.setLayout(null);
     }
 
     public void setLocationAndSize() {
@@ -125,10 +124,22 @@ public class RegisterFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Ottenere i valori inseriti dall'utente
         if (e.getSource() == registrati) {
-            RegistrazioneFunc.registrazione(nomeCognomeField, codiceFiscField, eMailField, userIdField, passwordField,
-                    centroMonField);
-            dispose();
-            SetFrameFunc.setFrame(new AreaOperatore());
+            String[] dataInserted = {
+                    nomeCognomeField.getText(),
+                    codiceFiscField.getText(),
+                    eMailField.getText(),
+                    userIdField.getText(),
+                    new String(passwordField.getPassword()),
+                    !centroMonField.getText().equals("") ? centroMonField.getText() : "null"
+            };
+            if (RegistrazioneFunc.checkRegisterInputs(dataInserted) &&
+                    RegistrazioneFunc.registrazione(dataInserted)) {
+                JOptionPane.showMessageDialog(null, "Profilo registrato con successo");
+                dispose();
+                SetFrameFunc.setFrame(new AreaOperatore());
+            } else
+                JOptionPane.showMessageDialog(null, "Profilo non registrato");
+
         }
 
         // Bottone Home

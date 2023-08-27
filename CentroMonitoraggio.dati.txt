@@ -1,3 +1,0 @@
-asd,asd,asd,asd,asd,asd,ciao,mio,yuo
-Peppino,comolotti,15,22042,22042,CO,Como,Firenze,Milano,New York
-Centro,Via Montagnola,13,22042,22042,CO,Como,Milano,Bologna

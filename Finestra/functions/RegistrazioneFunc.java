@@ -3,55 +3,86 @@
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegistrazioneFunc {
 
-    public static void registrazione(JTextField nomeCognomeField, JTextField codiceFiscField, JTextField eMailField,
-            JTextField userIdField, JPasswordField passwordField, JTextField centroMonField) {
-        // Ottenere i valori inseriti dall'utente
-        String nomeCognome = nomeCognomeField.getText();
-        String codiceFisc = codiceFiscField.getText();
-        String eMail = eMailField.getText();
-        String userId = userIdField.getText();
-        String password = new String(passwordField.getPassword());
-        String centroMon = centroMonField.getText();
+    public static boolean registrazione(String[] dataInserted) {
 
-        if (nomeCognome.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "inserisci un nome e cognome");
-        } else if (codiceFisc.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "inserisci un codice fiscale");
-        } else if (codiceFisc.length() <= 15) {
-            JOptionPane.showMessageDialog(null, "inserisci un codice fiscale valido");
-        } else if (eMail.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "inserisci una email");
-        } else if (!eMail.contains("@")) {
-            JOptionPane.showMessageDialog(null, "inserisci una email valida");
-        } else if (userId.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "inserisci un id");
-        } else if (password.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "inserisci una password");
-        } else if (password.length() < 8) {
-            JOptionPane.showMessageDialog(null, "la password deve essere lunga almeno 8 caratteri");
-        } else if (!password.matches(".*[A-Z].*")) {
-            JOptionPane.showMessageDialog(null, "la password deve contenere almeno una lettera maiuscola");
-        } else {
-            if (centroMon.isEmpty()) {
-                centroMon = null;
-            }
+        String dati = String.join(",", dataInserted) + "\n";
 
-            // Creare una stringa con i dati inseriti
-            String dati = nomeCognome + "," + codiceFisc.toUpperCase() + "," + eMail
-                    + "," + userId + "," + password + "," + centroMon + "\n";
-
-            // Salvare i dati su file txt
-            try {
-                FileWriter fileWriter = new FileWriter("OperatoriRegistrati.dati.csv", true);
-                fileWriter.write(dati);
-                fileWriter.close();
-                JOptionPane.showMessageDialog(null, "Profilo registrato con successo");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+        try {
+            FileWriter fileWriter = new FileWriter("OperatoriRegistrati.dati.csv", true);
+            fileWriter.write(dati);
+            fileWriter.close();
+            return true;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return false;
         }
     }
+
+    public static boolean checkRegisterInputs(String[] dataInserted) {
+
+        String title = "Dato inserito non corretto", message = "";
+
+        // String nomeCognomeField,
+        // String codiceFiscField,
+        // String eMailField,
+        // String userIdField,
+        // String passwordField,
+        // String centroMonField
+        if (dataInserted[0].isEmpty()) {
+            message = "Inserisci un nome e cognome";
+
+        } else if (dataInserted[1].isEmpty()) {
+            message = "Inserisci un codice fiscale";
+
+        } else if (!isValidFromRegex(dataInserted[1], "^[A-Z]{6}\\d{2}[A-Z]\\d{2}[A-Z]\\d{3}[A-Z]$")) {
+            message = "Inserisci un codice fiscale valido";
+
+        } else if (dataInserted[2].isEmpty()) {
+            message = "Inserisci una email";
+
+        } else if (!isValidFromRegex(dataInserted[2], "^[A-Za-z0-9+_.-]+@(.+)$")) {
+            message = "Email non corretta";
+
+        } else if (dataInserted[3].isEmpty()) {
+            message = "Inserisci un id";
+
+        } else if (dataInserted[4].isEmpty()) {
+            message = "Inserisci una password";
+
+        } else if (!LoginFunc.login(dataInserted[3], dataInserted[4]).equals("")) {
+            message = "L'utente esiste già. Cambiare ID utente e/o password";
+
+        } else if (!isValidFromRegex(dataInserted[4], "^(?=.*[A-Z])(?=.*[@#$%^&+=!])(.{8,})$")) {
+            message = "La password non ha il formato corretto.";
+
+            // } else {
+            // if (dataInserted[0].isEmpty()) {
+            // dataInserted[2] = null;
+            // }
+
+        }
+
+        if (!message.equals("")) {
+            JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    public static boolean isValidFromRegex(String email, String regex) {
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+
+        // return matcher.matches();
+        return true;
+    }
+
+    // public static boolean
 }

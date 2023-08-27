@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 
 public class Theme {
 
-    private static boolean darkMode = false;
+    private static boolean darkMode = true;
     private static Color lightBlue = new Color(153, 255, 255);
     private static Color darkGray = new Color(49, 51, 56);
 
@@ -30,6 +30,11 @@ public class Theme {
     }
 
     public static void applyThemeToLabel(JLabel label) {
+        if (isDarkMode()) {
+            label.setForeground(Color.WHITE);
+        } else {
+            label.setForeground(Color.BLACK);
+        }
 
     }
 }

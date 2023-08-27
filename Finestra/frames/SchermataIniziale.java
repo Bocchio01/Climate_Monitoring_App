@@ -3,12 +3,13 @@
 import javax.swing.*;
 
 import Finestra.utils.SetFrameFunc;
+import Finestra.utils.Theme;
 
 import java.awt.*;
 
 public class SchermataIniziale extends JFrame {
 
-    Container container = getContentPane();
+    JPanel container = new JPanel();
     JLabel icona = new JLabel(new ImageIcon("Immagini/logo_png_home.png"));// !Sistemare i bordi dell'immagine
     JLabel nomeLabel = new JLabel("Monitoraggio Climatico");
     JProgressBar progressBar = new JProgressBar(0, 100); // Valore minimo 0, valore massimo 100
@@ -16,9 +17,10 @@ public class SchermataIniziale extends JFrame {
 
     public SchermataIniziale() {
 
-        setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
+        Theme.applyThemeToContainer(container);
+        Theme.applyThemeToLabel(nomeLabel);
 
         timer = new Timer(0, e -> {
             int progress = progressBar.getValue();
@@ -34,14 +36,7 @@ public class SchermataIniziale extends JFrame {
         timer.start();
     }
 
-    public void setLayoutManager() {
-        // Set info Container
-        container.setBackground(new Color(224, 251, 255));
-        container.setLayout(null);
-    }
-
     public void setLocationAndSize() {
-        // !Centrare i compnenti
         icona.setBounds(150, 50, 420, 400);
         nomeLabel.setBounds(210, 470, 405, 55);
         nomeLabel.setFont(new Font("Ink Free", Font.CENTER_BASELINE, 35));
@@ -54,6 +49,8 @@ public class SchermataIniziale extends JFrame {
         container.add(icona);
         container.add(nomeLabel);
         container.add(progressBar);
+
+        add(container);
     }
 
 }

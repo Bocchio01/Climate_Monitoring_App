@@ -8,6 +8,7 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.MaskFormatter;
 
 import Finestra.utils.CharacterLimitFilter;
+import Finestra.utils.Theme;
 
 import java.text.ParseException;
 
@@ -23,12 +24,14 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Data extends JFrame implements ActionListener {
 
     private JTable table;
     private JScrollPane scrollPaneTable;
-    private DefaultTableModel model;
+    private DefaultTableModel modelTable;
     private JButton salvaButton;
     private JTextArea commentoVento;
     private JScrollPane barVento;
@@ -51,8 +54,22 @@ public class Data extends JFrame implements ActionListener {
     private String dateToString;
     private DateFormat dateFormat;
     private long milliseconds;
+    private Object[][] data = {
+            { "Vento", "Velocità del vento (km/h)", null },
+            { "Umidita'", "% di Umidità", null },
+            { "Pressione", "In hPa", null },
+            { "Temperatura", "In C°", null },
+            { "Precipitazioni", "In mm di pioggia", null },
+            { "Altitudine dei ghiacciai", "In m", null },
+            { "Massa dei ghiacciai", "In kg", null }
+    };
 
-    public Data(String s, String n) {
+    String nameCenter, areaSelected;
+
+    public Data(String areaSelected, String nameCenter) {
+
+        this.areaSelected = areaSelected;
+        this.nameCenter = nameCenter;
 
         try {
             MaskFormatter dateMask = new MaskFormatter("##/##/####"); // Defining the date format
@@ -82,23 +99,13 @@ public class Data extends JFrame implements ActionListener {
                 }
             });
 
-            this.area.setText(s);
-            this.nomeCentro.setText(n);
-
-            Object[][] data = {
-                    { "Vento", "Velocità del vento (km/h)", null },
-                    { "Umidita'", "% di Umidità", null },
-                    { "Pressione", "In hPa", null },
-                    { "Temperatura", "In C°", null },
-                    { "Precipitazioni", "In mm di pioggia", null },
-                    { "Altitudine dei ghiacciai", "In m", null },
-                    { "Massa dei ghiacciai", "In kg", null }
-            };
+            this.area.setText(areaSelected);
+            this.nomeCentro.setText(nameCenter);
 
             String[] columnNames = { "Categoria climatica", "Spiegazione", "Punteggio" };
 
             // Creazione del modello della tabella con 7 righe e 3 colonne
-            model = new DefaultTableModel(data, columnNames) {
+            modelTable = new DefaultTableModel(data, columnNames) {
                 @Override
                 public boolean isCellEditable(int row, int column) {
                     // Rendi modificabili solo l'ultima colonna (indice 2)
@@ -116,7 +123,7 @@ public class Data extends JFrame implements ActionListener {
             };
 
             // Creazione della tabella con il modello creato
-            table = new JTable(model);
+            table = new JTable(modelTable);
 
             // table.getColumnModel().getColumn(2).setCellEditor(new ScoreCellEditor());
 
@@ -279,7 +286,11 @@ public class Data extends JFrame implements ActionListener {
             container.add(nomeCentro);
             container.add(dateTextField);
 
+            Theme.applyThemeToContainer(container);
+            Theme.applyThemeToLabel(area);
+            Theme.applyThemeToLabel(nomeCentro);
             add(container);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -290,107 +301,116 @@ public class Data extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == salvaButton) {
 
-            salvaFile();
+            Object[] scores = new Object[modelTable.getRowCount()],
+                    comments = new Object[modelTable.getRowCount()];
+            String dataInserita = dateTextField.getText();
 
+            for (int i = 0; i < modelTable.getRowCount(); i++) {
+                scores[i] = (Integer) modelTable.getValueAt(i, 2);
+                // comments[i] = modelTable.getValueAt(i, 3);
+                comments[i] = (String) commenti[i].getText().trim();
+            }
+
+            int counterDataInserted = 0;
+            for (int i = 0; i < scores.length; i++) {
+                if (scores[i] != null) {
+                    counterDataInserted++;
+                    if (!isScoreValid(castScoreToInteger(scores[i]))) {
+                        JOptionPane.showMessageDialog(this,
+                                "Valore errato alla riga:" + (i + 1),
+                                "Valore errato",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+            }
+
+            if (counterDataInserted == 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Inserisci almeno un punteggio nella tabella.",
+                        "Valore errato",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (!isDateValid(dataInserita)) {
+                JOptionPane.showMessageDialog(this,
+                        "La data inserita non è corretta.",
+                        "Data errata",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (saveScoresToFile(this.areaSelected, this.nameCenter, dataInserita, scores, comments))
+                JOptionPane.showMessageDialog(this,
+                        "Dati salvati con successo!",
+                        "Salvataggio dati",
+                        JOptionPane.INFORMATION_MESSAGE);
+            else
+                JOptionPane.showMessageDialog(this,
+                        "Errore nella scrittura dei dati!",
+                        "Errore nel salvataggio dati",
+                        JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void salvaFile() {
-        String data = dateTextField.getText();
-        boolean flag = true;
-        boolean hasValidScore = false; // Nuova variabile per tenere traccia dei punteggi validi
-
-        // Verifica se almeno una cella contiene un punteggio valido
-        for (int i = 0; i < model.getRowCount(); i++) {
-            Object scoreObject = model.getValueAt(i, 2);
-            String score = scoreObject != null ? scoreObject.toString().trim() : "null"; // Converti in "null" se
-                                                                                         // scoreObject è null e rimuovi
-                                                                                         // spazi vuoti
-
-            if (!"null".equals(score)) {
-                try {
-                    int punteggio = Integer.parseInt(score);
-                    if (punteggio >= 1 && punteggio <= 5) {
-                        hasValidScore = true; // Se almeno un punteggio è valido, imposta a true
-                    }
-                } catch (NumberFormatException e) {
-                    flag = false;
-                }
-            }
-        }
-
-        if (!isValidDate(data)) {
-            JOptionPane.showMessageDialog(this, "Data non valida");
-        } else if (!hasValidScore) {
-            JOptionPane.showMessageDialog(this,
-                    "Almeno una cella nella colonna 'Punteggio' deve contenere un numero valido.");
-        } else if (!flag) {
-            JOptionPane.showMessageDialog(this, "Almeno un punteggio nella tabella è fuori intervallo (1-5).");
-        } else {
-            // Creazione del file e scrittura nel file //! salvare un csv
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter("tabella.txt", true));
-
-                writer.write(area.getText() + "," + nomeCentro.getText() + "," + dateTextField.getText() + ",");
-
-                for (int i = 0; i < model.getRowCount(); i++) {
-                    String category = (String) model.getValueAt(i, 0);
-                    Object scoreObject = model.getValueAt(i, 2);
-                    String score = scoreObject != null ? scoreObject.toString().trim() : "null"; // Converti in "null"
-                                                                                                 // se scoreObject è
-                                                                                                 // null e rimuovi spazi
-                                                                                                 // vuoti
-
-                    commenti[i].setText(commenti[i].getText().trim()); // Rimuovi spazi vuoti dai commenti
-                    if (commenti[i].equals(null)) {
-                        commenti[i].setText("null");
-                    }
-
-                    String row = category + "," + score + "," + commenti[i].getText();
-                    writer.write(row);
-                    writer.newLine();
-                }
-
-                writer.close();
-
-                JOptionPane.showMessageDialog(this, "Dati salvati con successo!");
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "Errore nella scrittura dei dati!");
-            }
-        }
-    }
-
-    private boolean isValidDate(String date) {
-        // Verifica che la data abbia il formato "dd/MM/yyyy"
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        dateFormat.setLenient(false);
+    private boolean saveScoresToFile(
+            String nameArea,
+            String nameCenter,
+            String date,
+            Object[] scores,
+            Object[] comments) {
 
         try {
-            dateFormat.parse(date);
-        } catch (ParseException e) {
+            FileWriter fout = new FileWriter("DatiRegistrati.csv", true);
+            BufferedWriter fbufferout = new BufferedWriter(fout);
+
+            for (int i = 0; i < 7; i++) {
+
+                fbufferout
+                        .write(nameArea + ","
+                                + nameCenter + ","
+                                + date + ","
+                                + data[i][0] + ","
+                                + (scores[i] != null ? scores[i] : "null") + ","
+                                + (!comments[i].equals("") ? comments[i] : "null"));
+
+                fbufferout.newLine();
+
+            }
+
+            fbufferout.close();
+
+            return true;
+
+        } catch (IOException e) {
             return false;
         }
+    }
 
-        // Estrai i componenti della data
-        String[] components = date.split("/");
-        int day = Integer.parseInt(components[0]);
-        int month = Integer.parseInt(components[1]);
-        int year = Integer.parseInt(components[2]);
+    public static boolean isDateValid(String dateString) {
+        try {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate date = LocalDate.parse(dateString, dateFormatter);
 
-        LocalDate currentDate = LocalDate.now();
-
-        // Verifica i limiti per giorno, mese e anno
-        if (year < 1 || month < 1 || month > 12 || day < 1 || day > 31) {
+            return !date.isAfter(LocalDate.now());
+        } catch (DateTimeParseException e) {
             return false;
         }
+    }
 
-        // Verifica se la data è nel passato
-        LocalDate inputDate = LocalDate.of(year, month, day);
-        if (inputDate.isAfter(currentDate)) {
-            return false;
+    private static boolean isScoreValid(Integer score) {
+        return (score >= 1 && score <= 5);
+    }
+
+    private static Integer castScoreToInteger(Object scoreObject) {
+        try {
+            return Integer.parseInt(scoreObject.toString().trim());
+
+        } catch (NumberFormatException e) {
+            // TODO: handle exception
+            return -1;
         }
-
-        return true;
     }
 
 }

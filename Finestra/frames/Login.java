@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import Finestra.functions.LoginFunc;
 import Finestra.utils.SetFrameFunc;
+import Finestra.utils.Theme;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,18 +25,12 @@ public class Login extends JFrame implements ActionListener {
 
     public Login() {
 
-        setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
         addActionEvent();
-    }
-
-    public void setLayoutManager() {
-
-        // Set info Container
-
-        container.setBackground(new Color(153, 255, 255));
-        container.setLayout(null);
+        Theme.applyThemeToContainer(container);
+        Theme.applyThemeToLabel(userIDLabel);
+        Theme.applyThemeToLabel(passwordLabel);
     }
 
     public void setLocationAndSize() {
@@ -73,16 +68,22 @@ public class Login extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginButton) {
             try {
-                int[] flag = LoginFunc.login(userIDField, passwordField);
 
-                if (flag[0] == 1) {
+                String userString = LoginFunc.login(userIDField.getText(), new String(passwordField.getPassword()));
+
+                if (!userString.equals("")) {
+                    // User exists
                     dispose();
+                    SetFrameFunc.setFrame(new CreaCentro(userString));
+                } else {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Password o ID errati",
+                            "Errore di login",
+                            JOptionPane.ERROR_MESSAGE);
+                }
 
-                    SetFrameFunc.setFrame(new CreaCentro(flag[1]));
-                } else
-                    JOptionPane.showMessageDialog(null, "Password o ID errati");
-
-            } catch (IOException e1) {
+            } catch (Exception e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }

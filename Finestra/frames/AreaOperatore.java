@@ -1,7 +1,5 @@
 ﻿package Finestra.frames;
 
-import java.awt.Color;
-
 import java.awt.Cursor;
 
 import java.awt.event.ActionEvent;
@@ -14,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Finestra.utils.SetFrameFunc;
+import Finestra.utils.Theme;
 
 public class AreaOperatore extends JFrame implements ActionListener {
     // Oggetti da inserire nel frame
@@ -32,19 +31,11 @@ public class AreaOperatore extends JFrame implements ActionListener {
 
         // Formazione del frame+componenti
 
-        setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
         addActionEvent();
+        Theme.applyThemeToContainer(container);
 
-    }
-
-    public void setLayoutManager() {
-
-        // Set info Container
-
-        container.setBackground(new Color(153, 255, 255));
-        container.setLayout(null);
     }
 
     public void setLocationAndSize() {

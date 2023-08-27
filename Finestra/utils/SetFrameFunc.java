@@ -10,6 +10,7 @@ import Finestra.frames.Data;
 import Finestra.frames.HomePage;
 import Finestra.frames.Login;
 import Finestra.frames.RegisterFrame;
+import Finestra.frames.SchermataIniziale;
 import Finestra.frames.Tabella;
 
 public class SetFrameFunc {
