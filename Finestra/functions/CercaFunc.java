@@ -69,18 +69,19 @@ public class CercaFunc {
         }
     }
 
-    private static double calcolaDistanza(double lat1, double lon1, double lat2, double lon2) {
-        int R = 6371; // raggio terrestre medio in km
-        double latDistanza = Math.toRadians(lat2 - lat1);
-        double lonDistanza = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(latDistanza / 2) * Math.sin(latDistanza / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                        * Math.sin(lonDistanza / 2) * Math.sin(lonDistanza / 2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        double c2 = 2 * Math.asin(Math.sqrt(a));
-        double distanza = R * c;
-        double dist2 = R * c2;
-        System.out.println(distanza + "\n" + dist2);
-        return distanza;
-    }
+    // private static double calcolaDistanza(double lat1, double lon1, double lat2,
+    // double lon2) {
+    // int R = 6371; // raggio terrestre medio in km
+    // double latDistanza = Math.toRadians(lat2 - lat1);
+    // double lonDistanza = Math.toRadians(lon2 - lon1);
+    // double a = Math.sin(latDistanza / 2) * Math.sin(latDistanza / 2)
+    // + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+    // * Math.sin(lonDistanza / 2) * Math.sin(lonDistanza / 2);
+    // double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    // double c2 = 2 * Math.asin(Math.sqrt(a));
+    // double distanza = R * c;
+    // double dist2 = R * c2;
+    // System.out.println(distanza + "\n" + dist2);
+    // return distanza;
+    // }
 }
