@@ -20,13 +20,21 @@ public class Theme {
         return darkMode;
     }
 
+    public static void applyTheme(Object[] guiElements) {
+        for (Object guiElement : guiElements) {
+            if (guiElement instanceof JPanel)
+                applyThemeToContainer((JPanel) guiElement);
+            else if (guiElement instanceof JLabel)
+                applyThemeToLabel((JLabel) guiElement);
+        }
+    }
+
     public static void applyThemeToContainer(JPanel container) {
         if (isDarkMode()) {
             container.setBackground(darkGray);
         } else {
             container.setBackground(lightBlue);
         }
-        container.setLayout(null);
     }
 
     public static void applyThemeToLabel(JLabel label) {

@@ -5,8 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Finestra.frames.operator.OperatorHomeFrame;
 import Finestra.functions.RegistrazioneFunc;
-import Finestra.utils.SetFrameFunc;
+import Finestra.utils.FrameHandler;
 import Finestra.utils.Theme;
 
 public class RegisterFrame extends JFrame implements ActionListener {
@@ -136,7 +137,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
                     RegistrazioneFunc.registrazione(dataInserted)) {
                 JOptionPane.showMessageDialog(null, "Profilo registrato con successo");
                 dispose();
-                SetFrameFunc.setFrame(new AreaOperatore());
+                FrameHandler.setFrame(new OperatorHomeFrame());
             } else
                 JOptionPane.showMessageDialog(null, "Profilo non registrato");
 
@@ -146,7 +147,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
         if (e.getSource() == homeButton) {
 
             dispose();
-            SetFrameFunc.setFrame(new HomePage());
+            FrameHandler.setFrame(new HomeFrame());
 
         }
     }

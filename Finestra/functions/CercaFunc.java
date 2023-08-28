@@ -46,9 +46,9 @@ public class CercaFunc {
     }
 
     // Ricerca per nome
-    public static boolean nameFind(String città, String nomeFile, Integer posizioneLista) {
+    public static boolean nameFind(String citta, String nomeFile, Integer posizioneLista) {
         try {
-            String lineString, cityQuery = città.toLowerCase().trim();
+            String lineString, cityQuery = citta.toLowerCase().trim();
             boolean findFlag = false;
 
             FileReader fin = new FileReader(nomeFile, StandardCharsets.UTF_8);

@@ -1,12 +1,10 @@
-import Finestra.frames.SchermataIniziale;
-import Finestra.utils.SetFrameFunc;
+import Finestra.frames.LoadingFrame;
+import Finestra.utils.FrameHandler;
 
 class Main {
     public static void main(String[] args) {
 
-        // SetFrameFunc.setFrame(new Tabella("Como"));
-        SetFrameFunc.setFrame(new SchermataIniziale());
-        // SetFrameFunc.setFrame(new Data("Como", "CentroDiBocchio"));
+        FrameHandler.setFrame(new LoadingFrame());
 
     }
 

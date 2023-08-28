@@ -17,7 +17,7 @@ import javax.swing.JTextField;
 
 import Finestra.functions.LoginFunc;
 import Finestra.functions.registraCentroAreeFunc;
-import Finestra.utils.SetFrameFunc;
+import Finestra.utils.FrameHandler;
 import Finestra.utils.Theme;
 
 public class CreaCentro extends JFrame implements ActionListener {
@@ -177,7 +177,7 @@ public class CreaCentro extends JFrame implements ActionListener {
                 registraCentroAreeFunc.registraCentroAree(datiInseriti, userData);
                 String userString = LoginFunc.login(userData[3], userData[4]);
                 dispose();
-                SetFrameFunc.setFrame(new CreaCentro(userString));
+                FrameHandler.setFrame(new CreaCentro(userString));
             }
 
         }
@@ -186,7 +186,7 @@ public class CreaCentro extends JFrame implements ActionListener {
             Object selectedItem = ricercaBox.getSelectedItem();
             if (selectedItem != null) {
                 dispose();
-                SetFrameFunc.setFrame(new Data(selectedItem.toString(), textFields[0].getText()));
+                FrameHandler.setFrame(new Data(selectedItem.toString(), textFields[0].getText()));
             } else {
                 JOptionPane.showMessageDialog(null, "Selezionare un'area");
             }
