@@ -2,6 +2,8 @@ package src.utils;
 
 import java.awt.Dimension;
 
+import java.nio.file.Paths;
+
 public class AppConstants {
 
     public static final String EMPTY_STRING = "NONE";
@@ -19,12 +21,33 @@ public class AppConstants {
     }
 
     public static final class Path {
-        public static final String REGISTERED_DATAS = "City.data.csv";
-        public static final String OPERATORS = "Operator.data.csv";
-        public static final String NAME_COORDS = "CityCoord.list.csv";
-        public static final String AREA_INFOS = "Area.data.csv";
 
-        public static final String IMG = "src/assets";
+        public static final class Files {
+
+            public static final String CITY_DATAS = "City.data.csv";
+            public static final String OPERATOR_DATA = "Operator.data.csv";
+            public static final String CITY_COORDS = "CityCoord.list.csv";
+            public static final String AREA_DATA = "Area.data.csv";
+
+            private Files() {
+            }
+        }
+
+        public static final class Assets {
+
+            public static final String LOGO = generatePath("logoDefault.png");
+            public static final String LOADING = generatePath("logoLoading.png");
+            public static final String FAVICON = generatePath("favicon.png");
+            public static final String HOME = generatePath("iconHome.png");
+            public static final String THEME = generatePath("iconTheme.png");
+
+            private Assets() {
+            }
+
+            private static String generatePath(String fileName) {
+                return Paths.get("src", "assets", fileName).toString();
+            }
+        }
 
         private Path() {
         }
@@ -45,7 +68,8 @@ public class AppConstants {
         public static final String ID = "ID_Bocchio";
         public static final String PWD = "PWD_Bocchio";
         public static final String AREA = "Area di Bocchio";
-        // public static final String AREA = String.join(",", new String[] { "Como", "Milano", "Firenze" });
+        // public static final String AREA = String.join(",", new String[] { "Como",
+        // "Milano", "Firenze" });
 
         private DefaultData() {
         }

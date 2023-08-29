@@ -28,9 +28,9 @@ public class Home extends JFrame {
     }
 
     private void initializeComponents() {
-        buttonChangeTheme.setIcon(new ImageIcon(AppConstants.Path.IMG + "/iconTheme.png"));
+        buttonChangeTheme.setIcon(new ImageIcon(AppConstants.Path.Assets.THEME));
 
-        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.IMG + "/logoDefault.png"));
+        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.Assets.LOGO));
 
         buttonToFind.setText("Cerca e visualizza dati");
         buttonToFind.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

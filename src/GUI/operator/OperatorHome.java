@@ -37,7 +37,7 @@ public class OperatorHome extends JFrame {
 
     private void initializeComponents() {
 
-        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.IMG + "/logoDefault.png"));
+        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.Assets.LOGO));
 
         buttonToRegistration.setText("Registrati");
         buttonToRegistration.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

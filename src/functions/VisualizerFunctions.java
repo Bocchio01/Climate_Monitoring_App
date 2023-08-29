@@ -14,7 +14,7 @@ public class VisualizerFunctions {
 
         List<String> dataStrings = new ArrayList<>();
 
-        try (FileReader fin = new FileReader(AppConstants.Path.REGISTERED_DATAS)) {
+        try (FileReader fin = new FileReader(AppConstants.Path.Files.CITY_DATAS)) {
 
             BufferedReader freader = new BufferedReader(fin);
             String line;

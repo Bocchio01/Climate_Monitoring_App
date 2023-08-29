@@ -57,7 +57,7 @@ public class OperatorLogin extends JFrame {
     }
 
     private void initializeComponents() {
-        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.IMG + "/logoDefault.png"));
+        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.Assets.LOGO));
 
         labelUserID.setText("ID Utente");
         labelUserID.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);

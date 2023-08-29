@@ -41,7 +41,7 @@ public class CityVisualizer extends JFrame {
         textareaOperator.setEditable(false);
         textareaDatas.setEditable(false);
 
-        buttonToHome.setIcon(new ImageIcon(AppConstants.Path.IMG + "/iconHome.png"));
+        buttonToHome.setIcon(new ImageIcon(AppConstants.Path.Assets.HOME));
         buttonToHome.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         buttonToHome.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
 

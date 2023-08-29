@@ -15,7 +15,7 @@ public class AreaFunctions {
         }
 
         if (OperatorFunctions.updateUserData(AppConstants.Index.AREA, datiInseriti[0]) &&
-                appendToFile(String.join(",", datiInseriti) + "\n", AppConstants.Path.AREA_INFOS)) {
+                appendToFile(String.join(",", datiInseriti) + "\n", AppConstants.Path.Files.AREA_DATA)) {
 
             return true;
         }
@@ -54,7 +54,7 @@ public class AreaFunctions {
     public static boolean isAreaExists(String areaName) {
 
         try {
-            FileReader fin = new FileReader(AppConstants.Path.AREA_INFOS);
+            FileReader fin = new FileReader(AppConstants.Path.Files.AREA_DATA);
             BufferedReader rfbuffer = new BufferedReader(fin);
             String line;
 

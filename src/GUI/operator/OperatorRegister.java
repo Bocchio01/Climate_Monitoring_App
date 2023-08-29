@@ -38,7 +38,7 @@ public class OperatorRegister extends JFrame {
     }
 
     private void initializeComponents() {
-        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.IMG + "/logoDefault.png"));
+        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.Assets.LOGO));
 
         labelName.setText("Nome e Cognome");
         labelName.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);

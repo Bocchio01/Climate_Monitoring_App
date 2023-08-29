@@ -29,7 +29,7 @@ public class Loading extends JFrame {
 
     private void initializeComponents() {
         // labelIconImage.setPreferredSize(new Dimension(400, 300));
-        labelIconImage.setIcon(new ImageIcon(AppConstants.Path.IMG + "/logoLoading.png"));
+        labelIconImage.setIcon(new ImageIcon(AppConstants.Path.Assets.LOADING));
 
         labelAppName.setText("Monitoraggio Climatico");
         labelAppName.setFont(new Font("Ink Free", Font.CENTER_BASELINE, 35));

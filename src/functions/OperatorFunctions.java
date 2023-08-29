@@ -17,7 +17,7 @@ public class OperatorFunctions {
     public static boolean performLogin(String id, String password) {
 
         try {
-            FileReader fin = new FileReader(AppConstants.Path.OPERATORS);
+            FileReader fin = new FileReader(AppConstants.Path.Files.OPERATOR_DATA);
             BufferedReader rfbuffer = new BufferedReader(fin);
             String line;
 
@@ -80,7 +80,7 @@ public class OperatorFunctions {
     public static boolean isUserExist(String id, String password) {
 
         try {
-            FileReader fin = new FileReader(AppConstants.Path.OPERATORS);
+            FileReader fin = new FileReader(AppConstants.Path.Files.OPERATOR_DATA);
             BufferedReader rfbuffer = new BufferedReader(fin);
             String line;
 
@@ -114,7 +114,7 @@ public class OperatorFunctions {
         }
 
         try {
-            FileReader fin = new FileReader(AppConstants.Path.OPERATORS);
+            FileReader fin = new FileReader(AppConstants.Path.Files.OPERATOR_DATA);
             BufferedReader rfbuffer = new BufferedReader(fin);
             StringBuilder fileContent = new StringBuilder();
 
@@ -138,7 +138,7 @@ public class OperatorFunctions {
 
             fin.close();
 
-            FileWriter fout = new FileWriter(AppConstants.Path.OPERATORS, false);
+            FileWriter fout = new FileWriter(AppConstants.Path.Files.OPERATOR_DATA, false);
             BufferedWriter wfbuffer = new BufferedWriter(fout);
 
             wfbuffer.write(fileContent.toString());
@@ -194,7 +194,7 @@ public class OperatorFunctions {
         String dati = String.join(",", dataInserted);
 
         try {
-            FileWriter fileWriter = new FileWriter(AppConstants.Path.OPERATORS, true);
+            FileWriter fileWriter = new FileWriter(AppConstants.Path.Files.OPERATOR_DATA, true);
             fileWriter.write(dati + "\n");
             fileWriter.close();
             return true;

@@ -40,7 +40,7 @@ public class CityQuery extends JFrame {
     private void initializeComponents() {
         String[] comboboxValues = new String[] { "Cerca per nome", "Cerca per coordinate" };
 
-        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.IMG + "/logoDefault.png"));
+        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.Assets.LOGO));
 
         labelQueryType.setText("Tipo di ricerca");
         comboboxQueryType.setModel(new DefaultComboBoxModel<>(comboboxValues));
@@ -150,7 +150,7 @@ public class CityQuery extends JFrame {
                                 // "Citta vuota!",
                                 // "Dato mancante",
                                 // JOptionPane.WARNING_MESSAGE);
-                    if (CityFunctions.nameFind(citta, AppConstants.Path.NAME_COORDS, 1)) {
+                    if (CityFunctions.nameFind(citta, AppConstants.Path.Files.CITY_COORDS, 1)) {
                         dispose();
                         FrameHandler.setFrame(new CityVisualizer(citta.trim()));
                     } else {
@@ -160,7 +160,7 @@ public class CityQuery extends JFrame {
 
                 case 1:
                     citta = CityFunctions.coordFind(textfieldLatitude.getText(), textfieldLongitude.getText(),
-                            AppConstants.Path.NAME_COORDS, 1);
+                            AppConstants.Path.Files.CITY_COORDS, 1);
                     dispose();
                     FrameHandler.setFrame(new CityVisualizer(citta.trim()));
                     break;

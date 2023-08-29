@@ -89,7 +89,7 @@ public class AreaCreateNew extends JFrame {
     }
 
     private void initializeComponents() {
-        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.IMG + "/logoDefault.png"));
+        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.Assets.LOGO));
 
         for (int i = 0; i < placeholderTexts.length; i++) {
             textfields[i].setText(placeholderTexts[i]);
