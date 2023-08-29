@@ -6,65 +6,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "OperatorLoginFrame",
-            "request": "launch",
-            "mainClass": "Finestra.frames.OperatorLoginFrame",
-            "projectName": "WeatherApp_416d515"
-        },
-        {
-            "type": "java",
-            "name": "AreaOperatore",
-            "request": "launch",
-            "mainClass": "Finestra.frames.AreaOperatore",
-            "projectName": "WeatherApp_416d515"
-        },
-        {
-            "type": "java",
-            "name": "VisualizerFrame",
-            "request": "launch",
-            "mainClass": "Finestra.frames.VisualizerFrame",
-            "projectName": "WeatherApp_416d515"
-        },
-        {
-            "type": "java",
-            "name": "FindFrame",
-            "request": "launch",
-            "mainClass": "Finestra.frames.FindFrame",
-            "projectName": "WeatherApp_416d515"
-        },
-        {
-            "type": "java",
-            "name": "HomeFrame",
-            "request": "launch",
-            "mainClass": "Finestra.frames.HomeFrame",
-            "projectName": "WeatherApp_416d515"
-        },
-        {
-            "type": "java",
-            "name": "TestFrame",
-            "request": "launch",
-            "mainClass": "Finestra.frames.TestFrame",
-            "projectName": "WeatherApp_416d515"
-        },
-        {
-            "type": "java",
-            "name": "Cerca",
-            "request": "launch",
-            "mainClass": "Finestra.frames.Cerca",
-            "projectName": "WeatherApp_416d515"
-        },
-        {
-            "type": "java",
-            "name": "LoadingFrame",
-            "request": "launch",
-            "mainClass": "Finestra.frames.LoadingFrame",
-            "projectName": "WeatherApp_416d515"
-        },
-        {
-            "type": "java",
             "name": "Main",
             "request": "launch",
-            "mainClass": "Main",
+            "mainClass": "src.Main",
             "projectName": "WeatherApp_416d515"
         }
     ]
