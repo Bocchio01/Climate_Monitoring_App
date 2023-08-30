@@ -1,9 +1,5 @@
 package src.GUI.operator;
 
-import java.awt.Cursor;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,85 +8,23 @@ import javax.security.auth.login.LoginException;
 import javax.swing.*;
 
 import src.GUI.Home;
-import src.GUI.area.AreaCreateNew;
 import src.GUI.area.AreaAddData;
+import src.GUI.area.AreaCreateNew;
 import src.functions.OperatorFunctions;
-import src.utils.AppConstants;
-import src.utils.PanelHandler;
-import src.utils.Theme;
+import src.utils.GUIHandler;
 import src.utils.Widget;
+import src.utils.templates.TwoColumns;
 
-public class OperatorLogin extends JFrame {
+public class OperatorLogin extends TwoColumns implements GUIHandler.Panel {
 
-    private static String windowsTitle = "Accedi all'area riservata";
+    public static String ID = "OperatorLogin";
+    public GUIHandler panelHandler;
 
-    private JPanel panelMain = new JPanel();
-    private JLabel labelLogoImage = Widget.createLogoLabel();
     private JTextField textfieldUsedID = new JTextField();
     private JPasswordField textfieldPassword = new JPasswordField();
-    private JButton buttonPerformLogin = Widget.createButton("Accedi");
-
-    private JTextField[] formElements = {
-            textfieldUsedID,
-            textfieldPassword
-    };
+    private JButton buttonPerformLogin = new Widget.Button("Accedi");
 
     public OperatorLogin() {
-        initializeComponents();
-        createLayout();
-        applyTheme();
-        addActionEvent();
-
-        if (OperatorFunctions.isUserLogged()) {
-            Integer response = JOptionPane.showConfirmDialog(
-                    null,
-                    "Risulti già loggato con ID_Utente: " + OperatorFunctions.getCurrentUserID() + "\n"
-                            + "Proseguire?",
-                    "Utente già loggato",
-                    JOptionPane.YES_NO_OPTION);
-
-            if (response == JOptionPane.YES_OPTION) {
-                textfieldUsedID.setText(OperatorFunctions.getCurrentUserID());
-                textfieldPassword.setText(OperatorFunctions.getCurrentUserPassword());
-                buttonPerformLogin.doClick();
-
-            } else {
-                OperatorFunctions.performLogout();
-            }
-        }
-    }
-
-    private void initializeComponents() {
-    }
-
-    private void createLayout() {
-        setTitle(windowsTitle);
-
-        panelMain.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.weightx = 1;
-        gbc.weighty = 10;
-        gbc.anchor = GridBagConstraints.CENTER;
-        panelMain.add(labelLogoImage, gbc);
-
-        gbc.weighty = 1;
-
-        String[] labels = { "ID Utente", "Password" };
-        for (int i = 0; i < labels.length; i++) {
-            panelMain.add(Widget.createFormPanel(labels[i], formElements[i]), gbc);
-        }
-
-        panelMain.add(buttonPerformLogin, gbc);
-
-        add(panelMain);
-    }
-
-    private void applyTheme() {
-        Theme.applyTheme(new Object[] { panelMain });
     }
 
     public void addActionEvent() {
@@ -132,21 +66,18 @@ public class OperatorLogin extends JFrame {
                                     JOptionPane.OK_CANCEL_OPTION);
 
                             if (response == JOptionPane.OK_OPTION) {
-                                dispose();
-                                // PanelHandler.setFrame(new AreaCreateNew());
+                                panelHandler.goToPanel(AreaCreateNew.ID, null);
                             } else {
                                 JOptionPane.showMessageDialog(
                                         this,
                                         "Stai per essere reindirizzato alla home page.",
                                         "Area mancante",
                                         JOptionPane.INFORMATION_MESSAGE);
-                                dispose();
-                                // PanelHandler.setFrame(new Home());
+                                panelHandler.goToPanel(Home.ID, null);
                             }
 
                         } else {
-                            dispose();
-                            // PanelHandler.setFrame(new AreaAddData());
+                            panelHandler.goToPanel(AreaAddData.ID, null);
                         }
                     } else {
                         throw new LoginException("Errore imprevisto in fase di login. Contattare l'assistenza.");
@@ -177,18 +108,54 @@ public class OperatorLogin extends JFrame {
         textfieldPassword.setText("");
     }
 
+    @Override
+    public OperatorLogin createPanel(GUIHandler panelHandler) {
+        this.panelHandler = panelHandler;
+
+        
+        addLeft(new Widget.LogoLabel());
+        addRight(new Widget.FormPanel("ID Utente", textfieldUsedID));
+        addRight(new Widget.FormPanel("Password", textfieldPassword));
+        addRight(buttonPerformLogin);
+
+        addActionEvent();
+
+        return this;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    public void onOpen(Object[] args) {
+        if (OperatorFunctions.isUserLogged()) {
+            Integer response = JOptionPane.showConfirmDialog(
+                    null,
+                    "Risulti già loggato con ID_Utente: " + OperatorFunctions.getCurrentUserID() + "\n"
+                            + "Proseguire?",
+                    "Utente già loggato",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (response == JOptionPane.YES_OPTION) {
+                textfieldUsedID.setText(OperatorFunctions.getCurrentUserID());
+                textfieldPassword.setText(OperatorFunctions.getCurrentUserPassword());
+                buttonPerformLogin.doClick();
+
+            } else {
+                OperatorFunctions.performLogout();
+            }
+        }
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            OperatorFunctions.performLogin(AppConstants.DefaultData.ID, AppConstants.DefaultData.PWD);
+            GUIHandler panelHandler = new GUIHandler();
+            Home home = new Home();
 
-            OperatorLogin operatorLoginFrame = new OperatorLogin();
-            operatorLoginFrame.setSize(1200, 800);
-            operatorLoginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            operatorLoginFrame.setVisible(true);
-            operatorLoginFrame.setLocationRelativeTo(null);
-
-            // operatorLoginFrame.textfieldUsedID.setText(AppConstants.DefaultData.ID);
-            // operatorLoginFrame.textfieldPassword.setText(AppConstants.DefaultData.PWD);
+            panelHandler.addPanel(home.createPanel(panelHandler));
+            home.onOpen(args);
         });
     }
 }

@@ -2,72 +2,26 @@ package src.GUI.city;
 
 import javax.swing.*;
 
-import src.GUI.Home;
 import src.functions.AreaFunctions;
 import src.functions.CityFunctions;
-import src.utils.PanelHandler;
-import src.utils.Theme;
+import src.utils.GUIHandler;
 import src.utils.Widget;
+import src.utils.templates.TwoColumns;
 
-import java.awt.*;
 import java.awt.event.*;
 
-public class CityQuery extends JPanel implements PanelHandler.PanelCreator {
+public class CityQuery extends TwoColumns implements GUIHandler.Panel {
 
-    public static String windowsTitle = "Ricerca dati città";
     public static String ID = "CityQuery";
+    public GUIHandler panelHandler;
 
-    private JPanel panelMain = new JPanel();
-    private JLabel labelLogoImage = Widget.createLogoLabel();
     private JTextField textfieldCityName = new JTextField();
     private JTextField textfieldLatitude = new JTextField();
     private JTextField textfieldLongitude = new JTextField();
-    private JButton buttonPerfomQuery = Widget.createButton("Cerca dati città");
-    private JButton buttonToBack = Widget.createButton("Indietro");
+    private JButton buttonPerfomQuery = new Widget.Button("Cerca dati città");
     private JComboBox<String> comboboxQueryType = new JComboBox<String>();
 
-    private Object[][] formData = {
-            { "Nome città", textfieldCityName },
-            { "Latitudine", textfieldLatitude },
-            { "Longitudine", textfieldLongitude }
-    };
-
     public CityQuery() {
-
-        // comboboxQueryType.setSelectedIndex(0);
-    }
-
-    private void initializeComponents() {
-        String[] comboboxValues = new String[] { "Cerca per nome", "Cerca per coordinate" };
-        comboboxQueryType.setModel(new DefaultComboBoxModel<>(comboboxValues));
-    }
-
-    private void createLayout() {
-        panelMain.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.weightx = 1;
-        gbc.weighty = 10;
-        gbc.anchor = GridBagConstraints.CENTER;
-        panelMain.add(labelLogoImage, gbc);
-
-        gbc.weighty = 1;
-        panelMain.add(Widget.createFormPanel("Tipo di ricerca", comboboxQueryType), gbc);
-        panelMain.add(Widget.createFormPanel("Città", textfieldCityName), gbc);
-        panelMain.add(Widget.createFormPanel("Latitudine", textfieldLatitude), gbc);
-        panelMain.add(Widget.createFormPanel("Longitudine", textfieldLongitude), gbc);
-
-        panelMain.add(buttonPerfomQuery, gbc);
-        panelMain.add(buttonToBack, gbc);
-
-        add(panelMain);
-    }
-
-    private void applyTheme() {
-        Theme.applyTheme(new Object[] { panelMain });
     }
 
     public void addActionEvent() {
@@ -109,8 +63,7 @@ public class CityQuery extends JPanel implements PanelHandler.PanelCreator {
                     cityID = AreaFunctions.getCityID(cityName);
 
                     if (cityID != null) {
-                        PanelHandler.changePanel(CityVisualizer.ID);
-                        CityVisualizer.loadDatas(cityID);
+                        panelHandler.goToPanel(CityVisualizer.ID, new Object[] { cityID });
                     } else {
                         JOptionPane.showMessageDialog(
                                 this,
@@ -126,8 +79,7 @@ public class CityQuery extends JPanel implements PanelHandler.PanelCreator {
                             textfieldLongitude.getText());
 
                     if (cityID != null) {
-                        PanelHandler.changePanel(CityVisualizer.ID);
-                        CityVisualizer.loadDatas(cityID);
+                        panelHandler.goToPanel(CityVisualizer.ID, new Object[] { cityID });
                     } else {
                         JOptionPane.showMessageDialog(
                                 this,
@@ -140,10 +92,6 @@ public class CityQuery extends JPanel implements PanelHandler.PanelCreator {
                 default:
                     break;
             }
-        });
-
-        buttonToBack.addActionListener(e -> {
-            PanelHandler.changePanel(Home.ID);
         });
 
         comboboxQueryType.addActionListener(e -> {
@@ -169,17 +117,44 @@ public class CityQuery extends JPanel implements PanelHandler.PanelCreator {
     }
 
     @Override
-    public JPanel createPanel() {
-        initializeComponents();
-        createLayout();
-        applyTheme();
+    public CityQuery createPanel(GUIHandler panelHandler) {
+        this.panelHandler = panelHandler;
+
+        String[] comboboxValues = new String[] { "Cerca per nome", "Cerca per coordinate" };
+        comboboxQueryType.setModel(new DefaultComboBoxModel<>(comboboxValues));
+
+        addLeft(new Widget.LogoLabel());
+        addRight(new Widget.FormPanel("Tipo di ricerca", comboboxQueryType));
+        addRight(new Widget.FormPanel("Città", textfieldCityName));
+        addRight(new Widget.FormPanel("Latitudine", textfieldLatitude));
+        addRight(new Widget.FormPanel("Longitudine", textfieldLongitude));
+        addRight(buttonPerfomQuery);
+
         addActionEvent();
 
         return this;
     }
 
+    @Override
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    public void onOpen(Object[] args) {
+        comboboxQueryType.setSelectedIndex(0);
+        textfieldCityName.setText("");
+        textfieldLatitude.setText("");
+        textfieldLongitude.setText("");
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
+            GUIHandler panelHandler = new GUIHandler();
+            CityQuery cityQuery = new CityQuery();
+
+            panelHandler.addPanel(cityQuery.createPanel(panelHandler));
+            cityQuery.onOpen(args);
         });
     }
 

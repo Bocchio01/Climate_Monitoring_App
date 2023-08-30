@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import src.utils.AppConstants;
+import src.utils.ENV;
 
 public class OperatorFunctions {
 
@@ -17,16 +17,16 @@ public class OperatorFunctions {
     public static boolean performLogin(String id, String password) {
 
         try {
-            FileReader fin = new FileReader(AppConstants.Path.Files.OPERATOR_DATA);
+            FileReader fin = new FileReader(ENV.Path.Files.OPERATOR_DATA);
             BufferedReader rfbuffer = new BufferedReader(fin);
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                String[] userDataFromFile = line.split(AppConstants.CSV_SEPARATOR);
+                String[] userDataFromFile = line.split(ENV.CSV_SEPARATOR);
 
                 if (checkCredentials(
-                        new String[] { id, userDataFromFile[AppConstants.Index.ID] },
-                        new String[] { password, userDataFromFile[AppConstants.Index.PWD] }) &&
+                        new String[] { id, userDataFromFile[ENV.Index.ID] },
+                        new String[] { password, userDataFromFile[ENV.Index.PWD] }) &&
                         setCurrentUserData(userDataFromFile)) {
 
                     rfbuffer.close();
@@ -50,13 +50,13 @@ public class OperatorFunctions {
 
         try {
 
-            currentUserData[AppConstants.Index.NAME] = userDataFromFile[AppConstants.Index.NAME];
-            currentUserData[AppConstants.Index.TAXCODE] = userDataFromFile[AppConstants.Index.TAXCODE];
-            currentUserData[AppConstants.Index.EMAIL] = userDataFromFile[AppConstants.Index.EMAIL];
-            currentUserData[AppConstants.Index.ID] = userDataFromFile[AppConstants.Index.ID];
-            currentUserData[AppConstants.Index.PWD] = userDataFromFile[AppConstants.Index.PWD];
-            currentUserData[AppConstants.Index.AREA] = !userDataFromFile[AppConstants.Index.AREA]
-                    .equals(AppConstants.EMPTY_STRING) ? userDataFromFile[AppConstants.Index.AREA]
+            currentUserData[ENV.Index.NAME] = userDataFromFile[ENV.Index.NAME];
+            currentUserData[ENV.Index.TAXCODE] = userDataFromFile[ENV.Index.TAXCODE];
+            currentUserData[ENV.Index.EMAIL] = userDataFromFile[ENV.Index.EMAIL];
+            currentUserData[ENV.Index.ID] = userDataFromFile[ENV.Index.ID];
+            currentUserData[ENV.Index.PWD] = userDataFromFile[ENV.Index.PWD];
+            currentUserData[ENV.Index.AREA] = !userDataFromFile[ENV.Index.AREA]
+                    .equals(ENV.EMPTY_STRING) ? userDataFromFile[ENV.Index.AREA]
                             : null;
 
             isUserLogged = true;
@@ -80,13 +80,13 @@ public class OperatorFunctions {
     public static boolean isUserExist(String id, String password) {
 
         try {
-            FileReader fin = new FileReader(AppConstants.Path.Files.OPERATOR_DATA);
+            FileReader fin = new FileReader(ENV.Path.Files.OPERATOR_DATA);
             BufferedReader rfbuffer = new BufferedReader(fin);
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                String idFromFile = line.split(AppConstants.CSV_SEPARATOR)[AppConstants.Index.ID];
-                String passwordFromFile = line.split(AppConstants.CSV_SEPARATOR)[AppConstants.Index.PWD];
+                String idFromFile = line.split(ENV.CSV_SEPARATOR)[ENV.Index.ID];
+                String passwordFromFile = line.split(ENV.CSV_SEPARATOR)[ENV.Index.PWD];
 
                 if (id.equals(idFromFile) ||
                         checkCredentials(
@@ -114,22 +114,22 @@ public class OperatorFunctions {
         }
 
         try {
-            FileReader fin = new FileReader(AppConstants.Path.Files.OPERATOR_DATA);
+            FileReader fin = new FileReader(ENV.Path.Files.OPERATOR_DATA);
             BufferedReader rfbuffer = new BufferedReader(fin);
             StringBuilder fileContent = new StringBuilder();
 
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                String[] dataFromFile = line.split(AppConstants.CSV_SEPARATOR);
+                String[] dataFromFile = line.split(ENV.CSV_SEPARATOR);
 
                 if (checkCredentials(
-                        new String[] { getCurrentUserID(), dataFromFile[AppConstants.Index.ID] },
-                        new String[] { getCurrentUserPassword(), dataFromFile[AppConstants.Index.PWD] })) {
+                        new String[] { getCurrentUserID(), dataFromFile[ENV.Index.ID] },
+                        new String[] { getCurrentUserPassword(), dataFromFile[ENV.Index.PWD] })) {
 
                     dataFromFile[index] = newValue;
 
-                    fileContent.append(String.join(AppConstants.CSV_SEPARATOR, dataFromFile)).append("\n");
+                    fileContent.append(String.join(ENV.CSV_SEPARATOR, dataFromFile)).append("\n");
                 } else {
                     fileContent.append(line).append("\n");
                 }
@@ -138,7 +138,7 @@ public class OperatorFunctions {
 
             fin.close();
 
-            FileWriter fout = new FileWriter(AppConstants.Path.Files.OPERATOR_DATA, false);
+            FileWriter fout = new FileWriter(ENV.Path.Files.OPERATOR_DATA, false);
             BufferedWriter wfbuffer = new BufferedWriter(fout);
 
             wfbuffer.write(fileContent.toString());
@@ -161,40 +161,40 @@ public class OperatorFunctions {
     }
 
     public static String getCurrentUserName() {
-        return currentUserData[AppConstants.Index.NAME];
+        return currentUserData[ENV.Index.NAME];
     }
 
     public static String getCurrentUserTaxCode() {
-        return currentUserData[AppConstants.Index.TAXCODE];
+        return currentUserData[ENV.Index.TAXCODE];
     }
 
     public static String getCurrentUserEmail() {
-        return currentUserData[AppConstants.Index.EMAIL];
+        return currentUserData[ENV.Index.EMAIL];
     }
 
     public static String getCurrentUserID() {
-        return currentUserData[AppConstants.Index.ID];
+        return currentUserData[ENV.Index.ID];
     }
 
     public static String getCurrentUserPassword() {
-        return currentUserData[AppConstants.Index.PWD];
+        return currentUserData[ENV.Index.PWD];
     }
 
     public static String getCurrentUserArea() {
-        return currentUserData[AppConstants.Index.AREA];
+        return currentUserData[ENV.Index.AREA];
     }
 
     public static boolean performRegistration(String[] dataInserted) {
 
         if (isValidInput(dataInserted) == false ||
-                isUserExist(dataInserted[AppConstants.Index.ID], dataInserted[AppConstants.Index.PWD])) {
+                isUserExist(dataInserted[ENV.Index.ID], dataInserted[ENV.Index.PWD])) {
             return false;
         }
 
-        String dati = String.join(AppConstants.CSV_SEPARATOR, dataInserted);
+        String dati = String.join(ENV.CSV_SEPARATOR, dataInserted);
 
         try {
-            FileWriter fileWriter = new FileWriter(AppConstants.Path.Files.OPERATOR_DATA, true);
+            FileWriter fileWriter = new FileWriter(ENV.Path.Files.OPERATOR_DATA, true);
             fileWriter.write(dati + "\n");
             fileWriter.close();
             return true;

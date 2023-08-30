@@ -1,6 +1,8 @@
 package src.utils;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -8,24 +10,37 @@ import javax.swing.JPanel;
 public class Theme {
 
     private static boolean darkMode = true;
-    private static Color lightBlue = new Color(153, 255, 255);
-    private static Color darkGray = new Color(49, 51, 56);
+    private final static Color lightBlue = new Color(153, 255, 255);
+    private final static Color darkGray = new Color(49, 51, 56);
 
-    public static boolean toggleTheme() {
+    private static List<JLabel> labels = new ArrayList<>();
+    private static List<JPanel> panels = new ArrayList<>();
+
+    public static void toggleTheme() {
         darkMode = !darkMode;
-        return darkMode;
+        applyTheme();
     }
 
     public static boolean isDarkMode() {
         return darkMode;
     }
 
-    public static void applyTheme(Object[] guiElements) {
-        for (Object guiElement : guiElements) {
-            if (guiElement instanceof JPanel)
-                applyThemeToPanel((JPanel) guiElement);
-            else if (guiElement instanceof JLabel)
-                applyThemeToLabel((JLabel) guiElement);
+    public static void registerLabel(JLabel label) {
+        labels.add(label);
+    }
+
+    public static void registerPanel(JPanel panel) {
+        panels.add(panel);
+    }
+
+    public static void applyTheme() {
+
+        for (JLabel label : labels) {
+            applyThemeToLabel(label);
+        }
+
+        for (JPanel panel : panels) {
+            applyThemeToPanel(panel);
         }
     }
 

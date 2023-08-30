@@ -2,85 +2,26 @@ package src.GUI.operator;
 
 import javax.swing.*;
 
-import src.GUI.Home;
 import src.functions.OperatorFunctions;
-import src.utils.AppConstants;
-import src.utils.PanelHandler;
-import src.utils.Theme;
+import src.utils.ENV;
+import src.utils.GUIHandler;
 import src.utils.Widget;
+import src.utils.templates.TwoColumns;
 
-import java.awt.*;
 
-public class OperatorRegister extends JFrame {
+public class OperatorRegister extends TwoColumns implements GUIHandler.Panel {
 
-    private static String windowsTitle = "Registrazione nuovo utente";
+    public static String ID = "OperatorRegister";
+    public GUIHandler panelHandler;
 
-    private JPanel panelMain = new JPanel();
-    private JLabel labelLogoImage = Widget.createLogoLabel();
     private JTextField textfieldName = new JTextField();
     private JTextField textfieldTaxCode = new JTextField();
     private JTextField textfieldEmail = new JTextField();
     private JTextField textfieldUserID = new JTextField();
     private JPasswordField textfieldPassword = new JPasswordField();
-    private JButton buttonPerformRegistration = Widget.createButton("Registrati");
-    private JButton buttonToHome = Widget.createButton("Home");
-
-    private JTextField[] formElements = {
-            textfieldName,
-            textfieldTaxCode,
-            textfieldEmail,
-            textfieldUserID,
-            textfieldPassword
-    };
+    private JButton buttonPerformRegistration = new Widget.Button("Registrati");
 
     public OperatorRegister() {
-        initializeComponents();
-        createLayout();
-        applyTheme();
-        addActionEvent();
-
-    }
-
-    private void initializeComponents() {
-    }
-
-    private void createLayout() {
-        setTitle(windowsTitle);
-
-        panelMain.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        gbc.gridheight = 10;
-        gbc.anchor = GridBagConstraints.CENTER;
-        panelMain.add(labelLogoImage, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridheight = 1;
-
-        String[] labels = {
-                "Nome e Cognome",
-                "Codice Fiscale",
-                "Email",
-                "User ID",
-                "Password"
-        };
-        for (int i = 0; i < labels.length; i++) {
-            panelMain.add(Widget.createFormPanel(labels[i], formElements[i]), gbc);
-        }
-
-        panelMain.add(buttonPerformRegistration, gbc);
-        panelMain.add(buttonToHome, gbc);
-
-        add(panelMain);
-    }
-
-    private void applyTheme() {
-        Theme.applyTheme(new Object[] { panelMain });
     }
 
     public void addActionEvent() {
@@ -95,7 +36,7 @@ public class OperatorRegister extends JFrame {
                     textfieldEmail.getText().trim(),
                     textfieldUserID.getText().trim(),
                     new String(textfieldPassword.getPassword()).trim(),
-                    AppConstants.EMPTY_STRING
+                    ENV.EMPTY_STRING
             };
 
             if (OperatorFunctions.isValidInput(dataInserted) &&
@@ -105,8 +46,7 @@ public class OperatorRegister extends JFrame {
                         "Profilo registrato con successo. Accedi.",
                         "Successo",
                         JOptionPane.INFORMATION_MESSAGE);
-                dispose();
-                // PanelHandler.setFrame(new OperatorLogin());
+                panelHandler.goToPanel(OperatorLogin.ID, null);
 
             } else {
                 JOptionPane.showMessageDialog(
@@ -117,26 +57,42 @@ public class OperatorRegister extends JFrame {
             }
         });
 
-        buttonToHome.addActionListener(e -> {
-            dispose();
-            // PanelHandler.setFrame(new Home());
-        });
+    }
 
+    @Override
+    public OperatorRegister createPanel(GUIHandler panelHandler) {
+        this.panelHandler = panelHandler;
+
+        addLeft(new Widget.LogoLabel());
+        addRight(new Widget.FormPanel("Nome e Cognome", textfieldName));
+        addRight(new Widget.FormPanel("Codice Fiscale", textfieldTaxCode));
+        addRight(new Widget.FormPanel("Email", textfieldEmail));
+        addRight(new Widget.FormPanel("User ID", textfieldUserID));
+        addRight(new Widget.FormPanel("Password", textfieldPassword));
+        addRight(buttonPerformRegistration);
+
+        addActionEvent();
+
+        return this;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    public void onOpen(Object[] args) {
+        OperatorFunctions.performLogout();
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            OperatorRegister operatorRegisterFrame = new OperatorRegister();
-            operatorRegisterFrame.setSize(1200, 800);
-            operatorRegisterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            operatorRegisterFrame.setVisible(true);
-            operatorRegisterFrame.setLocationRelativeTo(null);
+            GUIHandler panelHandler = new GUIHandler();
+            OperatorRegister operatorRegister = new OperatorRegister();
 
-            operatorRegisterFrame.textfieldName.setText(AppConstants.DefaultData.NAME);
-            operatorRegisterFrame.textfieldTaxCode.setText(AppConstants.DefaultData.TAXCODE);
-            operatorRegisterFrame.textfieldEmail.setText(AppConstants.DefaultData.EMAIL);
-            operatorRegisterFrame.textfieldUserID.setText(AppConstants.DefaultData.ID);
-            operatorRegisterFrame.textfieldPassword.setText(AppConstants.DefaultData.PWD);
+            panelHandler.addPanel(operatorRegister.createPanel(panelHandler));
+            operatorRegister.onOpen(args);
         });
     }
 }

@@ -3,7 +3,7 @@ package src.functions;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-import src.utils.AppConstants;
+import src.utils.ENV;
 
 public class CityFunctions {
 
@@ -19,12 +19,12 @@ public class CityFunctions {
 
             double currentMaxDistance = Integer.MAX_VALUE;
 
-            FileReader fin = new FileReader(AppConstants.Path.Files.CITY_COORDS);
+            FileReader fin = new FileReader(ENV.Path.Files.CITY_COORDS);
             BufferedReader rfbuffer = new BufferedReader(fin);
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                String[] lineArray = line.split(AppConstants.CSV_SEPARATOR);
+                String[] lineArray = line.split(ENV.CSV_SEPARATOR);
 
                 try {
                     double[] coordsFile = new double[] {
@@ -58,12 +58,12 @@ public class CityFunctions {
 
         try {
 
-            FileReader fin = new FileReader(AppConstants.Path.Files.CITY_COORDS);
+            FileReader fin = new FileReader(ENV.Path.Files.CITY_COORDS);
             BufferedReader rfbuffer = new BufferedReader(fin);
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                String[] lineArray = line.split(AppConstants.CSV_SEPARATOR);
+                String[] lineArray = line.split(ENV.CSV_SEPARATOR);
 
                 if (lineArray[1].equalsIgnoreCase(cityName)) {
                     cityID = Integer.parseInt(lineArray[0]);

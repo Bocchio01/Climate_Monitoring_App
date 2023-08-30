@@ -1,15 +1,15 @@
 package src.utils;
 
 import java.awt.Dimension;
-
 import java.nio.file.Paths;
 
-public class AppConstants {
+public class ENV {
 
     public static final String EMPTY_STRING = "NULL";
     public static final String CSV_SEPARATOR = ";";
+    public static final String APP_TITLE = "Monitoraggio Climatico";
 
-    private AppConstants() {
+    private ENV() {
     }
 
     public static final class Index {
@@ -60,8 +60,9 @@ public class AppConstants {
     }
 
     public static final class GUI {
+        public static final Integer FRAME_WIDTH = 1200;
+        public static final Integer FRAME_HEIGHT = 800;
         public static final Dimension WIDGET_DIMENSION = new Dimension(300, 40);
-        public static final Dimension LABEL_DIMENSION = new Dimension(300, 10);
 
         private GUI() {
         }
@@ -80,7 +81,7 @@ public class AppConstants {
 
         @Override
         public String toString() {
-            return String.join(AppConstants.CSV_SEPARATOR, new String[] { NAME, TAXCODE, EMAIL, ID, PWD, AREA });
+            return String.join(ENV.CSV_SEPARATOR, new String[] { NAME, TAXCODE, EMAIL, ID, PWD, AREA });
         }
     }
 

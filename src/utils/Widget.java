@@ -9,93 +9,72 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 public class Widget {
 
-    public static JPanel createFormPanel(String labelText, JComponent activeArea) {
-        JPanel panel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+    public static class FormPanel extends JPanel {
 
-        JLabel label = new JLabel(labelText);
+        public FormPanel(String labelText, JComponent activeArea) {
+            super(new GridBagLayout());
 
-        activeArea.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
+            JLabel label = new JLabel(labelText);
+            activeArea.setPreferredSize(ENV.GUI.WIDGET_DIMENSION);
+            
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+            gbc.insets = new Insets(5, 5, 2, 5);
+            add(label, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        gbc.insets = new Insets(5, 5, 2, 5);
-        panel.add(label, gbc);
+            gbc.gridy = 1;
+            gbc.insets = new Insets(0, 5, 5, 5);
+            add(activeArea, gbc);
 
-        gbc.gridy = 1;
-        gbc.insets = new Insets(0, 5, 5, 5);
-        panel.add(activeArea, gbc);
-
-        Theme.applyThemeToPanel(panel);
-        Theme.applyThemeToLabel(label);
-
-        return panel;
-    }
-
-    public static JButton createButton(String text) {
-        JButton button = new JButton(text);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        button.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        return button;
-    }
-
-    public static JLabel createLogoLabel() {
-        return createLogoLabel(1);
-    }
-
-    public static JLabel createLogoLabel(int scale) {
-        return createLogoLabel(200 * scale, 186 * scale);
-    }
-
-    public static JLabel createLogoLabel(int width, int height) {
-        JLabel label = new JLabel();
-
-        try {
-            BufferedImage originalImage = ImageIO.read(Widget.class.getResource(AppConstants.Path.Assets.LOGO));
-            Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-
-            ImageIcon icon = new ImageIcon(scaledImage);
-            label.setIcon(icon);
-
-        } catch (IOException e) {
-            e.printStackTrace();
+            Theme.registerPanel(this);
+            Theme.registerLabel(label);
         }
 
-        return label;
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setSize(1200, 800);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public static class Button extends JButton {
 
-        JPanel panel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        public Button(String text) {
+            setText(text);
+            setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            setPreferredSize(ENV.GUI.WIDGET_DIMENSION);
+        }
+    }
 
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.anchor = GridBagConstraints.CENTER;
+    public static class LogoLabel extends JLabel {
 
-        panel.add(createLogoLabel(), gbc);
-        panel.add(createButton("Button text"), gbc);
-        panel.add(createFormPanel("Label", new JTextField("Text field")), gbc);
-
-        frame.add(panel);
-        frame.setVisible(true);
+        public LogoLabel() {
+            this(2);
+        }
+    
+        public LogoLabel(double scale) {
+            this((int) (200 * scale), (int) (186 * scale));
+        }
+    
+        public LogoLabel(int width, int height) {
+            setHorizontalAlignment(JLabel.CENTER);
+            setVerticalAlignment(JLabel.CENTER);
+    
+            try {
+                BufferedImage originalImage = ImageIO.read(getClass().getResource(ENV.Path.Assets.LOGO));
+                Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+    
+                ImageIcon icon = new ImageIcon(scaledImage);
+                setIcon(icon);
+    
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

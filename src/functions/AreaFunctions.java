@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
-import src.utils.AppConstants;
+import src.utils.ENV;
 
 public class AreaFunctions {
 
@@ -21,9 +21,9 @@ public class AreaFunctions {
             return false;
         }
 
-        if (OperatorFunctions.updateUserData(AppConstants.Index.AREA, datiInseriti[0]) &&
-                appendToFile(String.join(AppConstants.CSV_SEPARATOR, datiInseriti) + "\n",
-                        AppConstants.Path.Files.AREA_DATA)) {
+        if (OperatorFunctions.updateUserData(ENV.Index.AREA, datiInseriti[0]) &&
+                appendToFile(String.join(ENV.CSV_SEPARATOR, datiInseriti) + "\n",
+                        ENV.Path.Files.AREA_DATA)) {
 
             return true;
         }
@@ -39,24 +39,24 @@ public class AreaFunctions {
             Object[][] tableDatas) {
 
         try {
-            FileWriter fout = new FileWriter(AppConstants.Path.Files.CITY_DATAS, true);
+            FileWriter fout = new FileWriter(ENV.Path.Files.CITY_DATAS, true);
             BufferedWriter wfbuffer = new BufferedWriter(fout);
 
             wfbuffer.write(String.join(
-                    AppConstants.CSV_SEPARATOR,
+                    ENV.CSV_SEPARATOR,
                     new String[] {
                             cityID.toString(),
                             nameArea,
                             date }));
-            wfbuffer.write(AppConstants.CSV_SEPARATOR);
+            wfbuffer.write(ENV.CSV_SEPARATOR);
 
             for (Object[] row : tableDatas) {
                 wfbuffer.write(String.join(
                         ",",
                         new String[] {
-                                row[0] != null ? row[0].toString() : AppConstants.EMPTY_STRING,
-                                row[1] != null ? (String) row[1] : AppConstants.EMPTY_STRING }));
-                wfbuffer.write(AppConstants.CSV_SEPARATOR);
+                                row[0] != null ? row[0].toString() : ENV.EMPTY_STRING,
+                                row[1] != null ? (String) row[1] : ENV.EMPTY_STRING }));
+                wfbuffer.write(ENV.CSV_SEPARATOR);
             }
 
             wfbuffer.newLine();
@@ -99,12 +99,12 @@ public class AreaFunctions {
     public static boolean isAreaExists(String areaName) {
 
         try {
-            FileReader fin = new FileReader(AppConstants.Path.Files.AREA_DATA);
+            FileReader fin = new FileReader(ENV.Path.Files.AREA_DATA);
             BufferedReader rfbuffer = new BufferedReader(fin);
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                if (line.split(AppConstants.CSV_SEPARATOR)[0].equals(areaName)) {
+                if (line.split(ENV.CSV_SEPARATOR)[0].equals(areaName)) {
                     rfbuffer.close();
                     return true;
                 }
@@ -124,12 +124,12 @@ public class AreaFunctions {
         ArrayList<Integer> cityIDs = new ArrayList<>();
 
         try {
-            FileReader fin = new FileReader(AppConstants.Path.Files.AREA_DATA);
+            FileReader fin = new FileReader(ENV.Path.Files.AREA_DATA);
             BufferedReader rfbuffer = new BufferedReader(fin);
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                String[] lineSplitted = line.split(AppConstants.CSV_SEPARATOR);
+                String[] lineSplitted = line.split(ENV.CSV_SEPARATOR);
 
                 if (lineSplitted[0].equals(areaName)) {
                     rfbuffer.close();
@@ -158,12 +158,12 @@ public class AreaFunctions {
     public static String getCityName(Integer cityID) {
 
         try {
-            FileReader fin = new FileReader(AppConstants.Path.Files.CITY_COORDS);
+            FileReader fin = new FileReader(ENV.Path.Files.CITY_COORDS);
             BufferedReader rfbuffer = new BufferedReader(fin);
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                String[] lineSplitted = line.split(AppConstants.CSV_SEPARATOR);
+                String[] lineSplitted = line.split(ENV.CSV_SEPARATOR);
 
                 if (lineSplitted[0].equals(cityID.toString())) {
                     rfbuffer.close();
@@ -185,12 +185,12 @@ public class AreaFunctions {
     public static Integer getCityID(String cityName) {
 
         try {
-            FileReader fin = new FileReader(AppConstants.Path.Files.CITY_COORDS);
+            FileReader fin = new FileReader(ENV.Path.Files.CITY_COORDS);
             BufferedReader rfbuffer = new BufferedReader(fin);
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                String[] lineSplitted = line.split(AppConstants.CSV_SEPARATOR);
+                String[] lineSplitted = line.split(ENV.CSV_SEPARATOR);
 
                 if (lineSplitted[1].equals(cityName)) {
                     rfbuffer.close();

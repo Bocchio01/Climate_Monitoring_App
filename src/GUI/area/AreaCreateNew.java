@@ -1,32 +1,22 @@
 package src.GUI.area;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import src.GUI.operator.OperatorLogin;
 import src.functions.AreaFunctions;
 import src.functions.OperatorFunctions;
-import src.utils.AppConstants;
-import src.utils.PanelHandler;
-import src.utils.Theme;
+import src.utils.GUIHandler;
 import src.utils.Widget;
+import src.utils.templates.TwoColumns;
 
-public class AreaCreateNew extends JFrame {
+public class AreaCreateNew extends TwoColumns implements GUIHandler.Panel {
 
-    private static String windowsTitle = "Crea una nuova area";
+    public static String ID = "AreaCreateNew";
+    private GUIHandler panelHandler;
 
-    private JPanel panelMain = new JPanel();
-    private JLabel labelLogoImage = Widget.createLogoLabel();
-    private JButton buttonPerformInit = Widget.createButton("Crea l'area");
     private JTextField textfieldAreaName = new JTextField();
     private JTextField textfieldStreetName = new JTextField();
     private JTextField textfieldStreetNumber = new JTextField();
@@ -34,6 +24,7 @@ public class AreaCreateNew extends JFrame {
     private JTextField textfieldTownName = new JTextField();
     private JTextField textfieldDistrictName = new JTextField();
     private JTextField textfieldCityNames = new JTextField();
+    private JButton buttonPerformInit = new Widget.Button("Crea l'area");
 
     private JTextField[] formElements = {
             textfieldAreaName,
@@ -46,75 +37,6 @@ public class AreaCreateNew extends JFrame {
     };
 
     public AreaCreateNew() {
-        initializeComponents();
-        createLayout();
-        applyTheme();
-        addActionEvent();
-
-        if (!OperatorFunctions.isUserLogged()) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Per creare una nuova area devi prima essere loggato.",
-                    "Utente non loggato",
-                    JOptionPane.ERROR_MESSAGE);
-
-            dispose();
-            // PanelHandler.setFrame(new OperatorLogin());
-
-        } else if (OperatorFunctions.getCurrentUserArea() != null) {
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Hai già creato la tua area.",
-                    "Errore",
-                    JOptionPane.ERROR_MESSAGE);
-
-            dispose();
-            // PanelHandler.setFrame(new AreaAddData());
-        }
-
-    }
-
-    private void initializeComponents() {
-    }
-
-    private void createLayout() {
-        setTitle(windowsTitle);
-
-        panelMain.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        // gbc.gridheight = textfields.length + 1;
-        gbc.anchor = GridBagConstraints.CENTER;
-        panelMain.add(labelLogoImage, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridheight = 1;
-
-        String[] labels = {
-                "Nome dell'area",
-                "Nome della via",
-                "Numero civico",
-                "CAP",
-                "Nome della città",
-                "Nome della provincia",
-                "Nomi delle città subordinate all'area (separate da virgola)"
-        };
-
-        for (int i = 0; i < labels.length; i++) {
-            panelMain.add(Widget.createFormPanel(labels[i], formElements[i]), gbc);
-        }
-        panelMain.add(buttonPerformInit, gbc);
-
-        add(panelMain);
-    }
-
-    private void applyTheme() {
-        Theme.applyTheme(new Object[] { panelMain });
     }
 
     private void addActionEvent() {
@@ -155,8 +77,7 @@ public class AreaCreateNew extends JFrame {
                                 "Nuova area inserita",
                                 JOptionPane.INFORMATION_MESSAGE);
 
-                        dispose();
-                        // PanelHandler.setFrame(new AreaAddData());
+                        panelHandler.goToPanel(AreaAddData.ID, null);
                     } else {
                         JOptionPane.showMessageDialog(
                                 this,
@@ -169,19 +90,60 @@ public class AreaCreateNew extends JFrame {
         });
     }
 
+    @Override
+    public AreaCreateNew createPanel(GUIHandler panelHandler) {
+        this.panelHandler = panelHandler;
+
+        addLeft(new Widget.LogoLabel());
+        addRight(new Widget.FormPanel("Nome dell'area", textfieldAreaName));
+        addRight(new Widget.FormPanel("Nome della via", textfieldStreetName));
+        addRight(new Widget.FormPanel("Numero civico", textfieldStreetNumber));
+        addRight(new Widget.FormPanel("CAP", textfieldCAP));
+        addRight(new Widget.FormPanel("Nome del comune", textfieldTownName));
+        addRight(new Widget.FormPanel("Nome della provincia", textfieldDistrictName));
+        addRight(new Widget.FormPanel("Nomi delle città subordinate all'area (separate da virgola)",
+                textfieldCityNames));
+        addRight(buttonPerformInit);
+
+        addActionEvent();
+
+        return this;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    public void onOpen(Object[] args) {
+        if (!OperatorFunctions.isUserLogged()) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Per creare una nuova area devi prima essere loggato.",
+                    "Utente non loggato",
+                    JOptionPane.ERROR_MESSAGE);
+
+            panelHandler.goToPanel(OperatorLogin.ID, null);
+
+        } else if (OperatorFunctions.getCurrentUserArea() != null) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Hai già creato la tua area.",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE);
+
+            panelHandler.goToPanel(AreaAddData.ID, null);
+        }
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            OperatorFunctions.performLogin(AppConstants.DefaultData.ID, AppConstants.DefaultData.PWD);
+            GUIHandler panelHandler = new GUIHandler();
+            AreaCreateNew areaCreateNew = new AreaCreateNew();
 
-            AreaCreateNew initNewAreaFrame = new AreaCreateNew();
-            initNewAreaFrame.setSize(1200, 800);
-            initNewAreaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            initNewAreaFrame.setVisible(true);
-            initNewAreaFrame.setLocationRelativeTo(null);
-
-            for (JTextField formElement : initNewAreaFrame.formElements) {
-                formElement.setText("Completamento automatico");
-            }
+            panelHandler.addPanel(areaCreateNew.createPanel(panelHandler));
+            areaCreateNew.onOpen(args);
         });
     }
 

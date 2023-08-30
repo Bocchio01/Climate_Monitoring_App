@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.utils.AppConstants;
+import src.utils.ENV;
 
 public class VisualizerFunctions {
 
@@ -41,13 +41,13 @@ public class VisualizerFunctions {
 
         List<String> dataStrings = new ArrayList<>();
 
-        try (FileReader fin = new FileReader(AppConstants.Path.Files.CITY_DATAS)) {
+        try (FileReader fin = new FileReader(ENV.Path.Files.CITY_DATAS)) {
 
             BufferedReader rfbuffer = new BufferedReader(fin);
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                int currentCityID = Integer.parseInt(line.split(AppConstants.CSV_SEPARATOR)[0]);
+                int currentCityID = Integer.parseInt(line.split(ENV.CSV_SEPARATOR)[0]);
                 if (cityID == currentCityID) {
                     dataStrings.add(line.replace("\n", ""));
                 }
@@ -65,10 +65,10 @@ public class VisualizerFunctions {
         Integer cumulativeScore = 0;
 
         for (int i = 0; i < cityDatas.length; i++) {
-            String categoryString = cityDatas[i].split(AppConstants.CSV_SEPARATOR)[categoryIndex];
+            String categoryString = cityDatas[i].split(ENV.CSV_SEPARATOR)[categoryIndex];
             String currentScoreString = categoryString.split(",")[0];
 
-            if (!currentScoreString.equals(AppConstants.EMPTY_STRING)) {
+            if (!currentScoreString.equals(ENV.EMPTY_STRING)) {
                 cumulativeScore += Integer.parseInt(currentScoreString);
             }
         }
@@ -81,10 +81,10 @@ public class VisualizerFunctions {
         ArrayList<String> commentArray = new ArrayList<>();
 
         for (int i = 0; i < cityDatas.length; i++) {
-            String categoryString = cityDatas[i].split(AppConstants.CSV_SEPARATOR)[categoryIndex];
+            String categoryString = cityDatas[i].split(ENV.CSV_SEPARATOR)[categoryIndex];
             String currentCommentString = categoryString.split(",")[1];
 
-            if (!currentCommentString.equals(AppConstants.EMPTY_STRING)) {
+            if (!currentCommentString.equals(ENV.EMPTY_STRING)) {
                 commentArray.add(currentCommentString);
             }
         }

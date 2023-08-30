@@ -1,34 +1,27 @@
 package src.GUI.city;
 
-import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Panel;
 
 import javax.swing.*;
 
 import src.GUI.Home;
-import src.functions.CityFunctions;
 import src.functions.VisualizerFunctions;
-import src.utils.AppConstants;
-import src.utils.PanelHandler;
+import src.utils.GUIHandler;
 import src.utils.Theme;
 import src.utils.Widget;
 
-public class CityVisualizer extends JPanel implements PanelHandler.PanelCreator {
+public class CityVisualizer extends JPanel implements GUIHandler.Panel {
 
-    public static String windowsTitle = "Visualizzatore dati per area";
     public static String ID = "CityVisualizer";
+    public GUIHandler panelHandler;
 
-    private JPanel panelMain = new JPanel();
     private JTextArea textareaOperator = new JTextArea();
     private static JTextArea textareaDatas = new JTextArea();
-    private JButton buttonToBack = Widget.createButton("Indietro");
-    private JButton buttonToHome = new JButton();
+    private JButton buttonToBack = new Widget.Button("Indietro");
 
     public CityVisualizer() {
-
     }
 
     private void initializeComponents() {
@@ -37,7 +30,7 @@ public class CityVisualizer extends JPanel implements PanelHandler.PanelCreator 
     }
 
     private void createLayout() {
-        panelMain.setLayout(new GridBagLayout());
+        setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
@@ -46,38 +39,26 @@ public class CityVisualizer extends JPanel implements PanelHandler.PanelCreator 
         gbc.weightx = 1;
         gbc.weighty = 5;
         gbc.anchor = GridBagConstraints.CENTER;
-        panelMain.add(textareaOperator, gbc);
-        panelMain.add(textareaDatas, gbc);
+        add(textareaOperator, gbc);
+        add(textareaDatas, gbc);
 
         gbc.weighty = 1;
-        panelMain.add(buttonToHome, gbc);
-        panelMain.add(buttonToBack, gbc);
+        add(buttonToBack, gbc);
 
-        add(panelMain);
-    }
-
-    private void applyTheme() {
-        Theme.applyTheme(new Object[] { panelMain });
     }
 
     private void addActionEvent() {
 
-        buttonToHome.addActionListener(e -> {
-            PanelHandler.changePanel(Home.ID);
-        });
-
         buttonToBack.addActionListener(e -> {
-            PanelHandler.changePanel(CityQuery.ID);
+            panelHandler.goToPanel(CityQuery.ID, null);
+
         });
     }
 
-    public static void loadDatas(Integer cityID) {
+    public void loadDatas(Integer cityID) {
         String[] dataFromFile = VisualizerFunctions.getDataFromFile(cityID);
 
         if (dataFromFile.length > 0) {
-            // String[] messagesAveraged =
-            // VisualizerFunctions.computeAverageMessages(dataFromFile);
-            // textareaDatas.setText(String.join("\n", messagesAveraged));
             for (int i = 3; i < 3 + 7; i++) {
                 textareaDatas.setText(VisualizerFunctions.computeConcatComment(dataFromFile, i) +
                         "\n" + textareaDatas.getText());
@@ -88,22 +69,50 @@ public class CityVisualizer extends JPanel implements PanelHandler.PanelCreator 
                     "L'operatore non ha ancora inserito dati per la città selezionata.",
                     "Dati mancanti",
                     JOptionPane.WARNING_MESSAGE);
-            PanelHandler.changePanel(CityQuery.ID);
+            panelHandler.goToPanel(CityQuery.ID, null);
         }
     }
 
     @Override
-    public JPanel createPanel() {
+    public CityVisualizer createPanel(GUIHandler panelHandler) {
+        this.panelHandler = panelHandler;
+
         initializeComponents();
         createLayout();
-        applyTheme();
+        Theme.registerPanel(this);
         addActionEvent();
 
         return this;
     }
 
+    @Override
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    public void onOpen(Object[] args) {
+        textareaOperator.setText("");
+        textareaDatas.setText("");
+
+        if (args != null && args.length > 0) {
+            loadDatas((Integer) args[0]);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Errore nell'apertura della pagina.",
+                    "Errore",
+                    JOptionPane.ERROR_MESSAGE);
+            panelHandler.goToPanel(Home.ID, null);
+        }
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
+            GUIHandler panelHandler = new GUIHandler();
+            CityVisualizer cityVisualizer = new CityVisualizer();
+
+            panelHandler.addPanel(cityVisualizer.createPanel(panelHandler));
+            cityVisualizer.onOpen(args);
         });
     }
 }

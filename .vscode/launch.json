@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "src.Main",
+            "projectName": "WeatherApp_416d515"
+        },
+        {
+            "type": "java",
             "name": "Loading",
             "request": "launch",
             "mainClass": "src.GUI.Loading",
@@ -13,23 +20,9 @@
         },
         {
             "type": "java",
-            "name": "AreaCreateNew",
+            "name": "Home",
             "request": "launch",
-            "mainClass": "src.GUI.area.AreaCreateNew",
-            "projectName": "WeatherApp_416d515"
-        },
-        {
-            "type": "java",
-            "name": "Widget",
-            "request": "launch",
-            "mainClass": "src.utils.Widget",
-            "projectName": "WeatherApp_416d515"
-        },
-        {
-            "type": "java",
-            "name": "_FormPanel",
-            "request": "launch",
-            "mainClass": "_FormPanel",
+            "mainClass": "src.GUI.Home",
             "projectName": "WeatherApp_416d515"
         },
         {
@@ -48,9 +41,9 @@
         },
         {
             "type": "java",
-            "name": "Home",
+            "name": "AreaCreateNew",
             "request": "launch",
-            "mainClass": "src.GUI.Home",
+            "mainClass": "src.GUI.area.AreaCreateNew",
             "projectName": "WeatherApp_416d515"
         },
         {
@@ -58,20 +51,6 @@
             "name": "AreaAddData",
             "request": "launch",
             "mainClass": "src.GUI.area.AreaAddData",
-            "projectName": "WeatherApp_416d515"
-        },
-        {
-            "type": "java",
-            "name": "_SimpleTable",
-            "request": "launch",
-            "mainClass": "_SimpleTable",
-            "projectName": "WeatherApp_416d515"
-        },
-        {
-            "type": "java",
-            "name": "Main",
-            "request": "launch",
-            "mainClass": "src.Main",
             "projectName": "WeatherApp_416d515"
         }
     ]
