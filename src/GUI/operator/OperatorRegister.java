@@ -7,15 +7,16 @@ import src.functions.OperatorFunctions;
 import src.utils.AppConstants;
 import src.utils.FrameHandler;
 import src.utils.Theme;
+import src.utils.Widget;
 
 import java.awt.*;
 
 public class OperatorRegister extends JFrame {
 
-    private String windowsTitle = "Registrazione nuovo utente";
+    private static String windowsTitle = "Registrazione nuovo utente";
 
     private JPanel panelMain = new JPanel();
-    private JLabel labelLogoImage = new JLabel();
+    private JLabel labelLogoImage = Widget.createLogoLabel();
     private JLabel labelName = new JLabel();
     private JLabel labelTaxCode = new JLabel();
     private JLabel labelEmail = new JLabel();
@@ -38,7 +39,6 @@ public class OperatorRegister extends JFrame {
     }
 
     private void initializeComponents() {
-        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.Assets.LOGO));
 
         labelName.setText("Nome e Cognome");
         labelName.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);

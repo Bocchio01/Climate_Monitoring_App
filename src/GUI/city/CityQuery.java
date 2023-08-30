@@ -3,30 +3,33 @@ package src.GUI.city;
 import javax.swing.*;
 
 import src.GUI.Home;
+import src.functions.AreaFunctions;
 import src.functions.CityFunctions;
-import src.utils.AppConstants;
 import src.utils.FrameHandler;
 import src.utils.Theme;
+import src.utils.Widget;
 
 import java.awt.*;
 import java.awt.event.*;
 
 public class CityQuery extends JFrame {
 
-    private String windowsTitle = "Ricerca dati città";
+    private static String windowsTitle = "Ricerca dati città";
 
     private JPanel panelMain = new JPanel();
-    private JLabel labelLogoImage = new JLabel();
-    private JLabel labelQueryType = new JLabel();
-    private JLabel labelCityName = new JLabel();
-    private JLabel labelLatitude = new JLabel();
-    private JLabel labelLongitude = new JLabel();
+    private JLabel labelLogoImage = Widget.createLogoLabel();
     private JTextField textfieldCityName = new JTextField();
     private JTextField textfieldLatitude = new JTextField();
     private JTextField textfieldLongitude = new JTextField();
-    private JButton buttonPerfomQuery = new JButton();
-    private JButton buttonToBack = new JButton();
+    private JButton buttonPerfomQuery = Widget.createButton("Cerca dati città");
+    private JButton buttonToBack = Widget.createButton("Indietro");
     private JComboBox<String> comboboxQueryType = new JComboBox<String>();
+
+    private Widget.FormElement[] formData = new Widget.FormElement[] {
+            new Widget.FormElement("Nome città", textfieldCityName),
+            new Widget.FormElement("Latitudine", textfieldLatitude),
+            new Widget.FormElement("Longitudine", textfieldLongitude)
+    };
 
     public CityQuery() {
         initializeComponents();
@@ -39,33 +42,7 @@ public class CityQuery extends JFrame {
 
     private void initializeComponents() {
         String[] comboboxValues = new String[] { "Cerca per nome", "Cerca per coordinate" };
-
-        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.Assets.LOGO));
-
-        labelQueryType.setText("Tipo di ricerca");
         comboboxQueryType.setModel(new DefaultComboBoxModel<>(comboboxValues));
-        comboboxQueryType.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        labelCityName.setText("Città");
-        labelCityName.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);
-        textfieldCityName.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        labelLatitude.setText("Latitudine");
-        labelLatitude.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);
-        textfieldLatitude.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        labelLongitude.setText("Longitudine");
-        labelLongitude.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);
-        textfieldLongitude.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        buttonPerfomQuery.setText("Cerca");
-        buttonPerfomQuery.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buttonPerfomQuery.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        buttonToBack.setText("Indietro");
-        buttonToBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buttonToBack.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
     }
 
     private void createLayout() {
@@ -83,17 +60,10 @@ public class CityQuery extends JFrame {
         panelMain.add(labelLogoImage, gbc);
 
         gbc.weighty = 1;
-        panelMain.add(labelQueryType, gbc);
-        panelMain.add(comboboxQueryType, gbc);
-
-        panelMain.add(labelCityName, gbc);
-        panelMain.add(textfieldCityName, gbc);
-
-        panelMain.add(labelLatitude, gbc);
-        panelMain.add(textfieldLatitude, gbc);
-
-        panelMain.add(labelLongitude, gbc);
-        panelMain.add(textfieldLongitude, gbc);
+        panelMain.add(Widget.createFormPanel("Tipo di ricerca", comboboxQueryType), gbc);
+        panelMain.add(Widget.createFormPanel("Città", textfieldCityName), gbc);
+        panelMain.add(Widget.createFormPanel("Latitudine", textfieldLatitude), gbc);
+        panelMain.add(Widget.createFormPanel("Longitudine", textfieldLongitude), gbc);
 
         panelMain.add(buttonPerfomQuery, gbc);
         panelMain.add(buttonToBack, gbc);
@@ -102,13 +72,7 @@ public class CityQuery extends JFrame {
     }
 
     private void applyTheme() {
-        Theme.applyTheme(new Object[] {
-                panelMain,
-                labelQueryType,
-                labelCityName,
-                labelLatitude,
-                labelLongitude
-        });
+        Theme.applyTheme(new Object[] { panelMain });
     }
 
     public void addActionEvent() {
@@ -141,28 +105,33 @@ public class CityQuery extends JFrame {
         };
 
         buttonPerfomQuery.addActionListener(e -> {
-            String citta = "";
+            String cityName = "";
+            Integer cityID = 0;
 
             switch (comboboxQueryType.getSelectedIndex()) {
                 case 0:
-                    citta = textfieldCityName.getText();
-                                //             JOptionPane.showMessageDialog(null,
-                                // "Citta vuota!",
-                                // "Dato mancante",
-                                // JOptionPane.WARNING_MESSAGE);
-                    if (CityFunctions.nameFind(citta, AppConstants.Path.Files.CITY_COORDS, 1)) {
+                    cityName = textfieldCityName.getText();
+                    cityID = AreaFunctions.getCityID(cityName);
+
+                    if (cityID != null) {
                         dispose();
-                        FrameHandler.setFrame(new CityVisualizer(citta.trim()));
+                        FrameHandler.setFrame(new CityVisualizer(cityID));
                     } else {
-                        JOptionPane.showMessageDialog(this, "Città non trovata.");
+                        JOptionPane.showMessageDialog(
+                                this,
+                                "La città inserita non è presente nel database.",
+                                "Città non trovata",
+                                JOptionPane.WARNING_MESSAGE);
                     }
                     break;
 
                 case 1:
-                    citta = CityFunctions.coordFind(textfieldLatitude.getText(), textfieldLongitude.getText(),
-                            AppConstants.Path.Files.CITY_COORDS, 1);
+                    cityID = CityFunctions.getCityIDByCoords(
+                            textfieldLatitude.getText(),
+                            textfieldLongitude.getText());
+
                     dispose();
-                    FrameHandler.setFrame(new CityVisualizer(citta.trim()));
+                    FrameHandler.setFrame(new CityVisualizer(cityID));
                     break;
 
                 default:

@@ -4,16 +4,16 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import src.utils.AppConstants;
 import src.utils.FrameHandler;
 import src.utils.Theme;
+import src.utils.Widget;
 
 public class Loading extends JFrame {
 
-    private String windowsTitle = "Caricamento applicazione...";
+    private static String windowsTitle = "Caricamento applicazione...";
 
     private JPanel panelMain = new JPanel();
-    private JLabel labelIconImage = new JLabel();
+    private JLabel labelIconImage = Widget.createLogoLabel(2);
     private JLabel labelAppName = new JLabel();
     private JProgressBar progressBar = new JProgressBar();
 
@@ -28,8 +28,6 @@ public class Loading extends JFrame {
     }
 
     private void initializeComponents() {
-        // labelIconImage.setPreferredSize(new Dimension(400, 300));
-        labelIconImage.setIcon(new ImageIcon(AppConstants.Path.Assets.LOADING));
 
         labelAppName.setText("Monitoraggio Climatico");
         labelAppName.setFont(new Font("Ink Free", Font.CENTER_BASELINE, 35));
@@ -40,7 +38,7 @@ public class Loading extends JFrame {
         progressBar.setStringPainted(true);
 
         timer = new Timer(5, e -> {
-            int progress = progressBar.getValue();
+            Integer progress = progressBar.getValue();
             if (progress < 100) {
                 progressBar.setValue(progress + 1);
             } else {
@@ -60,21 +58,17 @@ public class Loading extends JFrame {
         gbc.insets = new Insets(5, 5, 5, 5);
 
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
         gbc.weightx = 1;
         gbc.weighty = 10;
         gbc.anchor = GridBagConstraints.CENTER;
 
         panelMain.add(labelIconImage, gbc);
 
-        gbc.gridy = 1;
         gbc.weighty = 0;
         panelMain.add(labelAppName, gbc);
 
-        gbc.weightx = 0;
         gbc.weighty = 1;
-        gbc.gridy = 2;
-
         panelMain.add(progressBar, gbc);
 
         add(panelMain);

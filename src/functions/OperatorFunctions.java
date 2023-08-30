@@ -22,7 +22,7 @@ public class OperatorFunctions {
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                String[] userDataFromFile = line.split("[,;]");
+                String[] userDataFromFile = line.split(AppConstants.CSV_SEPARATOR);
 
                 if (checkCredentials(
                         new String[] { id, userDataFromFile[AppConstants.Index.ID] },
@@ -85,8 +85,8 @@ public class OperatorFunctions {
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                String idFromFile = line.split("[,;]")[AppConstants.Index.ID];
-                String passwordFromFile = line.split("[,;]")[AppConstants.Index.PWD];
+                String idFromFile = line.split(AppConstants.CSV_SEPARATOR)[AppConstants.Index.ID];
+                String passwordFromFile = line.split(AppConstants.CSV_SEPARATOR)[AppConstants.Index.PWD];
 
                 if (id.equals(idFromFile) ||
                         checkCredentials(
@@ -121,7 +121,7 @@ public class OperatorFunctions {
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                String[] dataFromFile = line.split(",");
+                String[] dataFromFile = line.split(AppConstants.CSV_SEPARATOR);
 
                 if (checkCredentials(
                         new String[] { getCurrentUserID(), dataFromFile[AppConstants.Index.ID] },
@@ -129,7 +129,7 @@ public class OperatorFunctions {
 
                     dataFromFile[index] = newValue;
 
-                    fileContent.append(String.join(",", dataFromFile)).append("\n");
+                    fileContent.append(String.join(AppConstants.CSV_SEPARATOR, dataFromFile)).append("\n");
                 } else {
                     fileContent.append(line).append("\n");
                 }
@@ -191,7 +191,7 @@ public class OperatorFunctions {
             return false;
         }
 
-        String dati = String.join(",", dataInserted);
+        String dati = String.join(AppConstants.CSV_SEPARATOR, dataInserted);
 
         try {
             FileWriter fileWriter = new FileWriter(AppConstants.Path.Files.OPERATOR_DATA, true);

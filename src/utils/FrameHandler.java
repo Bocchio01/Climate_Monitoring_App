@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 public class FrameHandler {
 
     public static void setFrame(JFrame mainFrame) {
-        ImageIcon iconImage = new ImageIcon(AppConstants.Path.Assets.FAVICON);
+        ImageIcon iconImage = new ImageIcon(AppConstants.Path.Assets.LOGO);
 
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(1200, 800);

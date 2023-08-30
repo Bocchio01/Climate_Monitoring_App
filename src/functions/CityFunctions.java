@@ -2,86 +2,104 @@ package src.functions;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.nio.charset.StandardCharsets;
+
+import src.utils.AppConstants;
 
 public class CityFunctions {
 
-    // Ricerca per coordinate
-    public static String coordFind(String latitude, String longitude, String nomeFile, Integer posizioneLista) {
+    public static Integer getCityIDByCoords(String latitude, String longitude) {
+
+        Integer cityID = null;
+
         try {
+            double[] coordsQuery = new double[] {
+                    Double.parseDouble(latitude.replace(',', '.')),
+                    Double.parseDouble(longitude.replace(',', '.'))
+            };
 
-            String lineString, cittaSelected = null;
+            double currentMaxDistance = Integer.MAX_VALUE;
 
-            double latInsert = Double.parseDouble(latitude.replace(',', '.')),
-                    lonInsert = Double.parseDouble(longitude.replace(',', '.')),
-                    actualMaxDistance = Integer.MAX_VALUE;
-            Integer maxDistance = 400;
-
-            FileReader fin = new FileReader(nomeFile, StandardCharsets.UTF_8);
+            FileReader fin = new FileReader(AppConstants.Path.Files.CITY_COORDS);
             BufferedReader rfbuffer = new BufferedReader(fin);
+            String line;
 
-            while ((lineString = rfbuffer.readLine()) != null) {
-                String[] lineArray = lineString.split("[;]");
+            while ((line = rfbuffer.readLine()) != null) {
+                String[] lineArray = line.split(AppConstants.CSV_SEPARATOR);
 
                 try {
-                    double latFile = Double.parseDouble(lineArray[5].replace(',', '.'));
-                    double lonFile = Double.parseDouble(lineArray[6].replace(',', '.'));
+                    double[] coordsFile = new double[] {
+                            Double.parseDouble(lineArray[5].replace(',', '.')),
+                            Double.parseDouble(lineArray[6].replace(',', '.'))
+                    };
 
-                    double temp = Math.sqrt(Math.pow(latFile - latInsert, 2) + Math.pow(lonFile - lonInsert, 2));
-                    if (temp < maxDistance && temp < actualMaxDistance) {
-                        actualMaxDistance = temp;
-                        cittaSelected = lineString;
+                    double distance = distanceBetweenCoords(coordsQuery, coordsFile);
+
+                    if (distance < 10 && distance < currentMaxDistance) {
+                        currentMaxDistance = distance;
+                        cityID = Integer.parseInt(lineArray[0]);
                     }
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
             }
 
+            rfbuffer.close();
             fin.close();
-            return cittaSelected.split("[;]")[posizioneLista];
+
         } catch (Exception e) {
             // TODO: handle exception
-            return "";
         }
+        return cityID;
     }
 
-    // Ricerca per nome
-    public static boolean nameFind(String citta, String nomeFile, Integer posizioneLista) {
+    public static Integer getCityIDByName(String cityName) {
+
+        Integer cityID = null;
+
         try {
-            String lineString, cityQuery = citta.toLowerCase().trim();
-            boolean findFlag = false;
 
-            FileReader fin = new FileReader(nomeFile, StandardCharsets.UTF_8);
+            FileReader fin = new FileReader(AppConstants.Path.Files.CITY_COORDS);
             BufferedReader rfbuffer = new BufferedReader(fin);
+            String line;
 
-            while (!findFlag && (lineString = rfbuffer.readLine()) != null) {
-                String[] lineArray = lineString.split("[,;]");
-                findFlag = lineArray.length > posizioneLista
-                        && lineArray[posizioneLista].toLowerCase().equals(cityQuery);
+            while ((line = rfbuffer.readLine()) != null) {
+                String[] lineArray = line.split(AppConstants.CSV_SEPARATOR);
+
+                if (lineArray[1].equalsIgnoreCase(cityName)) {
+                    cityID = Integer.parseInt(lineArray[0]);
+                    break;
+                }
             }
 
             fin.close();
-            return findFlag;
 
         } catch (Exception e) {
             // TODO: handle exception
-            return false;
         }
+        return cityID;
     }
 
-    // private static double calcolaDistanza(double lat1, double lon1, double lat2,
-    // double lon2) {
-    // int R = 6371; // raggio terrestre medio in km
-    // double latDistanza = Math.toRadians(lat2 - lat1);
-    // double lonDistanza = Math.toRadians(lon2 - lon1);
-    // double a = Math.sin(latDistanza / 2) * Math.sin(latDistanza / 2)
-    // + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-    // * Math.sin(lonDistanza / 2) * Math.sin(lonDistanza / 2);
-    // double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    // double c2 = 2 * Math.asin(Math.sqrt(a));
-    // double distanza = R * c;
-    // double dist2 = R * c2;
-    // System.out.println(distanza + "\n" + dist2);
-    // return distanza;
-    // }
+    private static double distanceBetweenCoords(double[] coords1, double[] coords2) {
+
+        Integer LAT = 0, LON = 1;
+        double distance = Math.sqrt(
+                Math.pow(coords1[LAT] - coords2[LAT], 2) +
+                        Math.pow(coords1[LON] - coords2[LON], 2));
+
+        return distance;
+    }
+
+    private static double _distanceBetweenCoords(double[] coords1, double[] coords2) {
+
+        Integer LAT = 0, LON = 1, R = 6371;
+        double distLat = Math.toRadians(coords1[LAT] - coords2[LAT]);
+        double distLon = Math.toRadians(coords1[LON] - coords2[LON]);
+
+        double a = Math.sin(distLat / 2) * Math.sin(distLat / 2) + Math.cos(Math.toRadians(coords1[LAT]))
+                * Math.cos(Math.toRadians(coords2[LAT])) * Math.sin(distLon / 2) * Math.sin(distLon / 2);
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c;
+    }
 }

@@ -7,18 +7,19 @@ import src.GUI.operator.OperatorHome;
 import src.utils.AppConstants;
 import src.utils.FrameHandler;
 import src.utils.Theme;
+import src.utils.Widget;
 
 import java.awt.*;
 
 public class Home extends JFrame {
 
-    private String windowsTitle = "Home";
+    private static String windowsTitle = "Home";
 
     private JPanel panelMain = new JPanel();
-    private JLabel labelLogoImage = new JLabel();
+    private JLabel labelLogoImage = Widget.createLogoLabel();
     private JButton buttonChangeTheme = new JButton();
-    private JButton buttonToFind = new JButton();
-    private JButton buttonToOperator = new JButton();
+    private JButton buttonToFind = Widget.createButton("Cerca e visualizza dati");
+    private JButton buttonToOperator = Widget.createButton("Gestisci area operatore");
 
     public Home() {
         initializeComponents();
@@ -29,16 +30,6 @@ public class Home extends JFrame {
 
     private void initializeComponents() {
         buttonChangeTheme.setIcon(new ImageIcon(AppConstants.Path.Assets.THEME));
-
-        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.Assets.LOGO));
-
-        buttonToFind.setText("Cerca e visualizza dati");
-        buttonToFind.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buttonToFind.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        buttonToOperator.setText("Gestisci area operatore");
-        buttonToOperator.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buttonToOperator.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
     }
 
     private void createLayout() {

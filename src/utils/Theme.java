@@ -23,17 +23,17 @@ public class Theme {
     public static void applyTheme(Object[] guiElements) {
         for (Object guiElement : guiElements) {
             if (guiElement instanceof JPanel)
-                applyThemeToContainer((JPanel) guiElement);
+                applyThemeToPanel((JPanel) guiElement);
             else if (guiElement instanceof JLabel)
                 applyThemeToLabel((JLabel) guiElement);
         }
     }
 
-    public static void applyThemeToContainer(JPanel container) {
+    public static void applyThemeToPanel(JPanel panel) {
         if (isDarkMode()) {
-            container.setBackground(darkGray);
+            panel.setBackground(darkGray);
         } else {
-            container.setBackground(lightBlue);
+            panel.setBackground(lightBlue);
         }
     }
 

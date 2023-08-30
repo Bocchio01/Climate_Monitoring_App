@@ -1,11 +1,9 @@
 package src.GUI.operator;
 
-import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,19 +11,19 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import src.GUI.Home;
-import src.utils.AppConstants;
 import src.utils.FrameHandler;
 import src.utils.Theme;
+import src.utils.Widget;
 
 public class OperatorHome extends JFrame {
 
-    private String windowsTitle = "Area operatore";
+    private static String windowsTitle = "Area operatore";
 
     private JPanel panelMain = new JPanel();
-    private JLabel labelLogoImage = new JLabel();
-    private JButton buttonToRegistration = new JButton();
-    private JButton buttonToLogin = new JButton();
-    private JButton buttonToBack = new JButton();
+    private JLabel labelLogoImage = Widget.createLogoLabel();
+    private JButton buttonToRegistration = Widget.createButton("Registrati");
+    private JButton buttonToLogin = Widget.createButton("Accedi");
+    private JButton buttonToBack = Widget.createButton("Indietro");
 
     public OperatorHome() {
         initializeComponents();
@@ -37,19 +35,6 @@ public class OperatorHome extends JFrame {
 
     private void initializeComponents() {
 
-        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.Assets.LOGO));
-
-        buttonToRegistration.setText("Registrati");
-        buttonToRegistration.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buttonToRegistration.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        buttonToLogin.setText("Accedi");
-        buttonToLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buttonToLogin.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        buttonToBack.setText("Indietro");
-        buttonToBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buttonToBack.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
     }
 
     private void createLayout() {

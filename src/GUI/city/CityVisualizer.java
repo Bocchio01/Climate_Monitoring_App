@@ -4,12 +4,11 @@ import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 import src.GUI.Home;
+import src.functions.CityFunctions;
 import src.functions.VisualizerFunctions;
 import src.utils.AppConstants;
 import src.utils.FrameHandler;
@@ -17,7 +16,7 @@ import src.utils.Theme;
 
 public class CityVisualizer extends JFrame {
 
-    private String windowsTitle = "Visualizzatore dati per area";
+    private static String windowsTitle = "Visualizzatore dati per area";
 
     private JPanel panelMain = new JPanel();
     private JTextArea textareaOperator = new JTextArea();
@@ -25,14 +24,14 @@ public class CityVisualizer extends JFrame {
     private JButton buttonToBack = new JButton();
     private JButton buttonToHome = new JButton();
 
-    public CityVisualizer(String nameCity) {
+    public CityVisualizer(Integer cityID) {
 
         initializeComponents();
         createLayout();
         applyTheme();
         addActionEvent();
 
-        loadDatas(nameCity);
+        loadDatas(cityID);
 
     }
 
@@ -89,35 +88,31 @@ public class CityVisualizer extends JFrame {
         });
     }
 
-    private void loadDatas(String nameCity) {
-        String[] dataFromFile = VisualizerFunctions.getDataFromFile(nameCity);
+    private void loadDatas(Integer cityID) {
+        String[] dataFromFile = VisualizerFunctions.getDataFromFile(cityID);
 
         if (dataFromFile.length > 0) {
-            String[] messagesAveraged = VisualizerFunctions.computeAverageMessages(dataFromFile);
-            textareaDatas.setText(String.join("\n", messagesAveraged));
+            // String[] messagesAveraged =
+            // VisualizerFunctions.computeAverageMessages(dataFromFile);
+            // textareaDatas.setText(String.join("\n", messagesAveraged));
+            for (int i = 3; i < 3+7; i++) {
+                textareaDatas.setText(VisualizerFunctions.computeConcatComment(dataFromFile, i) +
+                        "\n" +textareaDatas.getText());
+            }
 
         } else {
-
             JOptionPane.showMessageDialog(this,
                     "L'operatore non ha ancora inserito dati per la città selezionata.",
                     "Dati mancanti",
                     JOptionPane.WARNING_MESSAGE);
-
-            Timer timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dispose();
-                    FrameHandler.setFrame(new CityQuery());
-                }
-            });
-            timer.setRepeats(false);
-            timer.start();
+            dispose();
+            FrameHandler.setFrame(new CityQuery());
         }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            CityVisualizer visualizerFrame = new CityVisualizer("Milano");
+            CityVisualizer visualizerFrame = new CityVisualizer(CityFunctions.getCityIDByName("Milano"));
             visualizerFrame.setSize(1200, 800);
             visualizerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             visualizerFrame.setVisible(true);

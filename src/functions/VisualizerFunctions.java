@@ -10,84 +10,86 @@ import src.utils.AppConstants;
 
 public class VisualizerFunctions {
 
-    public static String[] getDataFromFile(String nameCity) {
+    // public static String[] computeAverageMessages(String[] dataFromFile) {
+
+    //     String[] AverageMessage = new String[7];
+    //     String cityName = dataFromFile[0].split(AppConstants.CSV_SEPARATOR)[0];
+
+    //     for (int i = 0; i < 7; i++) {
+
+    //         String[] AverageMessagePerCategory = new String[dataFromFile.length / 7];
+    //         String categoryName = dataFromFile[i].split(AppConstants.CSV_SEPARATOR)[3];
+    //         for (int j = i, k = 0; j < dataFromFile.length; j = j + 7, k++) {
+    //             AverageMessagePerCategory[k] = dataFromFile[j];
+    //         }
+
+    //         float aveargeScore = computeMeanScore(AverageMessagePerCategory);
+    //         String aveargeComment = computeConcatComment(AverageMessagePerCategory);
+
+    //         AverageMessage[i] = String.join(",",
+    //                 new String[] { cityName,
+    //                         categoryName,
+    //                         String.format("%.2f", aveargeScore),
+    //                         aveargeComment });
+    //     }
+
+    //     return AverageMessage;
+
+    // }
+
+    public static String[] getDataFromFile(int cityID) {
 
         List<String> dataStrings = new ArrayList<>();
 
         try (FileReader fin = new FileReader(AppConstants.Path.Files.CITY_DATAS)) {
 
-            BufferedReader freader = new BufferedReader(fin);
+            BufferedReader rfbuffer = new BufferedReader(fin);
             String line;
 
-            while ((line = freader.readLine()) != null) {
-                if (nameCity.equalsIgnoreCase(line.split(",")[0])) {
-                    dataStrings.add(line.replace("\n", line));
+            while ((line = rfbuffer.readLine()) != null) {
+                int currentCityID = Integer.parseInt(line.split(AppConstants.CSV_SEPARATOR)[0]);
+                if (cityID == currentCityID) {
+                    dataStrings.add(line.replace("\n", ""));
                 }
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
             return new String[] {};
         }
 
-        return dataStrings.toArray(new String[0]);
+        return dataStrings.toArray(new String[] {});
     }
 
-    public static String[] computeAverageMessages(String[] dataFromFile) {
-
-        String[] AverageMessage = new String[7];
-        String cityName = dataFromFile[0].split(",")[0];
-
-        for (int i = 0; i < 7; i++) {
-
-            String[] AverageMessagePerCategory = new String[dataFromFile.length / 7];
-            String categoryName = dataFromFile[i].split(",")[3];
-            for (int j = i, k = 0; j < dataFromFile.length; j = j + 7, k++) {
-                AverageMessagePerCategory[k] = dataFromFile[j];
-            }
-
-            float aveargeScore = computeAverageScores(AverageMessagePerCategory);
-            String aveargeComment = computeAverageComment(AverageMessagePerCategory);
-
-            AverageMessage[i] = String.join(",",
-                    new String[] { cityName,
-                            categoryName,
-                            String.format("%.2f", aveargeScore),
-                            aveargeComment });
-        }
-
-        return AverageMessage;
-
-    }
-
-    public static float computeAverageScores(String[] AverageMessagePerCategory) {
+    public static float computeMeanScore(String[] cityDatas, Integer categoryIndex) {
 
         Integer cumulativeScore = 0;
 
-        for (int i = 0; i < AverageMessagePerCategory.length; i++) {
-            String currentScore = AverageMessagePerCategory[i].split(",")[4];
+        for (int i = 0; i < cityDatas.length; i++) {
+            String categoryString = cityDatas[i].split(AppConstants.CSV_SEPARATOR)[categoryIndex];
+            String currentScoreString = categoryString.split(",")[0];
 
-            if (!currentScore.equals("null")) {
-                cumulativeScore += Integer.parseInt(currentScore);
+            if (!currentScoreString.equals(AppConstants.EMPTY_STRING)) {
+                cumulativeScore += Integer.parseInt(currentScoreString);
             }
         }
 
-        return (float) cumulativeScore / AverageMessagePerCategory.length;
+        return (float) cumulativeScore / cityDatas.length;
     }
 
-    public static String computeAverageComment(String[] AverageMessagePerCategory) {
+    public static String computeConcatComment(String[] cityDatas, Integer categoryIndex) {
 
-        StringBuilder concactedCommentBuilder = new StringBuilder();
+        ArrayList<String> commentArray = new ArrayList<>();
 
-        for (int i = 0; i < AverageMessagePerCategory.length; i++) {
-            concactedCommentBuilder.append(AverageMessagePerCategory[i].split(",")[5]);
+        for (int i = 0; i < cityDatas.length; i++) {
+            String categoryString = cityDatas[i].split(AppConstants.CSV_SEPARATOR)[categoryIndex];
+            String currentCommentString = categoryString.split(",")[1];
 
-            if (i < (AverageMessagePerCategory.length - 1)) {
-                concactedCommentBuilder.append(" | ");
+            if (!currentCommentString.equals(AppConstants.EMPTY_STRING)) {
+                commentArray.add(currentCommentString);
             }
         }
 
-        return concactedCommentBuilder.toString();
+        return String.join(" | ", commentArray);
     }
 
 }

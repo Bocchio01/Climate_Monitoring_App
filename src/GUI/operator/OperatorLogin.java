@@ -18,18 +18,17 @@ import src.functions.OperatorFunctions;
 import src.utils.AppConstants;
 import src.utils.FrameHandler;
 import src.utils.Theme;
+import src.utils.Widget;
 
 public class OperatorLogin extends JFrame {
 
-    private String windowsTitle = "Accedi all'area riservata";
+    private static String windowsTitle = "Accedi all'area riservata";
 
     private JPanel panelMain = new JPanel();
-    private JLabel labelLogoImage = new JLabel();
-    private JLabel labelUserID = new JLabel();
-    private JLabel labelPassword = new JLabel();
+    private JLabel labelLogoImage = Widget.createLogoLabel();
     private JTextField textfieldUsedID = new JTextField();
     private JPasswordField textfieldPassword = new JPasswordField();
-    private JButton buttonPerformLogin = new JButton();
+    private JButton buttonPerformLogin = Widget.createButton("Accedi");
 
     public OperatorLogin() {
         initializeComponents();
@@ -38,7 +37,7 @@ public class OperatorLogin extends JFrame {
         addActionEvent();
 
         if (OperatorFunctions.isUserLogged()) {
-            int response = JOptionPane.showConfirmDialog(
+            Integer response = JOptionPane.showConfirmDialog(
                     null,
                     "Risulti già loggato con ID_Utente: " + OperatorFunctions.getCurrentUserID() + "\n"
                             + "Proseguire?",
@@ -57,20 +56,6 @@ public class OperatorLogin extends JFrame {
     }
 
     private void initializeComponents() {
-        labelLogoImage.setIcon(new ImageIcon(AppConstants.Path.Assets.LOGO));
-
-        labelUserID.setText("ID Utente");
-        labelUserID.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);
-        textfieldUsedID.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        labelPassword.setText("Password");
-        labelPassword.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);
-        textfieldPassword.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        buttonPerformLogin.setText("Accedi");
-        buttonPerformLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buttonPerformLogin.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
     }
 
     private void createLayout() {
@@ -87,15 +72,9 @@ public class OperatorLogin extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         panelMain.add(labelLogoImage, gbc);
 
-        gbc.weighty = 0;
-        panelMain.add(labelUserID, gbc);
         gbc.weighty = 1;
-        panelMain.add(textfieldUsedID, gbc);
-
-        gbc.weighty = 0;
-        panelMain.add(labelPassword, gbc);
-        gbc.weighty = 1;
-        panelMain.add(textfieldPassword, gbc);
+        panelMain.add(Widget.createFormPanel("ID Utente", textfieldUsedID), gbc);
+        panelMain.add(Widget.createFormPanel("Password", textfieldUsedID), gbc);
 
         panelMain.add(buttonPerformLogin, gbc);
 
@@ -103,11 +82,7 @@ public class OperatorLogin extends JFrame {
     }
 
     private void applyTheme() {
-        Theme.applyTheme(new Object[] {
-                panelMain,
-                labelUserID,
-                labelPassword
-        });
+        Theme.applyTheme(new Object[] { panelMain });
     }
 
     public void addActionEvent() {
@@ -142,7 +117,7 @@ public class OperatorLogin extends JFrame {
                     if (OperatorFunctions.performLogin(userID, userPassword)) {
                         if (OperatorFunctions.getCurrentUserArea() == null) {
 
-                            int response = JOptionPane.showConfirmDialog(
+                            Integer response = JOptionPane.showConfirmDialog(
                                     null,
                                     "Ancora non hai creato la tua area. Vuoi crearla ora?",
                                     "Area non creata",

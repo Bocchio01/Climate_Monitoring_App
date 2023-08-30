@@ -6,6 +6,62 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AreaCreateNew",
+            "request": "launch",
+            "mainClass": "src.GUI.area.AreaCreateNew",
+            "projectName": "WeatherApp_416d515"
+        },
+        {
+            "type": "java",
+            "name": "Widget",
+            "request": "launch",
+            "mainClass": "src.utils.Widget",
+            "projectName": "WeatherApp_416d515"
+        },
+        {
+            "type": "java",
+            "name": "_FormPanel",
+            "request": "launch",
+            "mainClass": "_FormPanel",
+            "projectName": "WeatherApp_416d515"
+        },
+        {
+            "type": "java",
+            "name": "CityQuery",
+            "request": "launch",
+            "mainClass": "src.GUI.city.CityQuery",
+            "projectName": "WeatherApp_416d515"
+        },
+        {
+            "type": "java",
+            "name": "CityVisualizer",
+            "request": "launch",
+            "mainClass": "src.GUI.city.CityVisualizer",
+            "projectName": "WeatherApp_416d515"
+        },
+        {
+            "type": "java",
+            "name": "Home",
+            "request": "launch",
+            "mainClass": "src.GUI.Home",
+            "projectName": "WeatherApp_416d515"
+        },
+        {
+            "type": "java",
+            "name": "AreaAddData",
+            "request": "launch",
+            "mainClass": "src.GUI.area.AreaAddData",
+            "projectName": "WeatherApp_416d515"
+        },
+        {
+            "type": "java",
+            "name": "_SimpleTable",
+            "request": "launch",
+            "mainClass": "_SimpleTable",
+            "projectName": "WeatherApp_416d515"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "src.Main",
