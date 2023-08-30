@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Loading",
+            "request": "launch",
+            "mainClass": "src.GUI.Loading",
+            "projectName": "WeatherApp_416d515"
+        },
+        {
+            "type": "java",
             "name": "AreaCreateNew",
             "request": "launch",
             "mainClass": "src.GUI.area.AreaCreateNew",

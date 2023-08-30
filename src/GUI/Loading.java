@@ -4,27 +4,24 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import src.utils.FrameHandler;
+import src.utils.PanelHandler;
 import src.utils.Theme;
 import src.utils.Widget;
 
-public class Loading extends JFrame {
+public class Loading extends JPanel implements PanelHandler.PanelCreator {
 
-    private static String windowsTitle = "Caricamento applicazione...";
+    public static String windowsTitle = "Caricamento applicazione...";
+    public static String ID = "Loading";
 
     private JPanel panelMain = new JPanel();
     private JLabel labelIconImage = Widget.createLogoLabel(2);
     private JLabel labelAppName = new JLabel();
     private JProgressBar progressBar = new JProgressBar();
 
-    private Timer timer;
+    private static Timer timer;
 
     public Loading() {
-        initializeComponents();
-        createLayout();
-        applyTheme();
 
-        configureTimer();
     }
 
     private void initializeComponents() {
@@ -43,16 +40,13 @@ public class Loading extends JFrame {
                 progressBar.setValue(progress + 1);
             } else {
                 timer.stop();
-                dispose();
-                FrameHandler.setFrame(new Home());
+                PanelHandler.changePanel(Home.ID);
             }
         });
 
     }
 
     private void createLayout() {
-        setTitle(windowsTitle);
-
         panelMain.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -78,17 +72,23 @@ public class Loading extends JFrame {
         Theme.applyTheme(new Object[] { panelMain, labelAppName });
     }
 
-    private void configureTimer() {
+    public static void configureTimer() {
         timer.start();
+    }
+
+    @Override
+    public JPanel createPanel() {
+        initializeComponents();
+        createLayout();
+        applyTheme();
+        // addActionEvent();
+
+        return this;
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            Loading loadingFrame = new Loading();
-            loadingFrame.setSize(1200, 800);
-            loadingFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            loadingFrame.setVisible(true);
-            loadingFrame.setLocationRelativeTo(null);
+
         });
     }
 }

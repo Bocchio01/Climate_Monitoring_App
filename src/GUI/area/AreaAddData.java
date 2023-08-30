@@ -9,8 +9,9 @@ import src.GUI.operator.OperatorHome;
 import src.functions.AreaFunctions;
 import src.functions.OperatorFunctions;
 import src.utils.AppConstants;
-import src.utils.FrameHandler;
+import src.utils.PanelHandler;
 import src.utils.Theme;
+import src.utils.Widget;
 
 import java.awt.*;
 import java.awt.event.FocusEvent;
@@ -27,16 +28,13 @@ public class AreaAddData extends JFrame {
     private static String dateMask = datePattern.replaceAll("[dMy]", "#");
 
     private JPanel panelMain = new JPanel();
-    private JLabel labelAreaName = new JLabel();
-    private JLabel labelCityName = new JLabel();
-    private JLabel labelDate = new JLabel();
     private JTextField textfieldAreaName = new JTextField();
     private JComboBox<String> comboboxCityName = new JComboBox<>();
     private JFormattedTextField textfieldDate = new JFormattedTextField();
     private JTable table = new JTable();
     private JScrollPane scrollpanelTable = new JScrollPane();
     private DefaultTableModel defaulmodelTable = new DefaultTableModel();
-    private JButton buttonPerformSave = new JButton();
+    private JButton buttonPerformSave = Widget.createButton("Salva il nuovo set di dati");
 
     private static String[][] data = {
             { "Vento", "Velocità del vento (km/h)" },
@@ -66,6 +64,7 @@ public class AreaAddData extends JFrame {
                 }
 
                 textfieldAreaName.setText(nameArea);
+                textfieldAreaName.setEditable(false);
 
             } else {
                 JOptionPane.showMessageDialog(
@@ -73,7 +72,7 @@ public class AreaAddData extends JFrame {
                         "Per inserire un nuovo set di dati devi prima aver creato la tua area.",
                         "Area non creata",
                         JOptionPane.ERROR_MESSAGE);
-                FrameHandler.setFrame(new AreaCreateNew());
+                // PanelHandler.setFrame(new AreaCreateNew());
             }
 
         } else {
@@ -82,21 +81,12 @@ public class AreaAddData extends JFrame {
                     "Per inserire un nuovo set di dati devi prima essere loggato.",
                     "Utente non loggato",
                     JOptionPane.ERROR_MESSAGE);
-            FrameHandler.setFrame(new OperatorHome());
+            // PanelHandler.setFrame(new OperatorHome());
         }
 
     }
 
     private void initializeComponents() {
-
-        labelAreaName.setText("Area operatore");
-        labelAreaName.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);
-        textfieldAreaName.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-        textfieldAreaName.setEnabled(false);
-
-        labelCityName.setText("Città selezionata");
-        labelCityName.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);
-        comboboxCityName.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
 
         try {
             MaskFormatter maskFormatter = new MaskFormatter(dateMask);
@@ -105,11 +95,8 @@ public class AreaAddData extends JFrame {
             // TODO: handle exception
         }
 
-        labelDate.setText("Data rilevazione");
-        labelDate.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);
         textfieldDate.setText(getCurrentDateString());
         textfieldDate.setForeground(Color.GRAY);
-        textfieldDate.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
 
         defaulmodelTable.addColumn("Categoria");
         defaulmodelTable.addColumn("Punteggio");
@@ -132,9 +119,6 @@ public class AreaAddData extends JFrame {
         scrollpanelTable.setViewportView(table);
         // scrollpanelTable.setPreferredSize(new Dimension(1000, 500));
 
-        buttonPerformSave.setText("Salva il nuovo set di dati");
-        buttonPerformSave.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buttonPerformSave.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
     }
 
     private void createLayout() {
@@ -144,30 +128,30 @@ public class AreaAddData extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.gridx = GridBagConstraints.RELATIVE;
+        gbc.gridy = 0;
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.anchor = GridBagConstraints.CENTER;
+
+        panelMain.add(Widget.createFormPanel("Area operatore", textfieldAreaName), gbc);
+        panelMain.add(Widget.createFormPanel("Città selezionata", comboboxCityName), gbc);
+        panelMain.add(Widget.createFormPanel("Data rilevazione", textfieldDate), gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.gridwidth = 3;
         panelMain.add(scrollpanelTable, gbc);
 
-        panelMain.add(labelAreaName, gbc);
-        panelMain.add(textfieldAreaName, gbc);
-        panelMain.add(labelCityName, gbc);
-        panelMain.add(comboboxCityName, gbc);
-        panelMain.add(labelDate, gbc);
-        panelMain.add(textfieldDate, gbc);
+        gbc.gridx = 1;
+        gbc.gridwidth = 1;
         panelMain.add(buttonPerformSave, gbc);
 
         add(panelMain);
     }
 
     private void applyTheme() {
-        Theme.applyTheme(new Object[] {
-                panelMain,
-                labelAreaName,
-                labelCityName,
-                labelDate });
+        Theme.applyTheme(new Object[] { panelMain });
     }
 
     private void addActionEvent() {
@@ -212,12 +196,12 @@ public class AreaAddData extends JFrame {
             Object[][] tableData = new Object[defaulmodelTable.getRowCount()][defaulmodelTable.getColumnCount() - 1];
 
             for (int i = 0; i < defaulmodelTable.getRowCount(); i++) {
-                String score = defaulmodelTable.getValueAt(i, 1) != "" ? (String) defaulmodelTable.getValueAt(i, 1) : AppConstants.EMPTY_STRING;
-                String comment = defaulmodelTable.getValueAt(i, 2) != "" ? (String) defaulmodelTable.getValueAt(i, 2) : AppConstants.EMPTY_STRING;
-                
+                String scoreCell = (String) defaulmodelTable.getValueAt(i, 1);
+                String commentCell = (String) defaulmodelTable.getValueAt(i, 2);
+
                 tableData[i] = new Object[] {
-                        score,
-                        comment.trim()
+                        !scoreCell.isEmpty() ? scoreCell : AppConstants.EMPTY_STRING,
+                        !commentCell.isEmpty() ? commentCell.trim() : AppConstants.EMPTY_STRING
                 };
             }
 
@@ -248,6 +232,13 @@ public class AreaAddData extends JFrame {
                         JOptionPane.ERROR_MESSAGE);
         });
 
+    }
+
+    public static String getCurrentDateString() {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
+
+        return currentDate.format(formatter);
     }
 
     public static class IntegerCellEditor extends DefaultCellEditor {
@@ -298,13 +289,6 @@ public class AreaAddData extends JFrame {
             }
             return this;
         }
-    }
-
-    public static String getCurrentDateString() {
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-
-        return currentDate.format(formatter);
     }
 
     public static void main(String[] args) {

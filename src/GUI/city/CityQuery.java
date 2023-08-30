@@ -5,16 +5,17 @@ import javax.swing.*;
 import src.GUI.Home;
 import src.functions.AreaFunctions;
 import src.functions.CityFunctions;
-import src.utils.FrameHandler;
+import src.utils.PanelHandler;
 import src.utils.Theme;
 import src.utils.Widget;
 
 import java.awt.*;
 import java.awt.event.*;
 
-public class CityQuery extends JFrame {
+public class CityQuery extends JPanel implements PanelHandler.PanelCreator {
 
-    private static String windowsTitle = "Ricerca dati città";
+    public static String windowsTitle = "Ricerca dati città";
+    public static String ID = "CityQuery";
 
     private JPanel panelMain = new JPanel();
     private JLabel labelLogoImage = Widget.createLogoLabel();
@@ -25,19 +26,15 @@ public class CityQuery extends JFrame {
     private JButton buttonToBack = Widget.createButton("Indietro");
     private JComboBox<String> comboboxQueryType = new JComboBox<String>();
 
-    private Widget.FormElement[] formData = new Widget.FormElement[] {
-            new Widget.FormElement("Nome città", textfieldCityName),
-            new Widget.FormElement("Latitudine", textfieldLatitude),
-            new Widget.FormElement("Longitudine", textfieldLongitude)
+    private Object[][] formData = {
+            { "Nome città", textfieldCityName },
+            { "Latitudine", textfieldLatitude },
+            { "Longitudine", textfieldLongitude }
     };
 
     public CityQuery() {
-        initializeComponents();
-        createLayout();
-        applyTheme();
-        addActionEvent();
 
-        comboboxQueryType.setSelectedIndex(0);
+        // comboboxQueryType.setSelectedIndex(0);
     }
 
     private void initializeComponents() {
@@ -46,8 +43,6 @@ public class CityQuery extends JFrame {
     }
 
     private void createLayout() {
-        setTitle(windowsTitle);
-
         panelMain.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -114,8 +109,8 @@ public class CityQuery extends JFrame {
                     cityID = AreaFunctions.getCityID(cityName);
 
                     if (cityID != null) {
-                        dispose();
-                        FrameHandler.setFrame(new CityVisualizer(cityID));
+                        PanelHandler.changePanel(CityVisualizer.ID);
+                        CityVisualizer.loadDatas(cityID);
                     } else {
                         JOptionPane.showMessageDialog(
                                 this,
@@ -130,8 +125,16 @@ public class CityQuery extends JFrame {
                             textfieldLatitude.getText(),
                             textfieldLongitude.getText());
 
-                    dispose();
-                    FrameHandler.setFrame(new CityVisualizer(cityID));
+                    if (cityID != null) {
+                        PanelHandler.changePanel(CityVisualizer.ID);
+                        CityVisualizer.loadDatas(cityID);
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                this,
+                                "Le coordinate inserite non hanno portato ad alcuna città nel database.",
+                                "Città non trovata",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
                     break;
 
                 default:
@@ -140,8 +143,7 @@ public class CityQuery extends JFrame {
         });
 
         buttonToBack.addActionListener(e -> {
-            dispose();
-            FrameHandler.setFrame(new Home());
+            PanelHandler.changePanel(Home.ID);
         });
 
         comboboxQueryType.addActionListener(e -> {
@@ -166,13 +168,18 @@ public class CityQuery extends JFrame {
 
     }
 
+    @Override
+    public JPanel createPanel() {
+        initializeComponents();
+        createLayout();
+        applyTheme();
+        addActionEvent();
+
+        return this;
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            CityQuery cercaFrame = new CityQuery();
-            cercaFrame.setSize(1200, 800);
-            cercaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            cercaFrame.setVisible(true);
-            cercaFrame.setLocationRelativeTo(null);
         });
     }
 

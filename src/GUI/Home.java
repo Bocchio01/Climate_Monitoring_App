@@ -5,15 +5,16 @@ import javax.swing.*;
 import src.GUI.city.CityQuery;
 import src.GUI.operator.OperatorHome;
 import src.utils.AppConstants;
-import src.utils.FrameHandler;
+import src.utils.PanelHandler;
 import src.utils.Theme;
 import src.utils.Widget;
 
 import java.awt.*;
 
-public class Home extends JFrame {
+public class Home extends JPanel implements PanelHandler.PanelCreator {
 
-    private static String windowsTitle = "Home";
+    public static String windowsTitle = "Home";
+    public static String ID = "Home";
 
     private JPanel panelMain = new JPanel();
     private JLabel labelLogoImage = Widget.createLogoLabel();
@@ -22,10 +23,6 @@ public class Home extends JFrame {
     private JButton buttonToOperator = Widget.createButton("Gestisci area operatore");
 
     public Home() {
-        initializeComponents();
-        createLayout();
-        applyTheme();
-        addActionEvent();
     }
 
     private void initializeComponents() {
@@ -33,7 +30,6 @@ public class Home extends JFrame {
     }
 
     private void createLayout() {
-        setTitle(windowsTitle);
 
         panelMain.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -65,23 +61,37 @@ public class Home extends JFrame {
         });
 
         buttonToFind.addActionListener(e -> {
-            dispose();
-            FrameHandler.setFrame(new CityQuery());
+            PanelHandler.changePanel(CityQuery.ID);
         });
-
+        
         buttonToOperator.addActionListener(e -> {
-            dispose();
-            FrameHandler.setFrame(new OperatorHome());
+            // PanelHandler.changePanel(CityQuery.ID);
         });
     }
 
+    @Override
+    public JPanel createPanel() {
+        initializeComponents();
+        createLayout();
+        applyTheme();
+        addActionEvent();
+
+        return this;
+    }
+
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            Home homeFrame = new Home();
-            homeFrame.setSize(1200, 800);
-            homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            homeFrame.setVisible(true);
-            homeFrame.setLocationRelativeTo(null);
+            JFrame frame = new JFrame();
+            frame.setSize(1200, 800);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            PanelHandler.PanelCreator panel = new Home();
+            frame.add(panel.createPanel());
+
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        
         });
     }
 }

@@ -15,12 +15,10 @@ import javax.swing.SwingUtilities;
 import src.GUI.operator.OperatorLogin;
 import src.functions.AreaFunctions;
 import src.functions.OperatorFunctions;
-import src.utils.AppConstants.Index.Forms._AreaCreateNew;
 import src.utils.AppConstants;
-import src.utils.FrameHandler;
+import src.utils.PanelHandler;
 import src.utils.Theme;
 import src.utils.Widget;
-import src.utils.Widget.FormElement;
 
 public class AreaCreateNew extends JFrame {
 
@@ -29,15 +27,22 @@ public class AreaCreateNew extends JFrame {
     private JPanel panelMain = new JPanel();
     private JLabel labelLogoImage = Widget.createLogoLabel();
     private JButton buttonPerformInit = Widget.createButton("Crea l'area");
+    private JTextField textfieldAreaName = new JTextField();
+    private JTextField textfieldStreetName = new JTextField();
+    private JTextField textfieldStreetNumber = new JTextField();
+    private JTextField textfieldCAP = new JTextField();
+    private JTextField textfieldTownName = new JTextField();
+    private JTextField textfieldDistrictName = new JTextField();
+    private JTextField textfieldCityNames = new JTextField();
 
-    private Widget.FormElement[] formData = new FormElement[] {
-            new Widget.FormElement("Nome area di monitoraggio", new JTextField()),
-            new Widget.FormElement("Via / Piazza", new JTextField()),
-            new Widget.FormElement("Numero Civico", new JTextField()),
-            new Widget.FormElement("CAP", new JTextField()),
-            new Widget.FormElement("Comune", new JTextField()),
-            new Widget.FormElement("Provincia", new JTextField()),
-            new Widget.FormElement("Città incluse nell'area (separate da ',')", new JTextField())
+    private JTextField[] formElements = {
+            textfieldAreaName,
+            textfieldStreetName,
+            textfieldStreetNumber,
+            textfieldCAP,
+            textfieldTownName,
+            textfieldDistrictName,
+            textfieldCityNames
     };
 
     public AreaCreateNew() {
@@ -54,7 +59,7 @@ public class AreaCreateNew extends JFrame {
                     JOptionPane.ERROR_MESSAGE);
 
             dispose();
-            FrameHandler.setFrame(new OperatorLogin());
+            // PanelHandler.setFrame(new OperatorLogin());
 
         } else if (OperatorFunctions.getCurrentUserArea() != null) {
             JOptionPane.showMessageDialog(
@@ -64,7 +69,7 @@ public class AreaCreateNew extends JFrame {
                     JOptionPane.ERROR_MESSAGE);
 
             dispose();
-            FrameHandler.setFrame(new AreaAddData());
+            // PanelHandler.setFrame(new AreaAddData());
         }
 
     }
@@ -90,10 +95,19 @@ public class AreaCreateNew extends JFrame {
         gbc.gridx = 1;
         gbc.gridheight = 1;
 
-        for (Widget.FormElement formDataElement : formData) {
-            panelMain.add(Widget.createFormPanel(formDataElement.label, formDataElement.component), gbc);
-        }
+        String[] labels = {
+                "Nome dell'area",
+                "Nome della via",
+                "Numero civico",
+                "CAP",
+                "Nome della città",
+                "Nome della provincia",
+                "Nomi delle città subordinate all'area (separate da virgola)"
+        };
 
+        for (int i = 0; i < labels.length; i++) {
+            panelMain.add(Widget.createFormPanel(labels[i], formElements[i]), gbc);
+        }
         panelMain.add(buttonPerformInit, gbc);
 
         add(panelMain);
@@ -106,18 +120,18 @@ public class AreaCreateNew extends JFrame {
     private void addActionEvent() {
         buttonPerformInit.addActionListener(e -> {
 
-            String[] datiInseriti = new String[formData.length];
-            for (int i = 0; i < formData.length; i++) {
-                datiInseriti[i] = formData[i].getValue();
+            String[] datiInseriti = new String[formElements.length];
+            for (int i = 0; i < formElements.length; i++) {
+                String fieldValue = formElements[i].getText().trim();
+                datiInseriti[i] = !fieldValue.isEmpty() ? fieldValue : null;
             }
 
-            if (datiInseriti[_AreaCreateNew.AREA_NAME] != null) {
-                String[] aree = datiInseriti[_AreaCreateNew.CITY_NAMES].split(",");
+            if (datiInseriti[6] != null) {
+                String[] aree = datiInseriti[6].split(",");
                 for (int k = 0; k < aree.length; k++) {
                     aree[k] = aree[k].trim();
                 }
-                datiInseriti[_AreaCreateNew.CITY_NAMES] = String.join(",", aree);
-
+                datiInseriti[6] = String.join(",", aree);
             }
 
             if (!AreaFunctions.checkInputRegister(datiInseriti)) {
@@ -127,7 +141,7 @@ public class AreaCreateNew extends JFrame {
                         "Dati mancanti",
                         JOptionPane.WARNING_MESSAGE);
             } else {
-                if (AreaFunctions.isAreaExists(datiInseriti[_AreaCreateNew.AREA_NAME])) {
+                if (AreaFunctions.isAreaExists(datiInseriti[0])) {
                     JOptionPane.showMessageDialog(
                             this,
                             "Nome dell'area già preso. Scegliere un altro nome.",
@@ -142,7 +156,7 @@ public class AreaCreateNew extends JFrame {
                                 JOptionPane.INFORMATION_MESSAGE);
 
                         dispose();
-                        FrameHandler.setFrame(new AreaAddData());
+                        // PanelHandler.setFrame(new AreaAddData());
                     } else {
                         JOptionPane.showMessageDialog(
                                 this,
@@ -153,7 +167,6 @@ public class AreaCreateNew extends JFrame {
                 }
             }
         });
-
     }
 
     public static void main(String[] args) {
@@ -166,11 +179,10 @@ public class AreaCreateNew extends JFrame {
             initNewAreaFrame.setVisible(true);
             initNewAreaFrame.setLocationRelativeTo(null);
 
-            for (FormElement FormDataElement : initNewAreaFrame.formData) {
-                FormDataElement.setText("Completamento automatico");
-
+            for (JTextField formElement : initNewAreaFrame.formElements) {
+                formElement.setText("Completamento automatico");
             }
-
         });
     }
+
 }

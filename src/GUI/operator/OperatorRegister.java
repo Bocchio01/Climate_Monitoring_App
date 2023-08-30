@@ -5,7 +5,7 @@ import javax.swing.*;
 import src.GUI.Home;
 import src.functions.OperatorFunctions;
 import src.utils.AppConstants;
-import src.utils.FrameHandler;
+import src.utils.PanelHandler;
 import src.utils.Theme;
 import src.utils.Widget;
 
@@ -17,18 +17,21 @@ public class OperatorRegister extends JFrame {
 
     private JPanel panelMain = new JPanel();
     private JLabel labelLogoImage = Widget.createLogoLabel();
-    private JLabel labelName = new JLabel();
-    private JLabel labelTaxCode = new JLabel();
-    private JLabel labelEmail = new JLabel();
-    private JLabel labelUserID = new JLabel();
-    private JLabel labelPassword = new JLabel();
     private JTextField textfieldName = new JTextField();
     private JTextField textfieldTaxCode = new JTextField();
     private JTextField textfieldEmail = new JTextField();
     private JTextField textfieldUserID = new JTextField();
     private JPasswordField textfieldPassword = new JPasswordField();
-    private JButton buttonPerformRegistration = new JButton();
-    private JButton buttonToHome = new JButton();
+    private JButton buttonPerformRegistration = Widget.createButton("Registrati");
+    private JButton buttonToHome = Widget.createButton("Home");
+
+    private JTextField[] formElements = {
+            textfieldName,
+            textfieldTaxCode,
+            textfieldEmail,
+            textfieldUserID,
+            textfieldPassword
+    };
 
     public OperatorRegister() {
         initializeComponents();
@@ -39,34 +42,6 @@ public class OperatorRegister extends JFrame {
     }
 
     private void initializeComponents() {
-
-        labelName.setText("Nome e Cognome");
-        labelName.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);
-        textfieldName.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        labelTaxCode.setText("Codice Fiscale");
-        labelTaxCode.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);
-        textfieldTaxCode.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        labelEmail.setText("Email");
-        labelEmail.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);
-        textfieldEmail.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        labelUserID.setText("User ID");
-        labelUserID.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);
-        textfieldUserID.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        labelPassword.setText("Password");
-        labelPassword.setPreferredSize(AppConstants.GUI.LABEL_DIMENSION);
-        textfieldPassword.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        buttonPerformRegistration.setText("Registrati");
-        buttonPerformRegistration.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buttonPerformRegistration.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
-
-        buttonToHome.setText("Home");
-        buttonToHome.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buttonToHome.setPreferredSize(AppConstants.GUI.WIDGET_DIMENSION);
     }
 
     private void createLayout() {
@@ -87,16 +62,16 @@ public class OperatorRegister extends JFrame {
         gbc.gridx = 1;
         gbc.gridheight = 1;
 
-        panelMain.add(labelName, gbc);
-        panelMain.add(textfieldName, gbc);
-        panelMain.add(labelTaxCode, gbc);
-        panelMain.add(textfieldTaxCode, gbc);
-        panelMain.add(labelEmail, gbc);
-        panelMain.add(textfieldEmail, gbc);
-        panelMain.add(labelUserID, gbc);
-        panelMain.add(textfieldUserID, gbc);
-        panelMain.add(labelPassword, gbc);
-        panelMain.add(textfieldPassword, gbc);
+        String[] labels = {
+                "Nome e Cognome",
+                "Codice Fiscale",
+                "Email",
+                "User ID",
+                "Password"
+        };
+        for (int i = 0; i < labels.length; i++) {
+            panelMain.add(Widget.createFormPanel(labels[i], formElements[i]), gbc);
+        }
 
         panelMain.add(buttonPerformRegistration, gbc);
         panelMain.add(buttonToHome, gbc);
@@ -105,14 +80,7 @@ public class OperatorRegister extends JFrame {
     }
 
     private void applyTheme() {
-        Theme.applyTheme(new Object[] {
-                panelMain,
-                labelName,
-                labelTaxCode,
-                labelEmail,
-                labelUserID,
-                labelPassword
-        });
+        Theme.applyTheme(new Object[] { panelMain });
     }
 
     public void addActionEvent() {
@@ -138,7 +106,7 @@ public class OperatorRegister extends JFrame {
                         "Successo",
                         JOptionPane.INFORMATION_MESSAGE);
                 dispose();
-                FrameHandler.setFrame(new OperatorLogin());
+                // PanelHandler.setFrame(new OperatorLogin());
 
             } else {
                 JOptionPane.showMessageDialog(
@@ -151,7 +119,7 @@ public class OperatorRegister extends JFrame {
 
         buttonToHome.addActionListener(e -> {
             dispose();
-            FrameHandler.setFrame(new Home());
+            // PanelHandler.setFrame(new Home());
         });
 
     }

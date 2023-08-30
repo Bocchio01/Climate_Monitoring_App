@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import src.GUI.Home;
-import src.utils.FrameHandler;
+import src.utils.PanelHandler;
 import src.utils.Theme;
 import src.utils.Widget;
 
@@ -66,17 +66,17 @@ public class OperatorHome extends JFrame {
     public void addActionEvent() {
         buttonToRegistration.addActionListener(e -> {
             dispose();
-            FrameHandler.setFrame(new OperatorRegister());
+            // PanelHandler.setFrame(new OperatorRegister());
         });
 
         buttonToLogin.addActionListener(e -> {
             dispose();
-            FrameHandler.setFrame(new OperatorLogin());
+            // PanelHandler.setFrame(new OperatorLogin());
         });
 
         buttonToBack.addActionListener(e -> {
             dispose();
-            FrameHandler.setFrame(new Home());
+            // PanelHandler.setFrame(new Home());
         });
 
     }

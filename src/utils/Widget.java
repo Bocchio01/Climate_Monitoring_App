@@ -21,33 +21,6 @@ import javax.swing.JTextField;
 
 public class Widget {
 
-    public static class FormElement {
-        public String label;
-        public JComponent component;
-
-        public FormElement(String label, JComponent component) {
-            this.label = label;
-            this.component = component;
-        }
-
-        public String getValue() {
-            if (component instanceof JTextField) {
-                String value = ((JTextField) component).getText().trim();
-                return value.isEmpty() ? null : value;
-            }
-            if (component instanceof JPasswordField) {
-                return new String(((JPasswordField) component).getPassword());
-            }
-            return null;
-        }
-
-        public void setText(String text) {
-            if (component instanceof JTextField) {
-                ((JTextField) component).setText(text);
-            }
-        }
-    }
-
     public static JPanel createFormPanel(String labelText, JComponent activeArea) {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

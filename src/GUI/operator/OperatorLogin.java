@@ -16,7 +16,7 @@ import src.GUI.area.AreaCreateNew;
 import src.GUI.area.AreaAddData;
 import src.functions.OperatorFunctions;
 import src.utils.AppConstants;
-import src.utils.FrameHandler;
+import src.utils.PanelHandler;
 import src.utils.Theme;
 import src.utils.Widget;
 
@@ -29,6 +29,11 @@ public class OperatorLogin extends JFrame {
     private JTextField textfieldUsedID = new JTextField();
     private JPasswordField textfieldPassword = new JPasswordField();
     private JButton buttonPerformLogin = Widget.createButton("Accedi");
+
+    private JTextField[] formElements = {
+            textfieldUsedID,
+            textfieldPassword
+    };
 
     public OperatorLogin() {
         initializeComponents();
@@ -73,8 +78,11 @@ public class OperatorLogin extends JFrame {
         panelMain.add(labelLogoImage, gbc);
 
         gbc.weighty = 1;
-        panelMain.add(Widget.createFormPanel("ID Utente", textfieldUsedID), gbc);
-        panelMain.add(Widget.createFormPanel("Password", textfieldUsedID), gbc);
+
+        String[] labels = { "ID Utente", "Password" };
+        for (int i = 0; i < labels.length; i++) {
+            panelMain.add(Widget.createFormPanel(labels[i], formElements[i]), gbc);
+        }
 
         panelMain.add(buttonPerformLogin, gbc);
 
@@ -125,7 +133,7 @@ public class OperatorLogin extends JFrame {
 
                             if (response == JOptionPane.OK_OPTION) {
                                 dispose();
-                                FrameHandler.setFrame(new AreaCreateNew());
+                                // PanelHandler.setFrame(new AreaCreateNew());
                             } else {
                                 JOptionPane.showMessageDialog(
                                         this,
@@ -133,12 +141,12 @@ public class OperatorLogin extends JFrame {
                                         "Area mancante",
                                         JOptionPane.INFORMATION_MESSAGE);
                                 dispose();
-                                FrameHandler.setFrame(new Home());
+                                // PanelHandler.setFrame(new Home());
                             }
 
                         } else {
                             dispose();
-                            FrameHandler.setFrame(new AreaAddData());
+                            // PanelHandler.setFrame(new AreaAddData());
                         }
                     } else {
                         throw new LoginException("Errore imprevisto in fase di login. Contattare l'assistenza.");

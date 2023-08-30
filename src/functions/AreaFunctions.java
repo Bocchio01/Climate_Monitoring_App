@@ -163,7 +163,7 @@ public class AreaFunctions {
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                String[] lineSplitted = line.split(";");
+                String[] lineSplitted = line.split(AppConstants.CSV_SEPARATOR);
 
                 if (lineSplitted[0].equals(cityID.toString())) {
                     rfbuffer.close();
@@ -190,7 +190,7 @@ public class AreaFunctions {
             String line;
 
             while ((line = rfbuffer.readLine()) != null) {
-                String[] lineSplitted = line.split(";");
+                String[] lineSplitted = line.split(AppConstants.CSV_SEPARATOR);
 
                 if (lineSplitted[1].equals(cityName)) {
                     rfbuffer.close();

@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 
 public class AppConstants {
 
-    public static final String EMPTY_STRING = "NONE";
+    public static final String EMPTY_STRING = "NULL";
     public static final String CSV_SEPARATOR = ";";
 
     private AppConstants() {
@@ -21,53 +21,6 @@ public class AppConstants {
         public static final int AREA = 5;
 
         private Index() {
-        }
-
-        public static final class Forms {
-            private Forms() {
-            }
-
-            public static final class CityQuery {
-                public static final int CITY_NAME = 0;
-                public static final int CITY_LAT = 1;
-                public static final int CITY_LON = 1;
-
-                private CityQuery() {
-                }
-            }
-
-            public static final class OperatorLogin {
-                public static final int USER_ID = 0;
-                public static final int USER_PWD = 1;
-
-                private OperatorLogin() {
-                }
-            }
-
-            public static final class OperatorRegistration {
-                public static final int USER_NAME = 0;
-                public static final int USER_TAXCODE = 1;
-                public static final int USER_EMAIL = 2;
-                public static final int USER_ID = 3;
-                public static final int USER_PWD = 4;
-                public static final int USER_AREA = 5;
-
-                private OperatorRegistration() {
-                }
-            }
-
-            public static final class _AreaCreateNew {
-                public static final int AREA_NAME = 0;
-                public static final int STREET_NAME = 1;
-                public static final int STREET_NUMBER = 2;
-                public static final int CAP = 3;
-                public static final int TOWN_NAME = 4;
-                public static final int DISTRICT_NAME = 5;
-                public static final int CITY_NAMES = 6;
-
-                private _AreaCreateNew() {
-                }
-            }
         }
     }
 
@@ -85,7 +38,7 @@ public class AppConstants {
             }
 
             private static String getPath(String fileName) {
-                return SEPARATOR + Paths.get("data", fileName).toString();
+                return Paths.get("data", fileName).toString();
             }
         }
 
