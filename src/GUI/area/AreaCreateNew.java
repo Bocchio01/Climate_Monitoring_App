@@ -77,6 +77,9 @@ public class AreaCreateNew extends TwoColumns implements GUIHandler.Panel {
                                 "Nuova area inserita",
                                 JOptionPane.INFORMATION_MESSAGE);
 
+                        OperatorFunctions.performLogin(
+                                OperatorFunctions.getCurrentUserID(),
+                                OperatorFunctions.getCurrentUserPassword());
                         panelHandler.goToPanel(AreaAddData.ID, null);
                     } else {
                         JOptionPane.showMessageDialog(
@@ -100,8 +103,8 @@ public class AreaCreateNew extends TwoColumns implements GUIHandler.Panel {
         addRight(new Widget.FormPanel("Numero civico", textfieldStreetNumber));
         addRight(new Widget.FormPanel("CAP", textfieldCAP));
         addRight(new Widget.FormPanel("Nome del comune", textfieldTownName));
-        addRight(new Widget.FormPanel("Nome della provincia", textfieldDistrictName));
-        addRight(new Widget.FormPanel("Nomi delle città subordinate all'area (separate da virgola)",
+        addRight(new Widget.FormPanel("Sigla della provincia", textfieldDistrictName));
+        addRight(new Widget.FormPanel("Nomi delle città subordinate all'area (separate da ',')",
                 textfieldCityNames));
         addRight(buttonPerformInit);
 
@@ -139,11 +142,22 @@ public class AreaCreateNew extends TwoColumns implements GUIHandler.Panel {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
+            OperatorFunctions.performLogin("ID_Tetta", "PWD_Tetta");
+
             GUIHandler panelHandler = new GUIHandler();
             AreaCreateNew areaCreateNew = new AreaCreateNew();
 
             panelHandler.addPanel(areaCreateNew.createPanel(panelHandler));
             areaCreateNew.onOpen(args);
+
+            areaCreateNew.textfieldAreaName.setText("Area di Tetta");
+            areaCreateNew.textfieldStreetName.setText("Via Lucini");
+            areaCreateNew.textfieldStreetNumber.setText("10");
+            areaCreateNew.textfieldCAP.setText("22040");
+            areaCreateNew.textfieldTownName.setText("San Fermo della Battaglia");
+            areaCreateNew.textfieldDistrictName.setText("CO");
+            areaCreateNew.textfieldCityNames.setText("New York City,Milano");
+
         });
     }
 

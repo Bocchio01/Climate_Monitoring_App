@@ -10,6 +10,7 @@ import src.functions.AreaFunctions;
 import src.functions.OperatorFunctions;
 import src.utils.ENV;
 import src.utils.GUIHandler;
+import src.utils.Theme;
 import src.utils.Widget;
 
 import java.awt.*;
@@ -30,7 +31,6 @@ public class AreaAddData extends JPanel implements GUIHandler.Panel {
     private JComboBox<String> comboboxCityName = new JComboBox<>();
     private JFormattedTextField textfieldDate = new JFormattedTextField();
     private JTable table = new JTable();
-    private JScrollPane scrollpanelTable = new JScrollPane();
     private DefaultTableModel defaulmodelTable = new DefaultTableModel();
     private JButton buttonPerformSave = new Widget.Button("Salva il nuovo set di dati");
 
@@ -89,7 +89,9 @@ public class AreaAddData extends JPanel implements GUIHandler.Panel {
             Object[][] tableData = new Object[defaulmodelTable.getRowCount()][defaulmodelTable.getColumnCount() - 1];
 
             for (int i = 0; i < defaulmodelTable.getRowCount(); i++) {
-                String scoreCell = defaulmodelTable.getValueAt(i, 1).toString();
+                String scoreCell = defaulmodelTable.getValueAt(i, 1) != null
+                        ? defaulmodelTable.getValueAt(i, 1).toString()
+                        : "";
                 String commentCell = defaulmodelTable.getValueAt(i, 2).toString();
 
                 tableData[i] = new Object[] {
@@ -195,6 +197,9 @@ public class AreaAddData extends JPanel implements GUIHandler.Panel {
             // TODO: handle exception
         }
 
+        textfieldAreaName.setEnabled(false);
+        textfieldAreaName.setEditable(false);
+
         textfieldDate.setText(getCurrentDateString());
         textfieldDate.setForeground(Color.GRAY);
 
@@ -213,34 +218,23 @@ public class AreaAddData extends JPanel implements GUIHandler.Panel {
         table.getColumnModel().getColumn(1).setPreferredWidth(50);
         table.getColumnModel().getColumn(2).setPreferredWidth(300);
 
-        // table.getTableHeader().setResizingAllowed(false);
+        table.getTableHeader().setResizingAllowed(false);
         table.getTableHeader().setReorderingAllowed(false);
+        table.setRowHeight(40);
 
-        scrollpanelTable.setViewportView(table);
-        // scrollpanelTable.setPreferredSize(new Dimension(1000, 500));
+        setLayout(new BorderLayout());
 
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        topPanel.add(new Widget.FormPanel("Area operatore", textfieldAreaName));
+        topPanel.add(new Widget.FormPanel("Città selezionata", comboboxCityName));
+        topPanel.add(new Widget.FormPanel("Data rilevazione", textfieldDate));
+        // topPanel.add(new JSeparator());
 
-        gbc.gridx = GridBagConstraints.RELATIVE;
-        gbc.gridy = 0;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        gbc.anchor = GridBagConstraints.CENTER;
+        add(topPanel, BorderLayout.NORTH);
+        add(table, BorderLayout.CENTER);
+        add(buttonPerformSave, BorderLayout.SOUTH);
 
-        add(new Widget.FormPanel("Area operatore", textfieldAreaName), gbc);
-        add(new Widget.FormPanel("Città selezionata", comboboxCityName), gbc);
-        add(new Widget.FormPanel("Data rilevazione", textfieldDate), gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.gridwidth = 3;
-        add(scrollpanelTable, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridwidth = 1;
-        add(buttonPerformSave, gbc);
+        Theme.registerPanel(topPanel);
 
         addActionEvent();
 
@@ -266,7 +260,6 @@ public class AreaAddData extends JPanel implements GUIHandler.Panel {
                 }
 
                 textfieldAreaName.setText(nameArea);
-                textfieldAreaName.setEditable(false);
 
             } else {
                 JOptionPane.showMessageDialog(

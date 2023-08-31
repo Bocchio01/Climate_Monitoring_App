@@ -21,11 +21,44 @@ public class AreaFunctions {
             return false;
         }
 
-        if (OperatorFunctions.updateUserData(ENV.Index.AREA, datiInseriti[0]) &&
-                appendToFile(String.join(ENV.CSV_SEPARATOR, datiInseriti) + "\n",
-                        ENV.Path.Files.AREA_DATA)) {
+        if (OperatorFunctions.updateUserData(ENV.Index.AREA, datiInseriti[0])) {
+            ArrayList<Integer> cityIDs = new ArrayList<>();
 
-            return true;
+            for (String cityName : datiInseriti[6].split(",")) {
+                try {
+                    Integer cityID = getCityID(cityName.trim());
+                    cityIDs.add(cityID);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+
+            if (cityIDs.size() > 0) {
+
+                String[] cityIDStrings = new String[cityIDs.size()];
+
+                for (int i = 0; i < cityIDs.size(); i++) {
+                    cityIDStrings[i] = String.valueOf(cityIDs.get(i));
+                }
+
+                return appendToFile(
+                        String.join(
+                                ENV.CSV_SEPARATOR,
+                                new String[] {
+                                        datiInseriti[0],
+                                        datiInseriti[1],
+                                        datiInseriti[2],
+                                        datiInseriti[3],
+                                        datiInseriti[4],
+                                        datiInseriti[5] })
+                                + ENV.CSV_SEPARATOR
+                                + String.join(
+                                        ",",
+                                        cityIDStrings)
+                                + ENV.CSV_SEPARATOR
+                                + "\n",
+                        ENV.Path.Files.AREA_DATA);
+            }
         }
 
         return false;
@@ -134,15 +167,15 @@ public class AreaFunctions {
                 if (lineSplitted[0].equals(areaName)) {
                     rfbuffer.close();
 
-                    for (int i = 5; i < lineSplitted.length; i++) {
+                    String[] cityIDsString = lineSplitted[6].split(",");
+                    for (String cityIDString : cityIDsString) {
                         try {
-                            Integer cityID = Integer.parseInt(lineSplitted[i]);
+                            Integer cityID = Integer.parseInt(cityIDString);
                             cityIDs.add(cityID);
                         } catch (NumberFormatException e) {
                             // TODO: handle exception
                         }
                     }
-
                 }
             }
 

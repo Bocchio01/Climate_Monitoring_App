@@ -129,7 +129,7 @@ public class OperatorFunctions {
 
                     dataFromFile[index] = newValue;
 
-                    fileContent.append(String.join(ENV.CSV_SEPARATOR, dataFromFile)).append("\n");
+                    fileContent.append(String.join(ENV.CSV_SEPARATOR, dataFromFile)).append(ENV.CSV_SEPARATOR + "\n");
                 } else {
                     fileContent.append(line).append("\n");
                 }

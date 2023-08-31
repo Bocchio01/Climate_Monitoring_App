@@ -3,7 +3,6 @@ package src.GUI.operator;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
-import src.GUI.Home;
 import src.utils.GUIHandler;
 import src.utils.Widget;
 import src.utils.templates.TwoRows;

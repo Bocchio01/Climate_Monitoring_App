@@ -4,18 +4,30 @@ import src.GUI.Loading;
 import src.utils.GUIHandler;
 
 class Main {
-    
-    public GUIHandler panelHandler = new GUIHandler();
+
+    public GUIHandler panelHandler;
 
     public Main() {
-        panelHandler.addPanels();
     }
 
+    public void lauchGUI() {
+        panelHandler = new GUIHandler();
+        panelHandler.addPanels();
+        panelHandler.goToPanel(Loading.ID, null);
+    }
+
+    // public void lauchCMD(String[] args) {
+    // }
+
     public static void main(String[] args) {
+        Main mainIstance = new Main();
 
-        Main mainInstance = new Main();
-        mainInstance.panelHandler.goToPanel(Loading.ID, null);
-
+        if (args.length == 0) {
+            mainIstance.lauchGUI();
+        } else {
+            // TODO: Add command line arguments
+            // mainIstance.lauchCMD(args);
+        }
     }
 
 }
