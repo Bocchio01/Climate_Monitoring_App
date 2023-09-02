@@ -3,14 +3,16 @@ package src.GUI.operator;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
-import src.utils.GUIHandler;
+import src.models.MainModel;
+import src.utils.GUI;
+import src.utils.Interfaces;
 import src.utils.Widget;
 import src.utils.templates.TwoRows;
 
-public class OperatorHome extends TwoRows implements GUIHandler.Panel {
+public class OperatorHome extends TwoRows implements Interfaces.UIPanel {
 
     public static String ID = "OperatorHome";
-    public GUIHandler panelHandler;
+    public GUI gui;
 
     private JButton buttonToRegistration = new Widget.Button("Registrati");
     private JButton buttonToLogin = new Widget.Button("Accedi");
@@ -20,17 +22,17 @@ public class OperatorHome extends TwoRows implements GUIHandler.Panel {
 
     public void addActionEvent() {
         buttonToRegistration.addActionListener(e -> {
-            panelHandler.goToPanel(OperatorRegister.ID, null);
+            gui.goToPanel(OperatorRegister.ID, null);
         });
         
         buttonToLogin.addActionListener(e -> {
-            panelHandler.goToPanel(OperatorLogin.ID, null);
+            gui.goToPanel(OperatorLogin.ID, null);
         });
     }
 
     @Override
-    public OperatorHome createPanel(GUIHandler panelHandler) {
-        this.panelHandler = panelHandler;
+    public OperatorHome createPanel(GUI gui) {
+        this.gui = gui;
 
         addTop(new Widget.LogoLabel());
         addBottom(buttonToRegistration);
@@ -52,10 +54,11 @@ public class OperatorHome extends TwoRows implements GUIHandler.Panel {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            GUIHandler panelHandler = new GUIHandler();
+            MainModel mainModel = new MainModel();
+            GUI gui = new GUI(mainModel);
             OperatorHome operatorHome = new OperatorHome();
 
-            panelHandler.addPanel(operatorHome.createPanel(panelHandler));
+            gui.addPanel(operatorHome.createPanel(gui));
             operatorHome.onOpen(args);
         });
     }

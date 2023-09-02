@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "DataHandler",
+            "request": "launch",
+            "mainClass": "src.models.data.DataHandler",
+            "projectName": "WeatherApp_416d515"
+        },
+        {
+            "type": "java",
+            "name": "AppData",
+            "request": "launch",
+            "mainClass": "src.logics.AppData",
+            "projectName": "WeatherApp_416d515"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "src.Main",

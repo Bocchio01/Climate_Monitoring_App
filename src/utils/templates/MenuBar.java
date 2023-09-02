@@ -3,6 +3,7 @@ package src.utils.templates;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -13,12 +14,12 @@ import src.GUI.city.CityQuery;
 import src.GUI.operator.OperatorHome;
 import src.GUI.operator.OperatorLogin;
 import src.GUI.operator.OperatorRegister;
-import src.utils.GUIHandler;
+import src.utils.GUI;
 import src.utils.Theme;
 
 public class MenuBar extends JMenuBar {
 
-        public MenuBar(GUIHandler panelHandler) {
+        public MenuBar(GUI gui) {
             setLayout(new FlowLayout(FlowLayout.LEFT));
 
             JMenuItem itemHome = new JMenuItem("Home");
@@ -29,7 +30,7 @@ public class MenuBar extends JMenuBar {
             JMenuItem itemOperatorRegistration = new JMenuItem("Registrazione");
             JMenuItem itemAreaAddData = new JMenuItem("Gestisci area");
 
-            JMenuItem itemToggleTheme = new JMenuItem("Cambia tema");
+            JCheckBoxMenuItem itemToggleTheme = new JCheckBoxMenuItem("Cambia tema");
 
             JMenuItem[] jMenuItems = new JMenuItem[] {
                     itemHome,
@@ -41,27 +42,27 @@ public class MenuBar extends JMenuBar {
                     itemToggleTheme };
 
             itemHome.addActionListener(e -> {
-                panelHandler.goToPanel(Home.ID, null);
+                gui.goToPanel(Home.ID, null);
             });
 
             itemCityQuery.addActionListener(e -> {
-                panelHandler.goToPanel(CityQuery.ID, null);
+                gui.goToPanel(CityQuery.ID, null);
             });
 
             submenuOperator.addActionListener(e -> {
-                panelHandler.goToPanel(OperatorHome.ID, null);
+                gui.goToPanel(OperatorHome.ID, null);
             });
 
             itemOperatorLogin.addActionListener(e -> {
-                panelHandler.goToPanel(OperatorLogin.ID, null);
+                gui.goToPanel(OperatorLogin.ID, null);
             });
 
             itemOperatorRegistration.addActionListener(e -> {
-                panelHandler.goToPanel(OperatorRegister.ID, null);
+                gui.goToPanel(OperatorRegister.ID, null);
             });
 
             itemAreaAddData.addActionListener(e -> {
-                panelHandler.goToPanel(AreaAddData.ID, null);
+                gui.goToPanel(AreaAddData.ID, null);
             });
 
             itemToggleTheme.addActionListener(e -> {

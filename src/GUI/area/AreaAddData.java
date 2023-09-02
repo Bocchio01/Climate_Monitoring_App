@@ -6,10 +6,12 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
 import src.GUI.operator.OperatorHome;
-import src.functions.AreaFunctions;
-import src.functions.OperatorFunctions;
+import src.logics.AreaFunctions;
+import src.logics.OperatorFunctions;
+import src.models.data.DataStorage;
 import src.utils.ENV;
-import src.utils.GUIHandler;
+import src.utils.GUI;
+import src.utils.Interfaces;
 import src.utils.Theme;
 import src.utils.Widget;
 
@@ -19,10 +21,10 @@ import java.awt.event.FocusListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class AreaAddData extends JPanel implements GUIHandler.Panel {
+public class AreaAddData extends JPanel implements Interfaces.UIPanel {
 
     public static String ID = "AreaAddData";
-    public GUIHandler panelHandler;
+    public GUI gui;
 
     private static String datePattern = "dd/MM/yyyy";
     private static String dateMask = datePattern.replaceAll("[dMy]", "#");
@@ -187,8 +189,8 @@ public class AreaAddData extends JPanel implements GUIHandler.Panel {
     }
 
     @Override
-    public AreaAddData createPanel(GUIHandler panelHandler) {
-        this.panelHandler = panelHandler;
+    public AreaAddData createPanel(GUI gui) {
+        this.gui = gui;
 
         try {
             MaskFormatter maskFormatter = new MaskFormatter(dateMask);
@@ -267,7 +269,7 @@ public class AreaAddData extends JPanel implements GUIHandler.Panel {
                         "Per inserire un nuovo set di dati devi prima aver creato la tua area.",
                         "Area non creata",
                         JOptionPane.ERROR_MESSAGE);
-                panelHandler.goToPanel(AreaCreateNew.ID, args);
+                gui.goToPanel(AreaCreateNew.ID, args);
             }
 
         } else {
@@ -276,7 +278,7 @@ public class AreaAddData extends JPanel implements GUIHandler.Panel {
                     "Per inserire un nuovo set di dati devi prima essere loggato.",
                     "Utente non loggato",
                     JOptionPane.ERROR_MESSAGE);
-            panelHandler.goToPanel(OperatorHome.ID, null);
+            gui.goToPanel(OperatorHome.ID, null);
         }
     }
 
@@ -285,10 +287,11 @@ public class AreaAddData extends JPanel implements GUIHandler.Panel {
 
             OperatorFunctions.performLogin(ENV.DefaultData.ID, ENV.DefaultData.PWD);
 
-            GUIHandler panelHandler = new GUIHandler();
+            DataStorage appData = new DataStorage();
+            GUI gui = new GUI(appData);
             AreaAddData areaAddData = new AreaAddData();
 
-            panelHandler.addPanel(areaAddData.createPanel(panelHandler));
+            gui.addPanel(areaAddData.createPanel(gui));
             areaAddData.onOpen(args);
         });
     }

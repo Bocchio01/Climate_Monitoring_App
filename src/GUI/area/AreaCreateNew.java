@@ -6,16 +6,18 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import src.GUI.operator.OperatorLogin;
-import src.functions.AreaFunctions;
-import src.functions.OperatorFunctions;
-import src.utils.GUIHandler;
+import src.logics.AreaFunctions;
+import src.logics.OperatorFunctions;
+import src.models.data.DataStorage;
+import src.utils.GUI;
+import src.utils.Interfaces;
 import src.utils.Widget;
 import src.utils.templates.TwoColumns;
 
-public class AreaCreateNew extends TwoColumns implements GUIHandler.Panel {
+public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
 
     public static String ID = "AreaCreateNew";
-    private GUIHandler panelHandler;
+    private GUI gui;
 
     private JTextField textfieldAreaName = new JTextField();
     private JTextField textfieldStreetName = new JTextField();
@@ -80,7 +82,7 @@ public class AreaCreateNew extends TwoColumns implements GUIHandler.Panel {
                         OperatorFunctions.performLogin(
                                 OperatorFunctions.getCurrentUserID(),
                                 OperatorFunctions.getCurrentUserPassword());
-                        panelHandler.goToPanel(AreaAddData.ID, null);
+                        gui.goToPanel(AreaAddData.ID, null);
                     } else {
                         JOptionPane.showMessageDialog(
                                 this,
@@ -94,8 +96,8 @@ public class AreaCreateNew extends TwoColumns implements GUIHandler.Panel {
     }
 
     @Override
-    public AreaCreateNew createPanel(GUIHandler panelHandler) {
-        this.panelHandler = panelHandler;
+    public AreaCreateNew createPanel(GUI gui) {
+        this.gui = gui;
 
         addLeft(new Widget.LogoLabel());
         addRight(new Widget.FormPanel("Nome dell'area", textfieldAreaName));
@@ -127,7 +129,7 @@ public class AreaCreateNew extends TwoColumns implements GUIHandler.Panel {
                     "Utente non loggato",
                     JOptionPane.ERROR_MESSAGE);
 
-            panelHandler.goToPanel(OperatorLogin.ID, null);
+            gui.goToPanel(OperatorLogin.ID, null);
 
         } else if (OperatorFunctions.getCurrentUserArea() != null) {
             JOptionPane.showMessageDialog(
@@ -136,7 +138,7 @@ public class AreaCreateNew extends TwoColumns implements GUIHandler.Panel {
                     "Errore",
                     JOptionPane.ERROR_MESSAGE);
 
-            panelHandler.goToPanel(AreaAddData.ID, null);
+            gui.goToPanel(AreaAddData.ID, null);
         }
     }
 
@@ -144,10 +146,11 @@ public class AreaCreateNew extends TwoColumns implements GUIHandler.Panel {
         SwingUtilities.invokeLater(() -> {
             OperatorFunctions.performLogin("ID_Tetta", "PWD_Tetta");
 
-            GUIHandler panelHandler = new GUIHandler();
+            DataStorage appData = new DataStorage();
+            GUI gui = new GUI(appData);
             AreaCreateNew areaCreateNew = new AreaCreateNew();
 
-            panelHandler.addPanel(areaCreateNew.createPanel(panelHandler));
+            gui.addPanel(areaCreateNew.createPanel(gui));
             areaCreateNew.onOpen(args);
 
             areaCreateNew.textfieldAreaName.setText("Area di Tetta");

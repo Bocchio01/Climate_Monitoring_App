@@ -1,33 +1,37 @@
 package src;
 
 import src.GUI.Loading;
-import src.utils.GUIHandler;
+import src.models.MainModel;
+import src.utils.GUI;
 
 class Main {
 
-    public GUIHandler panelHandler;
+    public GUI gui;
+    public MainModel mainModel;
 
     public Main() {
+        mainModel = new MainModel();
     }
 
     public void lauchGUI() {
-        panelHandler = new GUIHandler();
-        panelHandler.addPanels();
-        panelHandler.goToPanel(Loading.ID, null);
+        gui = new GUI(mainModel);
+        gui.addPanels();
+        gui.goToPanel(Loading.ID, null);
     }
 
-    // public void lauchCMD(String[] args) {
-    // }
+    public void lauchCMD(String[] args) {
+    }
 
     public static void main(String[] args) {
         Main mainIstance = new Main();
+        mainIstance.lauchGUI();
 
-        if (args.length == 0) {
-            mainIstance.lauchGUI();
-        } else {
-            // TODO: Add command line arguments
-            // mainIstance.lauchCMD(args);
-        }
+        // if (args.length == 0) {
+        // mainIstance.lauchGUI();
+        // } else {
+        // // TODO: Add command line arguments
+        // mainIstance.lauchCMD(args);
+        // }
     }
 
 }

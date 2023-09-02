@@ -4,19 +4,20 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import src.models.MainModel;
 import src.utils.ENV;
-import src.utils.GUIHandler;
+import src.utils.GUI;
+import src.utils.Interfaces;
 import src.utils.Theme;
 import src.utils.Widget;
 import src.utils.templates.TwoRows;
 
-public class Loading extends TwoRows implements GUIHandler.Panel {
+public class Loading extends TwoRows implements Interfaces.UIPanel {
 
     public static String ID = "Loading";
-    public GUIHandler panelHandler;
+    private GUI gui;
 
     private JLabel labelAppName = new JLabel();
-
     private Timer timer;
 
     public Loading() {
@@ -27,8 +28,8 @@ public class Loading extends TwoRows implements GUIHandler.Panel {
     }
 
     @Override
-    public Loading createPanel(GUIHandler panelHandler) {
-        this.panelHandler = panelHandler;
+    public Loading createPanel(GUI gui) {
+        this.gui = gui;
 
         timer = new Timer(700, e -> {
             int animationSteps = 5;
@@ -38,7 +39,7 @@ public class Loading extends TwoRows implements GUIHandler.Panel {
 
             if (currentStep == animationSteps - 1) {
                 timer.stop();
-                panelHandler.goToPanel(Home.ID, null);
+                gui.goToPanel(Home.ID, null);
             }
         });
 
@@ -65,10 +66,11 @@ public class Loading extends TwoRows implements GUIHandler.Panel {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            GUIHandler panelHandler = new GUIHandler();
+            MainModel mainModel = new MainModel();
+            GUI gui = new GUI(mainModel);
             Loading loading = new Loading();
 
-            panelHandler.addPanel(loading.createPanel(panelHandler));
+            gui.addPanel(loading.createPanel(gui));
             loading.onOpen(args);
         });
     }

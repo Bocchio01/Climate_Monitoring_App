@@ -1,0 +1,92 @@
+package src.models.file;
+
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+
+import src.utils.ENV;
+
+public class FileHandler {
+
+    public FileHandler() {
+        try {
+            initFile(ENV.Path.Files.AREA,
+                    new String[] {
+                            "Area ID",
+                            "Area Name",
+                            "Street Name",
+                            "Street Number",
+                            "CAP",
+                            "Town Name",
+                            "District Name",
+                            "City IDs" });
+
+            initFile(ENV.Path.Files.WEATHER,
+                    new String[] {
+                            "Record ID",
+                            "Geoname ID",
+                            "Area ID",
+                            "Area Name",
+                            "Date",
+                            "Wind",
+                            "Humidity",
+                            "Pressure",
+                            "Temperature",
+                            "Precipitation",
+                            "Glacier elevation",
+                            "Mass of glaciers" });
+
+            initFile(ENV.Path.Files.CITY,
+                    new String[] {
+                            "Geoname ID",
+                            "Name",
+                            "ASCII Name",
+                            "Country Code",
+                            "Country Name",
+                            "Latitude",
+                            "Longitude" });
+
+            initFile(ENV.Path.Files.OPERATOR,
+                    new String[] {
+                            "Operator ID",
+                            "Name Surname",
+                            "Tax code",
+                            "Email",
+                            "Username",
+                            "Password",
+                            "Area ID" });
+
+        } catch (IOException e) {
+            // TODO: handle exception
+        }
+    }
+
+    private static void initFile(String filePath, String[] fileHeaders) throws IOException {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.createNewFile();
+
+            FileWriter writer = new FileWriter(file);
+            writer.write(String.join(ENV.CSV_SEPARATOR, fileHeaders) + "\n");
+            writer.close();
+        }
+    }
+
+    public static List<String> readFile(String filePath) throws IOException {
+        return Files.readAllLines(Paths.get(filePath));
+    }
+
+    public static void writeFile(String filePath, List<String> lines) throws IOException {
+        Files.write(Paths.get(filePath), lines);
+    }
+
+    public static void appendToFile(String filePath, String newLine) throws IOException {
+        FileWriter fout = new FileWriter(filePath, true);
+        BufferedWriter wfbuffer = new BufferedWriter(fout);
+
+        wfbuffer.write(newLine);
+        wfbuffer.newLine();
+        wfbuffer.close();
+    }
+
+}

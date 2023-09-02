@@ -2,18 +2,23 @@ package src.GUI.city;
 
 import javax.swing.*;
 
-import src.functions.AreaFunctions;
-import src.functions.CityFunctions;
-import src.utils.GUIHandler;
+import src.logics.CityFunctions;
+import src.models.MainModel;
+import src.models.data.DataQuery.QueryCondition;
+import src.models.record.CityRecord;
+import src.utils.GUI;
+import src.utils.Interfaces;
 import src.utils.Widget;
 import src.utils.templates.TwoColumns;
 
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CityQuery extends TwoColumns implements GUIHandler.Panel {
+public class CityQuery extends TwoColumns implements Interfaces.UIPanel {
 
     public static String ID = "CityQuery";
-    public GUIHandler panelHandler;
+    private GUI gui;
 
     private JTextField textfieldCityName = new JTextField();
     private JTextField textfieldLatitude = new JTextField();
@@ -54,16 +59,17 @@ public class CityQuery extends TwoColumns implements GUIHandler.Panel {
         };
 
         buttonPerfomQuery.addActionListener(e -> {
-            String cityName = "";
-            Integer cityID = 0;
 
             switch (comboboxQueryType.getSelectedIndex()) {
                 case 0:
-                    cityName = textfieldCityName.getText();
-                    cityID = AreaFunctions.getCityID(cityName);
+                    String cityName = textfieldCityName.getText();
 
-                    if (cityID != null) {
-                        panelHandler.goToPanel(CityVisualizer.ID, new Object[] { cityID });
+                    List<QueryCondition> conditions = new ArrayList<>();
+                    conditions.add(new QueryCondition("name", cityName));
+
+                    CityRecord[] result = gui.mainModel.dataHandler.dataQuery.getCityBy(conditions);
+                    if (result.length == 1) {
+                        gui.goToPanel(CityVisualizer.ID, new Object[] { result[0].ID() });
                     } else {
                         JOptionPane.showMessageDialog(
                                 this,
@@ -74,12 +80,12 @@ public class CityQuery extends TwoColumns implements GUIHandler.Panel {
                     break;
 
                 case 1:
-                    cityID = CityFunctions.getCityIDByCoords(
+                    Integer cityID = CityFunctions.getCityIDByCoords(
                             textfieldLatitude.getText(),
                             textfieldLongitude.getText());
 
                     if (cityID != null) {
-                        panelHandler.goToPanel(CityVisualizer.ID, new Object[] { cityID });
+                        gui.goToPanel(CityVisualizer.ID, new Object[] { cityID });
                     } else {
                         JOptionPane.showMessageDialog(
                                 this,
@@ -117,8 +123,8 @@ public class CityQuery extends TwoColumns implements GUIHandler.Panel {
     }
 
     @Override
-    public CityQuery createPanel(GUIHandler panelHandler) {
-        this.panelHandler = panelHandler;
+    public CityQuery createPanel(GUI gui) {
+        this.gui = gui;
 
         String[] comboboxValues = new String[] { "Cerca per nome", "Cerca per coordinate" };
         comboboxQueryType.setModel(new DefaultComboBoxModel<>(comboboxValues));
@@ -150,10 +156,11 @@ public class CityQuery extends TwoColumns implements GUIHandler.Panel {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            GUIHandler panelHandler = new GUIHandler();
+            MainModel mainModel = new MainModel();
+            GUI gui = new GUI(mainModel);
             CityQuery cityQuery = new CityQuery();
 
-            panelHandler.addPanel(cityQuery.createPanel(panelHandler));
+            gui.addPanel(cityQuery.createPanel(gui));
             cityQuery.onOpen(args);
         });
     }

@@ -7,15 +7,19 @@ import java.awt.Insets;
 import javax.swing.*;
 
 import src.GUI.Home;
-import src.functions.VisualizerFunctions;
-import src.utils.GUIHandler;
+import src.models.MainModel;
+import src.models.data.DataQuery.QueryCondition;
+import src.models.record.CityRecord;
+import src.models.record.WeatherRecord;
+import src.utils.GUI;
+import src.utils.Interfaces;
 import src.utils.Theme;
 import src.utils.Widget;
 
-public class CityVisualizer extends JPanel implements GUIHandler.Panel {
+public class CityVisualizer extends JPanel implements Interfaces.UIPanel {
 
     public static String ID = "CityVisualizer";
-    public GUIHandler panelHandler;
+    public GUI gui;
 
     private JTextArea textareaOperator = new JTextArea();
     private static JTextArea textareaDatas = new JTextArea();
@@ -50,32 +54,36 @@ public class CityVisualizer extends JPanel implements GUIHandler.Panel {
     private void addActionEvent() {
 
         buttonToBack.addActionListener(e -> {
-            panelHandler.goToPanel(CityQuery.ID, null);
+            gui.goToPanel(CityQuery.ID, null);
 
         });
     }
 
     public void loadDatas(Integer cityID) {
-        String[] dataFromFile = VisualizerFunctions.getDataFromFile(cityID);
 
-        if (dataFromFile.length > 0) {
-            for (int i = 3; i < 3 + 7; i++) {
-                textareaDatas.setText(VisualizerFunctions.computeConcatComment(dataFromFile, i) +
-                        "\n" + textareaDatas.getText());
+        QueryCondition condition = new QueryCondition("cityID", cityID);
+        WeatherRecord[] weatherRecords = gui.mainModel.dataHandler.dataQuery.getWeatherBy(condition);
+        
+        if (weatherRecords.length > 0) {
+            for (WeatherRecord weatherRecord : weatherRecords) {
+                textareaDatas.append(weatherRecord.toString() + "\n");
             }
+
+            CityRecord cityRecord = gui.mainModel.dataHandler.dataQuery.getCityBy(cityID);
+            textareaOperator.setText(cityRecord.toString());
 
         } else {
             JOptionPane.showMessageDialog(null,
                     "L'operatore non ha ancora inserito dati per la città selezionata.",
                     "Dati mancanti",
                     JOptionPane.WARNING_MESSAGE);
-            panelHandler.goToPanel(CityQuery.ID, null);
+            gui.goToPanel(CityQuery.ID, null);
         }
     }
 
     @Override
-    public CityVisualizer createPanel(GUIHandler panelHandler) {
-        this.panelHandler = panelHandler;
+    public CityVisualizer createPanel(GUI gui) {
+        this.gui = gui;
 
         initializeComponents();
         createLayout();
@@ -102,16 +110,17 @@ public class CityVisualizer extends JPanel implements GUIHandler.Panel {
                     "Errore nell'apertura della pagina.",
                     "Errore",
                     JOptionPane.ERROR_MESSAGE);
-            panelHandler.goToPanel(Home.ID, null);
+            gui.goToPanel(Home.ID, null);
         }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            GUIHandler panelHandler = new GUIHandler();
+            MainModel mainModel = new MainModel();
+            GUI gui = new GUI(mainModel);
             CityVisualizer cityVisualizer = new CityVisualizer();
 
-            panelHandler.addPanel(cityVisualizer.createPanel(panelHandler));
+            gui.addPanel(cityVisualizer.createPanel(gui));
             cityVisualizer.onOpen(args);
         });
     }

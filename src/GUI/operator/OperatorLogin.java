@@ -10,15 +10,18 @@ import javax.swing.*;
 import src.GUI.Home;
 import src.GUI.area.AreaAddData;
 import src.GUI.area.AreaCreateNew;
-import src.functions.OperatorFunctions;
-import src.utils.GUIHandler;
+import src.models.MainModel;
+import src.models.data.DataStorage;
+import src.models.record.OperatorRecord;
+import src.utils.GUI;
+import src.utils.Interfaces;
 import src.utils.Widget;
 import src.utils.templates.TwoColumns;
 
-public class OperatorLogin extends TwoColumns implements GUIHandler.Panel {
+public class OperatorLogin extends TwoColumns implements Interfaces.UIPanel {
 
     public static String ID = "OperatorLogin";
-    public GUIHandler panelHandler;
+    public GUI gui;
 
     private JTextField textfieldUsedID = new JTextField();
     private JPasswordField textfieldPassword = new JPasswordField();
@@ -50,49 +53,43 @@ public class OperatorLogin extends TwoColumns implements GUIHandler.Panel {
         };
 
         buttonPerformLogin.addActionListener(e -> {
+            String userID = textfieldUsedID.getText();
+            String userPassword = new String(textfieldPassword.getPassword());
+
             try {
+                gui.mainModel.logicOperator.performLogin(userID, userPassword);
 
-                String userID = textfieldUsedID.getText();
-                String userPassword = new String(textfieldPassword.getPassword());
+                OperatorRecord currentOperator = gui.mainModel.logicOperator.getCurrentOperator();
 
-                if (OperatorFunctions.isUserExist(userID, userPassword)) {
-                    if (OperatorFunctions.performLogin(userID, userPassword)) {
-                        if (OperatorFunctions.getCurrentUserArea() == null) {
-
-                            Integer response = JOptionPane.showConfirmDialog(
-                                    null,
-                                    "Ancora non hai creato la tua area. Vuoi crearla ora?",
-                                    "Area non creata",
-                                    JOptionPane.OK_CANCEL_OPTION);
-
-                            if (response == JOptionPane.OK_OPTION) {
-                                panelHandler.goToPanel(AreaCreateNew.ID, null);
-                            } else {
-                                JOptionPane.showMessageDialog(
-                                        this,
-                                        "Stai per essere reindirizzato alla home page.",
-                                        "Area mancante",
-                                        JOptionPane.INFORMATION_MESSAGE);
-                                panelHandler.goToPanel(Home.ID, null);
-                            }
-
-                        } else {
-                            panelHandler.goToPanel(AreaAddData.ID, null);
-                        }
+                if (currentOperator.areaID() == null) {
+                    Integer response = JOptionPane.showConfirmDialog(
+                            null,
+                            "Ancora non hai creato la tua area. Vuoi crearla ora?",
+                            "Area non creata",
+                            JOptionPane.OK_CANCEL_OPTION);
+                    if (response == JOptionPane.OK_OPTION) {
+                        gui.goToPanel(AreaCreateNew.ID, null);
                     } else {
-                        throw new LoginException("Errore imprevisto in fase di login. Contattare l'assistenza.");
+                        JOptionPane.showMessageDialog(
+                                this,
+                                "Stai per essere reindirizzato alla home page.",
+                                "Area mancante",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        gui.goToPanel(Home.ID, null);
                     }
+
                 } else {
-                    throw new LoginException("Password o ID errati");
+                    gui.goToPanel(AreaAddData.ID, null);
                 }
 
-            } catch (LoginException loginException) {
+            } catch (Exception exception) {
+                // TODO: handle exception
+                // System.out.println(e.getMessage());
                 JOptionPane.showMessageDialog(
                         this,
-                        loginException.getMessage(),
+                        exception.getMessage(),
                         "Errore di login",
                         JOptionPane.ERROR_MESSAGE);
-
             } finally {
                 cleanTextFiels();
             }
@@ -109,10 +106,9 @@ public class OperatorLogin extends TwoColumns implements GUIHandler.Panel {
     }
 
     @Override
-    public OperatorLogin createPanel(GUIHandler panelHandler) {
-        this.panelHandler = panelHandler;
+    public OperatorLogin createPanel(GUI gui) {
+        this.gui = gui;
 
-        
         addLeft(new Widget.LogoLabel());
         addRight(new Widget.FormPanel("ID Utente", textfieldUsedID));
         addRight(new Widget.FormPanel("Password", textfieldPassword));
@@ -130,31 +126,32 @@ public class OperatorLogin extends TwoColumns implements GUIHandler.Panel {
 
     @Override
     public void onOpen(Object[] args) {
-        if (OperatorFunctions.isUserLogged()) {
+        if(gui.mainModel.logicOperator.isUserLogged()) {
             Integer response = JOptionPane.showConfirmDialog(
                     null,
-                    "Risulti già loggato con ID_Utente: " + OperatorFunctions.getCurrentUserID() + "\n"
+                    "Risulti già loggato con UserName: " + gui.mainModel.logicOperator.getCurrentOperator().username() + "\n"
                             + "Proseguire?",
                     "Utente già loggato",
                     JOptionPane.YES_NO_OPTION);
 
             if (response == JOptionPane.YES_OPTION) {
-                textfieldUsedID.setText(OperatorFunctions.getCurrentUserID());
-                textfieldPassword.setText(OperatorFunctions.getCurrentUserPassword());
+                textfieldUsedID.setText(gui.mainModel.logicOperator.getCurrentOperator().username());
+                textfieldPassword.setText(gui.mainModel.logicOperator.getCurrentOperator().password());
                 buttonPerformLogin.doClick();
-
             } else {
-                OperatorFunctions.performLogout();
+                gui.mainModel.logicOperator.performLogout();
             }
         }
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            GUIHandler panelHandler = new GUIHandler();
+            MainModel mainModel = new MainModel();
+            GUI gui = new GUI(mainModel);
+
             Home home = new Home();
 
-            panelHandler.addPanel(home.createPanel(panelHandler));
+            gui.addPanel(home.createPanel(gui));
             home.onOpen(args);
         });
     }

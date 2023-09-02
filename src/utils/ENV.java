@@ -7,6 +7,7 @@ public class ENV {
 
     public static final String EMPTY_STRING = "NULL";
     public static final String CSV_SEPARATOR = ";";
+    public static final String CSV_SUB_SEPARATOR = ",";
     public static final String APP_TITLE = "Monitoraggio Climatico";
 
     private ENV() {
@@ -29,10 +30,10 @@ public class ENV {
         public static final String SEPARATOR = "/";
 
         public static final class Files {
-            public static final String CITY_DATAS = getPath("City.data.csv");
-            public static final String OPERATOR_DATA = getPath("Operator.data.csv");
-            public static final String CITY_COORDS = getPath("CityCoord.list.csv");
-            public static final String AREA_DATA = getPath("Area.data.csv");
+            public static final String WEATHER = getPath("Weather.data.csv");
+            public static final String OPERATOR = getPath("Operator.data.csv");
+            public static final String CITY = getPath("City.list.csv");
+            public static final String AREA = getPath("Area.data.csv");
 
             private Files() {
             }

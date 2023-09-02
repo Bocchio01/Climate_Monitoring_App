@@ -11,9 +11,9 @@ import javax.swing.JScrollPane;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-import src.utils.GUIHandler;
+import src.utils.Interfaces;
 
-public class MainWindows extends JPanel implements GUIHandler.WindowsArea {
+public class MainWindows extends JPanel implements Interfaces.UIWindows {
 
     private JScrollPane scrollPane = new JScrollPane();
     private JPanel contentPanel = new JPanel();

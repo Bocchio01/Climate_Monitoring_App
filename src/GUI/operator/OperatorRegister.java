@@ -2,22 +2,21 @@ package src.GUI.operator;
 
 import javax.swing.*;
 
-import src.functions.OperatorFunctions;
-import src.utils.ENV;
-import src.utils.GUIHandler;
+import src.models.MainModel;
+import src.utils.GUI;
+import src.utils.Interfaces;
 import src.utils.Widget;
 import src.utils.templates.TwoColumns;
 
-
-public class OperatorRegister extends TwoColumns implements GUIHandler.Panel {
+public class OperatorRegister extends TwoColumns implements Interfaces.UIPanel {
 
     public static String ID = "OperatorRegister";
-    public GUIHandler panelHandler;
+    public GUI gui;
 
     private JTextField textfieldName = new JTextField();
     private JTextField textfieldTaxCode = new JTextField();
     private JTextField textfieldEmail = new JTextField();
-    private JTextField textfieldUserID = new JTextField();
+    private JTextField textfieldUsername = new JTextField();
     private JPasswordField textfieldPassword = new JPasswordField();
     private JButton buttonPerformRegistration = new Widget.Button("Registrati");
 
@@ -28,30 +27,33 @@ public class OperatorRegister extends TwoColumns implements GUIHandler.Panel {
 
         buttonPerformRegistration.addActionListener(e -> {
 
-            OperatorFunctions.performLogout();
+            String nameSurname = textfieldName.getText().trim();
+            String taxCode = textfieldTaxCode.getText().trim();
+            String email = textfieldEmail.getText().trim();
+            String username = textfieldUsername.getText().trim();
+            String password = new String(textfieldPassword.getPassword()).trim();
+            Integer areaID = null;
 
-            String[] dataInserted = {
-                    textfieldName.getText().trim(),
-                    textfieldTaxCode.getText().trim(),
-                    textfieldEmail.getText().trim(),
-                    textfieldUserID.getText().trim(),
-                    new String(textfieldPassword.getPassword()).trim(),
-                    ENV.EMPTY_STRING
-            };
-
-            if (OperatorFunctions.isValidInput(dataInserted) &&
-                    OperatorFunctions.performRegistration(dataInserted)) {
+            try {
+                gui.mainModel.logicOperator.performRegistration(
+                        nameSurname,
+                        taxCode,
+                        email,
+                        username,
+                        password,
+                        areaID);
                 JOptionPane.showMessageDialog(
                         this,
                         "Profilo registrato con successo. Accedi.",
                         "Successo",
                         JOptionPane.INFORMATION_MESSAGE);
-                panelHandler.goToPanel(OperatorLogin.ID, null);
+                gui.goToPanel(OperatorLogin.ID, null);
 
-            } else {
+            } catch (Exception exception) {
+                // TODO: handle exception
                 JOptionPane.showMessageDialog(
                         this,
-                        "Profilo non registrato.",
+                        exception.getMessage(),
                         "Errore",
                         JOptionPane.ERROR_MESSAGE);
             }
@@ -60,14 +62,14 @@ public class OperatorRegister extends TwoColumns implements GUIHandler.Panel {
     }
 
     @Override
-    public OperatorRegister createPanel(GUIHandler panelHandler) {
-        this.panelHandler = panelHandler;
+    public OperatorRegister createPanel(GUI gui) {
+        this.gui = gui;
 
         addLeft(new Widget.LogoLabel());
         addRight(new Widget.FormPanel("Nome e Cognome", textfieldName));
         addRight(new Widget.FormPanel("Codice Fiscale", textfieldTaxCode));
         addRight(new Widget.FormPanel("Email", textfieldEmail));
-        addRight(new Widget.FormPanel("User ID", textfieldUserID));
+        addRight(new Widget.FormPanel("User ID", textfieldUsername));
         addRight(new Widget.FormPanel("Password", textfieldPassword));
         addRight(buttonPerformRegistration);
 
@@ -83,15 +85,16 @@ public class OperatorRegister extends TwoColumns implements GUIHandler.Panel {
 
     @Override
     public void onOpen(Object[] args) {
-        OperatorFunctions.performLogout();
+        gui.mainModel.logicOperator.performLogout();
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            GUIHandler panelHandler = new GUIHandler();
+            MainModel mainModel = new MainModel();
+            GUI gui = new GUI(mainModel);
             OperatorRegister operatorRegister = new OperatorRegister();
 
-            panelHandler.addPanel(operatorRegister.createPanel(panelHandler));
+            gui.addPanel(operatorRegister.createPanel(gui));
             operatorRegister.onOpen(args);
         });
     }
