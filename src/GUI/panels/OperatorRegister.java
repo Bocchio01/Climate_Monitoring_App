@@ -1,17 +1,18 @@
-package src.GUI.operator;
+package src.GUI.panels;
 
 import javax.swing.*;
 
+import src.GUI.GUI;
+import src.GUI.templates.TwoColumns;
+import src.GUI.templates.Widget;
 import src.models.MainModel;
-import src.utils.GUI;
 import src.utils.Interfaces;
-import src.utils.Widget;
-import src.utils.templates.TwoColumns;
 
 public class OperatorRegister extends TwoColumns implements Interfaces.UIPanel {
 
     public static String ID = "OperatorRegister";
-    public GUI gui;
+    private GUI gui;
+    private MainModel mainModel;
 
     private JTextField textfieldName = new JTextField();
     private JTextField textfieldTaxCode = new JTextField();
@@ -20,7 +21,8 @@ public class OperatorRegister extends TwoColumns implements Interfaces.UIPanel {
     private JPasswordField textfieldPassword = new JPasswordField();
     private JButton buttonPerformRegistration = new Widget.Button("Registrati");
 
-    public OperatorRegister() {
+    public OperatorRegister(MainModel mainModel) {
+        this.mainModel = mainModel;
     }
 
     public void addActionEvent() {
@@ -35,7 +37,7 @@ public class OperatorRegister extends TwoColumns implements Interfaces.UIPanel {
             Integer areaID = null;
 
             try {
-                gui.mainModel.logicOperator.performRegistration(
+                mainModel.logicOperator.performRegistration(
                         nameSurname,
                         taxCode,
                         email,
@@ -85,14 +87,14 @@ public class OperatorRegister extends TwoColumns implements Interfaces.UIPanel {
 
     @Override
     public void onOpen(Object[] args) {
-        gui.mainModel.logicOperator.performLogout();
+        mainModel.logicOperator.performLogout();
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             MainModel mainModel = new MainModel();
             GUI gui = new GUI(mainModel);
-            OperatorRegister operatorRegister = new OperatorRegister();
+            OperatorRegister operatorRegister = new OperatorRegister(mainModel);
 
             gui.addPanel(operatorRegister.createPanel(gui));
             operatorRegister.onOpen(args);

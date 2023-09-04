@@ -1,23 +1,26 @@
-package src.GUI.area;
+package src.GUI.panels;
+
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import src.GUI.operator.OperatorLogin;
-import src.logics.AreaFunctions;
-import src.logics.OperatorFunctions;
+import src.GUI.GUI;
+import src.GUI.templates.TwoColumns;
+import src.GUI.templates.Widget;
+import src.models.MainModel;
 import src.models.data.DataStorage;
-import src.utils.GUI;
+import src.models.logic.AreaFunctions;
+import src.utils.ENV;
 import src.utils.Interfaces;
-import src.utils.Widget;
-import src.utils.templates.TwoColumns;
 
 public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
 
     public static String ID = "AreaCreateNew";
     private GUI gui;
+    private MainModel mainModel;
 
     private JTextField textfieldAreaName = new JTextField();
     private JTextField textfieldStreetName = new JTextField();
@@ -38,60 +41,58 @@ public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
             textfieldCityNames
     };
 
-    public AreaCreateNew() {
+    public AreaCreateNew(MainModel mainModel) {
+        this.mainModel = mainModel;
     }
 
     private void addActionEvent() {
         buttonPerformInit.addActionListener(e -> {
 
-            String[] datiInseriti = new String[formElements.length];
-            for (int i = 0; i < formElements.length; i++) {
-                String fieldValue = formElements[i].getText().trim();
-                datiInseriti[i] = !fieldValue.isEmpty() ? fieldValue : null;
-            }
+            // String[] datiInseriti = new String[formElements.length];
+            // for (int i = 0; i < formElements.length; i++) {
+            //     String fieldValue = formElements[i].getText().trim();
+            //     datiInseriti[i] = !fieldValue.isEmpty() ? fieldValue : null;
+            // }
 
-            if (datiInseriti[6] != null) {
-                String[] aree = datiInseriti[6].split(",");
-                for (int k = 0; k < aree.length; k++) {
-                    aree[k] = aree[k].trim();
-                }
-                datiInseriti[6] = String.join(",", aree);
-            }
+            // if (datiInseriti[6] != null) {
+            //     String[] aree = datiInseriti[6].split(Pattern.quote(ENV.CSV_SUB_SEPARATOR));
+            //     for (int k = 0; k < aree.length; k++) {
+            //         aree[k] = aree[k].trim();
+            //     }
+            //     datiInseriti[6] = String.join(ENV.CSV_SUB_SEPARATOR, aree);
+            // }
 
-            if (!AreaFunctions.checkInputRegister(datiInseriti)) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Mancano uno o più dati da inserire.",
-                        "Dati mancanti",
-                        JOptionPane.WARNING_MESSAGE);
-            } else {
-                if (AreaFunctions.isAreaExists(datiInseriti[0])) {
-                    JOptionPane.showMessageDialog(
-                            this,
-                            "Nome dell'area già preso. Scegliere un altro nome.",
-                            "Dato errato",
-                            JOptionPane.ERROR_MESSAGE);
-                } else {
-                    if (AreaFunctions.initNewArea(datiInseriti)) {
-                        JOptionPane.showMessageDialog(
-                                this,
-                                "Nuova area inserita correttamente.",
-                                "Nuova area inserita",
-                                JOptionPane.INFORMATION_MESSAGE);
+            // if (!AreaFunctions.checkInputRegister(datiInseriti)) {
+            //     JOptionPane.showMessageDialog(
+            //             this,
+            //             "Mancano uno o più dati da inserire.",
+            //             "Dati mancanti",
+            //             JOptionPane.WARNING_MESSAGE);
+            // } else {
+            //     if (AreaFunctions.isAreaExists(datiInseriti[0])) {
+            //         JOptionPane.showMessageDialog(
+            //                 this,
+            //                 "Nome dell'area già preso. Scegliere un altro nome.",
+            //                 "Dato errato",
+            //                 JOptionPane.ERROR_MESSAGE);
+            //     } else {
+            //         if (AreaFunctions.initNewArea(datiInseriti)) {
+            //             JOptionPane.showMessageDialog(
+            //                     this,
+            //                     "Nuova area inserita correttamente.",
+            //                     "Nuova area inserita",
+            //                     JOptionPane.INFORMATION_MESSAGE);
 
-                        OperatorFunctions.performLogin(
-                                OperatorFunctions.getCurrentUserID(),
-                                OperatorFunctions.getCurrentUserPassword());
-                        gui.goToPanel(AreaAddData.ID, null);
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                this,
-                                "C'è stato un problema nella creazione della nuova area. Riprovare.",
-                                "Errore inserimento",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
+            //             gui.goToPanel(AreaAddData.ID, null);
+            //         } else {
+            //             JOptionPane.showMessageDialog(
+            //                     this,
+            //                     "C'è stato un problema nella creazione della nuova area. Riprovare.",
+            //                     "Errore inserimento",
+            //                     JOptionPane.ERROR_MESSAGE);
+            //         }
+            //     }
+            // }
         });
     }
 
@@ -106,7 +107,7 @@ public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
         addRight(new Widget.FormPanel("CAP", textfieldCAP));
         addRight(new Widget.FormPanel("Nome del comune", textfieldTownName));
         addRight(new Widget.FormPanel("Sigla della provincia", textfieldDistrictName));
-        addRight(new Widget.FormPanel("Nomi delle città subordinate all'area (separate da ',')",
+        addRight(new Widget.FormPanel("Nomi delle città nell'area (separate da '|')",
                 textfieldCityNames));
         addRight(buttonPerformInit);
 
@@ -122,7 +123,7 @@ public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
 
     @Override
     public void onOpen(Object[] args) {
-        if (!OperatorFunctions.isUserLogged()) {
+        if (!mainModel.logicOperator.isUserLogged()) {
             JOptionPane.showMessageDialog(
                     this,
                     "Per creare una nuova area devi prima essere loggato.",
@@ -131,7 +132,7 @@ public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
 
             gui.goToPanel(OperatorLogin.ID, null);
 
-        } else if (OperatorFunctions.getCurrentUserArea() != null) {
+        } else if (mainModel.logicOperator.getCurrentOperator().areaID() != null) {
             JOptionPane.showMessageDialog(
                     this,
                     "Hai già creato la tua area.",
@@ -144,11 +145,11 @@ public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            OperatorFunctions.performLogin("ID_Tetta", "PWD_Tetta");
+            // OperatorFunctions.performLogin("ID_Tetta", "PWD_Tetta");
 
-            DataStorage appData = new DataStorage();
-            GUI gui = new GUI(appData);
-            AreaCreateNew areaCreateNew = new AreaCreateNew();
+            MainModel mainModel = new MainModel();
+            GUI gui = new GUI(mainModel);
+            AreaCreateNew areaCreateNew = new AreaCreateNew(mainModel);
 
             gui.addPanel(areaCreateNew.createPanel(gui));
             areaCreateNew.onOpen(args);

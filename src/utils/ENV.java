@@ -7,7 +7,7 @@ public class ENV {
 
     public static final String EMPTY_STRING = "NULL";
     public static final String CSV_SEPARATOR = ";";
-    public static final String CSV_SUB_SEPARATOR = ",";
+    public static final String CSV_SUB_SEPARATOR = "|";
     public static final String APP_TITLE = "Monitoraggio Climatico";
 
     private ENV() {
@@ -61,7 +61,7 @@ public class ENV {
     }
 
     public static final class GUI {
-        public static final Integer FRAME_WIDTH = 1200;
+        public static final Integer FRAME_WIDTH = 1400;
         public static final Integer FRAME_HEIGHT = 800;
         public static final Dimension WIDGET_DIMENSION = new Dimension(300, 40);
 

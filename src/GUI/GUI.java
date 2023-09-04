@@ -1,4 +1,4 @@
-package src.utils;
+package src.GUI;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -9,23 +9,26 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import src.GUI.Home;
-import src.GUI.Loading;
-import src.GUI.area.AreaAddData;
-import src.GUI.area.AreaCreateNew;
-import src.GUI.city.CityQuery;
-import src.GUI.city.CityVisualizer;
-import src.GUI.operator.OperatorHome;
-import src.GUI.operator.OperatorLogin;
-import src.GUI.operator.OperatorRegister;
+import src.GUI.panels.AreaAddData;
+import src.GUI.panels.AreaCreateNew;
+import src.GUI.panels.CityQuery;
+import src.GUI.panels.CityVisualizer;
+import src.GUI.panels.Home;
+import src.GUI.panels.Loading;
+import src.GUI.panels.OperatorHome;
+import src.GUI.panels.OperatorLogin;
+import src.GUI.panels.OperatorRegister;
+import src.GUI.templates.MainFrame;
+import src.GUI.templates.MainWindows;
+import src.GUI.templates.MenuBar;
 import src.models.MainModel;
-import src.utils.templates.MainFrame;
-import src.utils.templates.MainWindows;
-import src.utils.templates.MenuBar;
+import src.utils.Interfaces;
+import src.utils.Interfaces.UIPanel;
+import src.utils.Interfaces.UIWindows;
 
 public class GUI {
 
-    public MainModel mainModel;
+    private MainModel mainModel;
 
     public CardLayout cardLayout = new CardLayout();
     public JFrame mainFrame = new MainFrame();
@@ -33,14 +36,14 @@ public class GUI {
     private Map<String, Interfaces.UIPanel> Panels = new HashMap<>();
     private String currentID;
 
-    private Loading loadingPanel = new Loading();
-    private Home homePanel = new Home();
-    private CityQuery cityQueryPanel = new CityQuery();
-    private CityVisualizer cityVisualizerPanel = new CityVisualizer();
-    private OperatorHome operatorHomePanel = new OperatorHome();
-    private OperatorLogin operatorLoginPanel = new OperatorLogin();
-    private OperatorRegister operatorRegisterPanel = new OperatorRegister();
-    // private AreaCreateNew areaCreateNewPanel = new AreaCreateNew();
+    private Loading loadingPanel;
+    private Home homePanel;
+    private CityQuery cityQueryPanel;
+    private CityVisualizer cityVisualizerPanel;
+    private OperatorHome operatorHomePanel;
+    private OperatorLogin operatorLoginPanel;
+    private OperatorRegister operatorRegisterPanel;
+    private AreaCreateNew areaCreateNewPanel;
     // private AreaAddData areaAddDataPanel = new AreaAddData();
 
     public GUI(MainModel mainModel) {
@@ -53,6 +56,15 @@ public class GUI {
         mainWindowsArea.getMainPanel().revalidate();
         mainWindowsArea.getMainPanel().repaint();
 
+        loadingPanel = new Loading(mainModel);
+        homePanel = new Home(mainModel);
+        cityQueryPanel = new CityQuery(mainModel);
+        cityVisualizerPanel = new CityVisualizer(mainModel);
+        operatorHomePanel = new OperatorHome(mainModel);
+        operatorLoginPanel = new OperatorLogin(mainModel);
+        operatorRegisterPanel = new OperatorRegister(mainModel);
+        areaCreateNewPanel = new AreaCreateNew(mainModel);
+
     }
 
     public void addPanels() {
@@ -63,7 +75,7 @@ public class GUI {
         addPanel(operatorHomePanel.createPanel(this));
         addPanel(operatorLoginPanel.createPanel(this));
         addPanel(operatorRegisterPanel.createPanel(this));
-        // addPanel(areaCreateNewPanel.createPanel(this));
+        addPanel(areaCreateNewPanel.createPanel(this));
         // addPanel(areaAddDataPanel.createPanel(this));
     }
 
@@ -99,6 +111,7 @@ public class GUI {
             // mainWindowsArea.setAppInfo("ID Pagina corrente: " + ID);
         } catch (Exception e) {
             // TODO: handle exception
+            System.out.println("Errore: Panel non trovato.");
         }
     }
 

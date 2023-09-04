@@ -46,7 +46,7 @@ public class LogicOperator {
         conditions.add(new QueryCondition("username", username));
         conditions.add(new QueryCondition("password", password));
 
-        OperatorRecord[] result = dataHandler.dataQuery.getOperatorBy(conditions);
+        OperatorRecord[] result = dataHandler.getOperatorBy(conditions);
         if (result.length == 1) {
             setCurrentOperator(result[0]);
         } else {
@@ -81,7 +81,7 @@ public class LogicOperator {
         conditions.add(new QueryCondition("username", username));
         conditions.add(new QueryCondition("password", password));
 
-        OperatorRecord[] result = dataHandler.dataQuery.getOperatorBy(conditions);
+        OperatorRecord[] result = dataHandler.getOperatorBy(conditions);
         if (result.length > 0) {
             performLogout();
             throw new IllegalArgumentException("user already exists");

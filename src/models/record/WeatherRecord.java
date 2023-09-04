@@ -4,8 +4,8 @@ import src.utils.ENV;
 
 public record WeatherRecord(
         Integer ID,
-        Integer areaID,
         Integer cityID,
+        Integer areaID,
         String date,
         WeatherData wind,
         WeatherData humidity,
@@ -13,14 +13,14 @@ public record WeatherRecord(
         WeatherData temperature,
         WeatherData precipitation,
         WeatherData glacierElevation,
-        WeatherData massOfGlaciers) {
+        WeatherData glacierMass) {
 
     @Override
     public String toString() {
         String[] dataStrings = new String[] {
                 ID.toString(),
-                areaID.toString(),
                 cityID.toString(),
+                areaID.toString(),
                 date,
                 wind.toString(),
                 humidity.toString(),
@@ -28,7 +28,7 @@ public record WeatherRecord(
                 temperature.toString(),
                 precipitation.toString(),
                 glacierElevation.toString(),
-                massOfGlaciers.toString()
+                glacierMass.toString()
         };
 
         return String.join(ENV.CSV_SEPARATOR, dataStrings);

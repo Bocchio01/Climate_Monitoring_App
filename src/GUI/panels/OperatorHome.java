@@ -1,23 +1,25 @@
-package src.GUI.operator;
+package src.GUI.panels;
 
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
+import src.GUI.GUI;
+import src.GUI.templates.TwoRows;
+import src.GUI.templates.Widget;
 import src.models.MainModel;
-import src.utils.GUI;
 import src.utils.Interfaces;
-import src.utils.Widget;
-import src.utils.templates.TwoRows;
 
 public class OperatorHome extends TwoRows implements Interfaces.UIPanel {
 
     public static String ID = "OperatorHome";
-    public GUI gui;
+    private GUI gui;
+    private MainModel mainModel;
 
     private JButton buttonToRegistration = new Widget.Button("Registrati");
     private JButton buttonToLogin = new Widget.Button("Accedi");
 
-    public OperatorHome() {
+    public OperatorHome(MainModel mainModel) {
+        this.mainModel = mainModel;
     }
 
     public void addActionEvent() {
@@ -56,7 +58,7 @@ public class OperatorHome extends TwoRows implements Interfaces.UIPanel {
         SwingUtilities.invokeLater(() -> {
             MainModel mainModel = new MainModel();
             GUI gui = new GUI(mainModel);
-            OperatorHome operatorHome = new OperatorHome();
+            OperatorHome operatorHome = new OperatorHome(mainModel);
 
             gui.addPanel(operatorHome.createPanel(gui));
             operatorHome.onOpen(args);

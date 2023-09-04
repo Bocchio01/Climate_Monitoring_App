@@ -24,9 +24,8 @@ public class FileHandler {
             initFile(ENV.Path.Files.WEATHER,
                     new String[] {
                             "Record ID",
-                            "Geoname ID",
+                            "City ID",
                             "Area ID",
-                            "Area Name",
                             "Date",
                             "Wind",
                             "Humidity",
@@ -38,7 +37,7 @@ public class FileHandler {
 
             initFile(ENV.Path.Files.CITY,
                     new String[] {
-                            "Geoname ID",
+                            "City ID",
                             "Name",
                             "ASCII Name",
                             "Country Code",

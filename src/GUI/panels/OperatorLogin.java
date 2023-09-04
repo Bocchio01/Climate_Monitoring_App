@@ -1,4 +1,4 @@
-package src.GUI.operator;
+package src.GUI.panels;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -7,27 +7,26 @@ import java.awt.event.KeyListener;
 import javax.security.auth.login.LoginException;
 import javax.swing.*;
 
-import src.GUI.Home;
-import src.GUI.area.AreaAddData;
-import src.GUI.area.AreaCreateNew;
+import src.GUI.GUI;
+import src.GUI.templates.TwoColumns;
+import src.GUI.templates.Widget;
 import src.models.MainModel;
 import src.models.data.DataStorage;
 import src.models.record.OperatorRecord;
-import src.utils.GUI;
 import src.utils.Interfaces;
-import src.utils.Widget;
-import src.utils.templates.TwoColumns;
 
 public class OperatorLogin extends TwoColumns implements Interfaces.UIPanel {
 
     public static String ID = "OperatorLogin";
-    public GUI gui;
+    private GUI gui;
+    private MainModel mainModel;
 
     private JTextField textfieldUsedID = new JTextField();
     private JPasswordField textfieldPassword = new JPasswordField();
     private JButton buttonPerformLogin = new Widget.Button("Accedi");
 
-    public OperatorLogin() {
+    public OperatorLogin(MainModel mainModel) {
+        this.mainModel = mainModel;
     }
 
     public void addActionEvent() {
@@ -57,9 +56,9 @@ public class OperatorLogin extends TwoColumns implements Interfaces.UIPanel {
             String userPassword = new String(textfieldPassword.getPassword());
 
             try {
-                gui.mainModel.logicOperator.performLogin(userID, userPassword);
+                mainModel.logicOperator.performLogin(userID, userPassword);
 
-                OperatorRecord currentOperator = gui.mainModel.logicOperator.getCurrentOperator();
+                OperatorRecord currentOperator = mainModel.logicOperator.getCurrentOperator();
 
                 if (currentOperator.areaID() == null) {
                     Integer response = JOptionPane.showConfirmDialog(
@@ -126,20 +125,20 @@ public class OperatorLogin extends TwoColumns implements Interfaces.UIPanel {
 
     @Override
     public void onOpen(Object[] args) {
-        if(gui.mainModel.logicOperator.isUserLogged()) {
+        if(mainModel.logicOperator.isUserLogged()) {
             Integer response = JOptionPane.showConfirmDialog(
                     null,
-                    "Risulti già loggato con UserName: " + gui.mainModel.logicOperator.getCurrentOperator().username() + "\n"
+                    "Risulti già loggato con UserName: " + mainModel.logicOperator.getCurrentOperator().username() + "\n"
                             + "Proseguire?",
                     "Utente già loggato",
                     JOptionPane.YES_NO_OPTION);
 
             if (response == JOptionPane.YES_OPTION) {
-                textfieldUsedID.setText(gui.mainModel.logicOperator.getCurrentOperator().username());
-                textfieldPassword.setText(gui.mainModel.logicOperator.getCurrentOperator().password());
+                textfieldUsedID.setText(mainModel.logicOperator.getCurrentOperator().username());
+                textfieldPassword.setText(mainModel.logicOperator.getCurrentOperator().password());
                 buttonPerformLogin.doClick();
             } else {
-                gui.mainModel.logicOperator.performLogout();
+                mainModel.logicOperator.performLogout();
             }
         }
     }
@@ -148,8 +147,7 @@ public class OperatorLogin extends TwoColumns implements Interfaces.UIPanel {
         SwingUtilities.invokeLater(() -> {
             MainModel mainModel = new MainModel();
             GUI gui = new GUI(mainModel);
-
-            Home home = new Home();
+            Home home = new Home(mainModel);
 
             gui.addPanel(home.createPanel(gui));
             home.onOpen(args);

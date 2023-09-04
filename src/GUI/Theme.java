@@ -1,4 +1,4 @@
-package src.utils;
+package src.GUI;
 
 import java.awt.Color;
 import java.util.ArrayList;

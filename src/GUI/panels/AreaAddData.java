@@ -1,19 +1,18 @@
-package src.GUI.area;
+package src.GUI.panels;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
-import src.GUI.operator.OperatorHome;
-import src.logics.AreaFunctions;
+import src.GUI.GUI;
+import src.GUI.Theme;
+import src.GUI.templates.Widget;
 import src.logics.OperatorFunctions;
 import src.models.data.DataStorage;
+import src.models.logic.AreaFunctions;
 import src.utils.ENV;
-import src.utils.GUI;
 import src.utils.Interfaces;
-import src.utils.Theme;
-import src.utils.Widget;
 
 import java.awt.*;
 import java.awt.event.FocusEvent;

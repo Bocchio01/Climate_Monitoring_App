@@ -124,11 +124,10 @@ public class DataQuery {
 
     private boolean checkCityCondition(CityRecord city, QueryCondition condition) {
 
-        double epsilon = 1e-6;
         String key = condition.getKey();
         Object value = condition.getValue();
 
-        if (key.equals("geonameID")) {
+        if (key.equals("ID")) {
             Integer targetID = (Integer) value;
             return city.ID().equals(targetID);
 
@@ -150,11 +149,11 @@ public class DataQuery {
 
         } else if (key.equals("latitude")) {
             double targetLatitude = (double) value;
-            return Math.abs(city.latitude() - targetLatitude) < epsilon;
+            return Math.abs(city.latitude() - targetLatitude) < generateEpsilon(targetLatitude);
 
         } else if (key.equals("longitude")) {
             double targetLongitude = (double) value;
-            return Math.abs(city.longitude() - targetLongitude) < epsilon;
+            return Math.abs(city.longitude() - targetLongitude) < generateEpsilon(targetLongitude);
         }
 
         throw new IllegalArgumentException("Invalid key");
@@ -270,6 +269,27 @@ public class DataQuery {
         }
 
         throw new IllegalArgumentException("Invalid key");
+    }
+
+    public static double generateEpsilon(double value) {
+        int decimalPlaces = computeDecimalPlaces(value);
+
+        // Calculate epsilon as 1 / (10^decimalPlaces) for appropriate precision
+        double epsilon = 1.0 / Math.pow(10, decimalPlaces);
+
+        return epsilon;
+    }
+
+    public static int computeDecimalPlaces(double value) {
+        String text = Double.toString(Math.abs(value));
+        int integerPlaces = text.indexOf('.');
+        int decimalPlaces = 0;
+
+        if (integerPlaces > 0) {
+            decimalPlaces = text.length() - integerPlaces - 1;
+        }
+
+        return decimalPlaces;
     }
 
     public static class QueryCondition {

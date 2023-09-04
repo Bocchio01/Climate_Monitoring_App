@@ -3,25 +3,29 @@ package src.models;
 import src.models.data.DataHandler;
 import src.models.data.DataStorage;
 import src.models.file.FileHandler;
+import src.models.logic.LogicArea;
 import src.models.logic.LogicOperator;
 
 public class MainModel {
     
 
-    public FileHandler fileHandler;
+    public FileHandler file;
     public DataStorage dataStorage;
-    public DataHandler dataHandler;
+    public DataHandler data;
 
     public LogicOperator logicOperator;
+    public LogicArea logicArea;
 
 
     public MainModel() {
 
-        fileHandler = new FileHandler();
+        file = new FileHandler();
 
-        dataHandler = new DataHandler();
+        data = new DataHandler();
 
-        logicOperator = new LogicOperator(dataHandler);
+        logicOperator = new LogicOperator(data);
+
+        logicArea = new LogicArea(data);
 
     }
 }

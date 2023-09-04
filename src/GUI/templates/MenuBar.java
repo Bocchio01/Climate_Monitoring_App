@@ -1,4 +1,4 @@
-package src.utils.templates;
+package src.GUI.templates;
 
 import java.awt.Cursor;
 import java.awt.FlowLayout;
@@ -8,14 +8,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import src.GUI.Home;
-import src.GUI.area.AreaAddData;
-import src.GUI.city.CityQuery;
-import src.GUI.operator.OperatorHome;
-import src.GUI.operator.OperatorLogin;
-import src.GUI.operator.OperatorRegister;
-import src.utils.GUI;
-import src.utils.Theme;
+import src.GUI.GUI;
+import src.GUI.Theme;
+import src.GUI.panels.AreaAddData;
+import src.GUI.panels.CityQuery;
+import src.GUI.panels.Home;
+import src.GUI.panels.OperatorHome;
+import src.GUI.panels.OperatorLogin;
+import src.GUI.panels.OperatorRegister;
 
 public class MenuBar extends JMenuBar {
 

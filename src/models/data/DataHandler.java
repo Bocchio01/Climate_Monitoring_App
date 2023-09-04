@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import src.models.data.DataQuery.QueryCondition;
 import src.models.file.FileHandler;
 import src.models.record.AreaRecord;
 import src.models.record.CityRecord;
@@ -14,14 +13,12 @@ import src.models.record.OperatorRecord;
 import src.models.record.WeatherRecord;
 import src.utils.ENV;
 
-public class DataHandler {
+public class DataHandler extends DataQuery {
 
-    private DataStorage dataStorage;
-    public DataQuery dataQuery;
+    private static DataStorage dataStorage = new DataStorage();
 
     public DataHandler() {
-        dataStorage = new DataStorage();
-        dataQuery = new DataQuery(dataStorage);
+        super(dataStorage);
     }
 
     public Integer generatePrimaryKey(HashMap<Integer, ?> map) {
@@ -138,7 +135,7 @@ public class DataHandler {
         conditions.add(new QueryCondition("geonameID", Arrays.asList(3178229, 1680243)));
         conditions.add(new QueryCondition("name", "Unzad"));
 
-        CityRecord[] cities = dat.dataQuery.getCityBy(conditions);
+        CityRecord[] cities = dat.getCityBy(conditions);
         for (CityRecord cityRecord : cities) {
             System.out.println(cityRecord.toString());
         }

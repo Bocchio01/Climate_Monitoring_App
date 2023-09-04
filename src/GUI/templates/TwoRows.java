@@ -1,8 +1,8 @@
-package src.utils.templates;
+package src.GUI.templates;
 
 import javax.swing.*;
 
-import src.utils.Theme;
+import src.GUI.Theme;
 
 import java.awt.*;
 

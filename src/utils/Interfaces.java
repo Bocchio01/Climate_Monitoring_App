@@ -3,6 +3,8 @@ package src.utils;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import src.GUI.GUI;
+
 public class Interfaces {
 
     public interface CityRecord {

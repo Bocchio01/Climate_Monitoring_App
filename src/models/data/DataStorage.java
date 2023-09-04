@@ -2,6 +2,7 @@ package src.models.data;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import src.utils.ENV;
 import src.models.file.FileHandler;
@@ -141,7 +142,7 @@ public class DataStorage {
                         line[4],
                         line[5],
                         line[6],
-                        Arrays.stream(line[7].split(ENV.CSV_SUB_SEPARATOR)).map(Integer::parseInt)
+                        Arrays.stream(line[7].split(Pattern.quote(ENV.CSV_SUB_SEPARATOR))).map(Integer::parseInt)
                                 .toArray(Integer[]::new));
             }
 
@@ -171,8 +172,10 @@ public class DataStorage {
                 List<WeatherData> weatherDataList = new ArrayList<>();
 
                 for (int j = 4; j < line.length; j++) {
-                    String[] data = line[j].split(ENV.CSV_SUB_SEPARATOR);
-                    weatherDataList.add(new WeatherRecord.WeatherData(Integer.parseInt(data[0]), data[1]));
+                    String[] data = line[j].split(Pattern.quote(ENV.CSV_SUB_SEPARATOR));
+                    weatherDataList.add(new WeatherRecord.WeatherData(
+                            data[0].equals(ENV.EMPTY_STRING) ? null : Integer.parseInt(data[0]),
+                            data[1]));
                 }
 
                 weatherDatas[i - 1] = new WeatherRecord(

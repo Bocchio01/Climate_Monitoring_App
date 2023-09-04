@@ -1,24 +1,24 @@
-package src.GUI;
+package src.GUI.panels;
 
 import javax.swing.*;
 
-import src.GUI.city.CityQuery;
-import src.GUI.operator.OperatorHome;
+import src.GUI.GUI;
+import src.GUI.templates.TwoRows;
+import src.GUI.templates.Widget;
 import src.models.MainModel;
-import src.utils.GUI;
 import src.utils.Interfaces;
-import src.utils.Widget;
-import src.utils.templates.TwoRows;
 
 public class Home extends TwoRows implements Interfaces.UIPanel {
 
     public static String ID = "Home";
     private GUI gui;
+    private MainModel mainModel;
 
     private JButton buttonToFind = new Widget.Button("Cerca e visualizza dati");
     private JButton buttonToOperator = new Widget.Button("Gestisci area operatore");
 
-    public Home() {
+    public Home(MainModel mainModel) {
+        this.mainModel = mainModel;
     }
 
     private void addActionEvent() {
@@ -57,7 +57,7 @@ public class Home extends TwoRows implements Interfaces.UIPanel {
         SwingUtilities.invokeLater(() -> {
             MainModel mainModel = new MainModel();
             GUI gui = new GUI(mainModel);
-            Home home = new Home();
+            Home home = new Home(mainModel);
 
             gui.addPanel(home.createPanel(gui));
             home.onOpen(args);

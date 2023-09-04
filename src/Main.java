@@ -1,8 +1,8 @@
 package src;
 
-import src.GUI.Loading;
+import src.GUI.GUI;
+import src.GUI.panels.Loading;
 import src.models.MainModel;
-import src.utils.GUI;
 
 class Main {
 
@@ -20,18 +20,21 @@ class Main {
     }
 
     public void lauchCMD(String[] args) {
+        // cmd = new CMD(mainModel);
+        // cmd.run(args);
+        // CityRecord city = mainModel.dataHandler.dataQuery.getCityBy(3178229);
+        // System.out.println(city);
     }
 
     public static void main(String[] args) {
         Main mainIstance = new Main();
-        mainIstance.lauchGUI();
 
-        // if (args.length == 0) {
-        // mainIstance.lauchGUI();
-        // } else {
-        // // TODO: Add command line arguments
-        // mainIstance.lauchCMD(args);
-        // }
+        if (args.length == 0) {
+            mainIstance.lauchGUI();
+        } else {
+            mainIstance.lauchCMD(args);
+            // TODO: Add command line arguments
+        }
     }
 
 }

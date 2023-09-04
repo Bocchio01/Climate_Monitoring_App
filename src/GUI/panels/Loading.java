@@ -1,26 +1,28 @@
-package src.GUI;
+package src.GUI.panels;
 
 import java.awt.*;
 
 import javax.swing.*;
 
+import src.GUI.GUI;
+import src.GUI.Theme;
+import src.GUI.templates.TwoRows;
+import src.GUI.templates.Widget;
 import src.models.MainModel;
 import src.utils.ENV;
-import src.utils.GUI;
 import src.utils.Interfaces;
-import src.utils.Theme;
-import src.utils.Widget;
-import src.utils.templates.TwoRows;
 
 public class Loading extends TwoRows implements Interfaces.UIPanel {
 
     public static String ID = "Loading";
     private GUI gui;
+    private MainModel mainModel;
 
     private JLabel labelAppName = new JLabel();
     private Timer timer;
 
-    public Loading() {
+    public Loading(MainModel mainModel) {
+        this.mainModel = mainModel;
     }
 
     public void runAnimation() {
@@ -68,7 +70,7 @@ public class Loading extends TwoRows implements Interfaces.UIPanel {
         SwingUtilities.invokeLater(() -> {
             MainModel mainModel = new MainModel();
             GUI gui = new GUI(mainModel);
-            Loading loading = new Loading();
+            Loading loading = new Loading(mainModel);
 
             gui.addPanel(loading.createPanel(gui));
             loading.onOpen(args);

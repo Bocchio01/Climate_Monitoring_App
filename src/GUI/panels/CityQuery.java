@@ -1,15 +1,14 @@
-package src.GUI.city;
+package src.GUI.panels;
 
 import javax.swing.*;
 
-import src.logics.CityFunctions;
+import src.GUI.GUI;
+import src.GUI.templates.TwoColumns;
+import src.GUI.templates.Widget;
 import src.models.MainModel;
 import src.models.data.DataQuery.QueryCondition;
 import src.models.record.CityRecord;
-import src.utils.GUI;
 import src.utils.Interfaces;
-import src.utils.Widget;
-import src.utils.templates.TwoColumns;
 
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -19,6 +18,7 @@ public class CityQuery extends TwoColumns implements Interfaces.UIPanel {
 
     public static String ID = "CityQuery";
     private GUI gui;
+    private MainModel mainModel;
 
     private JTextField textfieldCityName = new JTextField();
     private JTextField textfieldLatitude = new JTextField();
@@ -26,7 +26,8 @@ public class CityQuery extends TwoColumns implements Interfaces.UIPanel {
     private JButton buttonPerfomQuery = new Widget.Button("Cerca dati città");
     private JComboBox<String> comboboxQueryType = new JComboBox<String>();
 
-    public CityQuery() {
+    public CityQuery(MainModel mainModel) {
+        this.mainModel = mainModel;
     }
 
     public void addActionEvent() {
@@ -60,50 +61,55 @@ public class CityQuery extends TwoColumns implements Interfaces.UIPanel {
 
         buttonPerfomQuery.addActionListener(e -> {
 
+            CityRecord[] result = null;
+            List<QueryCondition> conditions = new ArrayList<>();
+
             switch (comboboxQueryType.getSelectedIndex()) {
                 case 0:
                     String cityName = textfieldCityName.getText();
 
-                    List<QueryCondition> conditions = new ArrayList<>();
                     conditions.add(new QueryCondition("name", cityName));
-
-                    CityRecord[] result = gui.mainModel.dataHandler.dataQuery.getCityBy(conditions);
-                    if (result.length == 1) {
-                        gui.goToPanel(CityVisualizer.ID, new Object[] { result[0].ID() });
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                this,
-                                "La città inserita non è presente nel database.",
-                                "Città non trovata",
-                                JOptionPane.WARNING_MESSAGE);
-                    }
+                    result = mainModel.data.getCityBy(conditions);
                     break;
 
                 case 1:
-                    Integer cityID = CityFunctions.getCityIDByCoords(
-                            textfieldLatitude.getText(),
-                            textfieldLongitude.getText());
+                    Double latitude = Double.parseDouble(textfieldLatitude.getText().replace(',', '.'));
+                    Double longitude = Double.parseDouble(textfieldLongitude.getText().replace(',', '.'));
 
-                    if (cityID != null) {
-                        gui.goToPanel(CityVisualizer.ID, new Object[] { cityID });
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                this,
-                                "Le coordinate inserite non hanno portato ad alcuna città nel database.",
-                                "Città non trovata",
-                                JOptionPane.WARNING_MESSAGE);
-                    }
+                    conditions.add(new QueryCondition("latitude", latitude));
+                    conditions.add(new QueryCondition("longitude", longitude));
+                    result = mainModel.data.getCityBy(conditions);
                     break;
+            }
 
-                default:
-                    break;
+            if (result.length > 1) {
+                CityRecord selectedCity = (CityRecord) JOptionPane.showInputDialog(
+                        this,
+                        "Sono state trovate più città con lo stesso nome. Seleziona quella desiderata.",
+                        "Città trovate",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        result,
+                        result[0]);
+                if (selectedCity != null)
+                    gui.goToPanel(CityVisualizer.ID, new Object[] { selectedCity.ID() });
+
+            } else if (result.length == 1) {
+                gui.goToPanel(CityVisualizer.ID, new Object[] { result[0].ID() });
+
+            } else {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "La città inserita non è presente nel database.",
+                        "Città non trovata",
+                        JOptionPane.WARNING_MESSAGE);
             }
         });
 
         comboboxQueryType.addActionListener(e -> {
-            textfieldCityName.setText("");
-            textfieldLatitude.setText("");
-            textfieldLongitude.setText("");
+            // textfieldCityName.setText("");
+            // textfieldLatitude.setText("");
+            // textfieldLongitude.setText("");
 
             if (comboboxQueryType.getSelectedIndex() == 0) {
                 textfieldCityName.setEnabled(true);
@@ -148,20 +154,26 @@ public class CityQuery extends TwoColumns implements Interfaces.UIPanel {
 
     @Override
     public void onOpen(Object[] args) {
-        comboboxQueryType.setSelectedIndex(0);
-        textfieldCityName.setText("");
-        textfieldLatitude.setText("");
-        textfieldLongitude.setText("");
+        // comboboxQueryType.setSelectedIndex(0);
+        // textfieldCityName.setText("");
+        // textfieldLatitude.setText("");
+        // textfieldLongitude.setText("");
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             MainModel mainModel = new MainModel();
             GUI gui = new GUI(mainModel);
-            CityQuery cityQuery = new CityQuery();
+            CityQuery cityQuery = new CityQuery(mainModel);
 
             gui.addPanel(cityQuery.createPanel(gui));
             cityQuery.onOpen(args);
+
+            cityQuery.comboboxQueryType.setSelectedIndex(1);
+            cityQuery.textfieldLatitude.setText("45,80819");
+            cityQuery.textfieldLongitude.setText("9,0832");
+            cityQuery.buttonPerfomQuery.doClick();
+
         });
     }
 

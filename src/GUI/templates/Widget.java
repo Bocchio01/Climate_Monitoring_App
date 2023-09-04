@@ -1,4 +1,4 @@
-package src.utils;
+package src.GUI.templates;
 
 import java.awt.Cursor;
 import java.awt.GridBagConstraints;
@@ -14,6 +14,12 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import src.GUI.Theme;
+import src.utils.ENV;
+import src.utils.ENV.GUI;
+import src.utils.ENV.Path;
+import src.utils.ENV.Path.Assets;
 
 public class Widget {
 

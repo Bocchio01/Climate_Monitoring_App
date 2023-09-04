@@ -1,4 +1,4 @@
-package src.utils.templates;
+package src.GUI.templates;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
