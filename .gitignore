@@ -1,7 +1,5 @@
-*_test
 *.data.csv
 **/_**
 
-.vscode
 .vscode/launch.json
 TODO
