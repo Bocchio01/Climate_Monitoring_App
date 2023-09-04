@@ -40,6 +40,9 @@ public class OperatorHome extends TwoRows implements Interfaces.UIPanel {
         addBottom(buttonToRegistration);
         addBottom(buttonToLogin);
 
+        gui.appTheme.registerPanel(topPanel);
+        gui.appTheme.registerPanel(bottomPanel);
+
         addActionEvent();
 
         return this;

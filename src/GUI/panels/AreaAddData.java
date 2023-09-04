@@ -6,7 +6,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
 import src.GUI.GUI;
-import src.GUI.Theme;
 import src.GUI.templates.Widget;
 import src.logics.OperatorFunctions;
 import src.models.data.DataStorage;
@@ -226,16 +225,16 @@ public class AreaAddData extends JPanel implements Interfaces.UIPanel {
         setLayout(new BorderLayout());
 
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        topPanel.add(new Widget.FormPanel("Area operatore", textfieldAreaName));
-        topPanel.add(new Widget.FormPanel("Città selezionata", comboboxCityName));
-        topPanel.add(new Widget.FormPanel("Data rilevazione", textfieldDate));
+        topPanel.add(new Widget.FormPanel(gui.appTheme, "Area operatore", textfieldAreaName));
+        topPanel.add(new Widget.FormPanel(gui.appTheme, "Città selezionata", comboboxCityName));
+        topPanel.add(new Widget.FormPanel(gui.appTheme, "Data rilevazione", textfieldDate));
         // topPanel.add(new JSeparator());
 
         add(topPanel, BorderLayout.NORTH);
         add(table, BorderLayout.CENTER);
         add(buttonPerformSave, BorderLayout.SOUTH);
 
-        Theme.registerPanel(topPanel);
+        gui.appTheme.registerPanel(topPanel);
 
         addActionEvent();
 

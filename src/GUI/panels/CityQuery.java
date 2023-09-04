@@ -136,11 +136,14 @@ public class CityQuery extends TwoColumns implements Interfaces.UIPanel {
         comboboxQueryType.setModel(new DefaultComboBoxModel<>(comboboxValues));
 
         addLeft(new Widget.LogoLabel());
-        addRight(new Widget.FormPanel("Tipo di ricerca", comboboxQueryType));
-        addRight(new Widget.FormPanel("Città", textfieldCityName));
-        addRight(new Widget.FormPanel("Latitudine", textfieldLatitude));
-        addRight(new Widget.FormPanel("Longitudine", textfieldLongitude));
+        addRight(new Widget.FormPanel(gui.appTheme, "Tipo di ricerca", comboboxQueryType));
+        addRight(new Widget.FormPanel(gui.appTheme, "Città", textfieldCityName));
+        addRight(new Widget.FormPanel(gui.appTheme, "Latitudine", textfieldLatitude));
+        addRight(new Widget.FormPanel(gui.appTheme, "Longitudine", textfieldLongitude));
         addRight(buttonPerfomQuery);
+
+        gui.appTheme.registerPanel(leftPanel);
+        gui.appTheme.registerPanel(rightPanel);
 
         addActionEvent();
 

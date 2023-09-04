@@ -2,8 +2,6 @@ package src.GUI.templates;
 
 import javax.swing.*;
 
-import src.GUI.Theme;
-
 import java.awt.*;
 
 public abstract class TwoRows extends JPanel {
@@ -39,9 +37,6 @@ public abstract class TwoRows extends JPanel {
 
         add(topPanel, mainPanelConstrains);
         add(bottomPanel, mainPanelConstrains);
-
-        Theme.registerPanel(topPanel);
-        Theme.registerPanel(bottomPanel);
 
     }
 

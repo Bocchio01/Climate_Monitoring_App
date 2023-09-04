@@ -29,10 +29,11 @@ import src.utils.Interfaces.UIWindows;
 public class GUI {
 
     private MainModel mainModel;
+    public Theme appTheme = new Theme();
 
-    public CardLayout cardLayout = new CardLayout();
-    public JFrame mainFrame = new MainFrame();
-    public Interfaces.UIWindows mainWindowsArea = new MainWindows(cardLayout);
+    private CardLayout cardLayout = new CardLayout();
+    private JFrame mainFrame = new MainFrame();
+    private Interfaces.UIWindows mainWindowsArea = new MainWindows(cardLayout);
     private Map<String, Interfaces.UIPanel> Panels = new HashMap<>();
     private String currentID;
 
@@ -83,8 +84,8 @@ public class GUI {
         Panels.put(Panel.getID(), Panel);
         mainWindowsArea.getContentPanel().add((Component) Panel, Panel.getID());
 
-        Theme.registerPanel((JPanel) Panel);
-        Theme.applyTheme();
+        appTheme.registerPanel((JPanel) Panel);
+        appTheme.applyTheme();
     }
 
     public Interfaces.UIPanel getUIPanel(String ID) {

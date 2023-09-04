@@ -5,7 +5,6 @@ import java.awt.*;
 import javax.swing.*;
 
 import src.GUI.GUI;
-import src.GUI.Theme;
 import src.GUI.templates.TwoRows;
 import src.GUI.templates.Widget;
 import src.models.MainModel;
@@ -51,7 +50,9 @@ public class Loading extends TwoRows implements Interfaces.UIPanel {
         addTop(new Widget.LogoLabel(2));
         addBottom(labelAppName);
 
-        Theme.registerLabel(labelAppName);
+        gui.appTheme.registerPanel(topPanel);
+        gui.appTheme.registerPanel(bottomPanel);
+        gui.appTheme.registerLabel(labelAppName);
 
         return this;
     }

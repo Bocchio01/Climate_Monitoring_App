@@ -68,12 +68,15 @@ public class OperatorRegister extends TwoColumns implements Interfaces.UIPanel {
         this.gui = gui;
 
         addLeft(new Widget.LogoLabel());
-        addRight(new Widget.FormPanel("Nome e Cognome", textfieldName));
-        addRight(new Widget.FormPanel("Codice Fiscale", textfieldTaxCode));
-        addRight(new Widget.FormPanel("Email", textfieldEmail));
-        addRight(new Widget.FormPanel("User ID", textfieldUsername));
-        addRight(new Widget.FormPanel("Password", textfieldPassword));
+        addRight(new Widget.FormPanel(gui.appTheme, "Nome e Cognome", textfieldName));
+        addRight(new Widget.FormPanel(gui.appTheme, "Codice Fiscale", textfieldTaxCode));
+        addRight(new Widget.FormPanel(gui.appTheme, "Email", textfieldEmail));
+        addRight(new Widget.FormPanel(gui.appTheme, "User ID", textfieldUsername));
+        addRight(new Widget.FormPanel(gui.appTheme, "Password", textfieldPassword));
         addRight(buttonPerformRegistration);
+
+        gui.appTheme.registerPanel(leftPanel);
+        gui.appTheme.registerPanel(rightPanel);
 
         addActionEvent();
 

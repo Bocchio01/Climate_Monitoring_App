@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "src.Main",
+            "projectName": "Climate_Monitoring_App_4a27388c"
+        },
+        {
+            "type": "java",
             "name": "DataHandler",
             "request": "launch",
             "mainClass": "src.models.data.DataHandler",

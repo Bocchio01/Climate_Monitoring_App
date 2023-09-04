@@ -39,6 +39,9 @@ public class Home extends TwoRows implements Interfaces.UIPanel {
         addBottom(buttonToFind);
         addBottom(buttonToOperator);
 
+        gui.appTheme.registerPanel(topPanel);
+        gui.appTheme.registerPanel(bottomPanel);
+
         addActionEvent();
 
         return this;

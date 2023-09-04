@@ -19,7 +19,11 @@ public class DataQuery {
     }
 
     public CityRecord getCityBy(Integer ID) {
-        return getCityBy(new QueryCondition("ID", ID))[0];
+        CityRecord[] matchingCity = getCityBy(new QueryCondition("ID", ID));
+        if (matchingCity.length > 1)
+        throw new IllegalArgumentException("Multiple cities with same ID");
+        
+        return matchingCity[0]; 
     }
 
     public CityRecord[] getCityBy(QueryCondition condition) {
@@ -36,7 +40,11 @@ public class DataQuery {
     }
 
     public OperatorRecord getOperatorBy(Integer ID) {
-        return getOperatorBy(new QueryCondition("ID", ID))[0];
+        OperatorRecord[] matchingOperator = getOperatorBy(new QueryCondition("ID", ID));
+        if (matchingOperator.length > 1)
+            throw new IllegalArgumentException("Multiple operators with same ID");
+
+        return matchingOperator[0];
     }
 
     public OperatorRecord[] getOperatorBy(QueryCondition condition) {
@@ -53,7 +61,11 @@ public class DataQuery {
     }
 
     public AreaRecord getAreaBy(Integer ID) {
-        return getAreaBy(new QueryCondition("ID", ID))[0];
+        AreaRecord[] matchingArea = getAreaBy(new QueryCondition("ID", ID));
+        if (matchingArea.length > 1)
+            throw new IllegalArgumentException("Multiple areas with same ID");
+
+        return matchingArea[0];
     }
 
     public AreaRecord[] getAreaBy(QueryCondition condition) {
@@ -70,7 +82,11 @@ public class DataQuery {
     }
 
     public WeatherRecord getWeatherBy(Integer ID) {
-        return getWeatherBy(new QueryCondition("ID", ID))[0];
+        WeatherRecord[] matchingWeather = getWeatherBy(new QueryCondition("ID", ID));
+        if (matchingWeather.length > 1)
+            throw new IllegalArgumentException("Multiple weather records with same ID");
+
+        return matchingWeather[0];
     }
 
     public WeatherRecord[] getWeatherBy(QueryCondition condition) {

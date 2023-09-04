@@ -17,15 +17,12 @@ import javax.swing.JPanel;
 
 import src.GUI.Theme;
 import src.utils.ENV;
-import src.utils.ENV.GUI;
-import src.utils.ENV.Path;
-import src.utils.ENV.Path.Assets;
 
 public class Widget {
 
     public static class FormPanel extends JPanel {
 
-        public FormPanel(String labelText, JComponent activeArea) {
+        public FormPanel(Theme appTheme, String labelText, JComponent activeArea) {
             super(new GridBagLayout());
 
             JLabel label = new JLabel(labelText);
@@ -42,8 +39,8 @@ public class Widget {
             gbc.insets = new Insets(0, 5, 5, 5);
             add(activeArea, gbc);
 
-            Theme.registerPanel(this);
-            Theme.registerLabel(label);
+            appTheme.registerPanel(this);
+            appTheme.registerLabel(label);
         }
 
     }

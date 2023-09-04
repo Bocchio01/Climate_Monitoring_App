@@ -9,31 +9,31 @@ import javax.swing.JPanel;
 
 public class Theme {
 
-    private static boolean darkMode = true;
+    private boolean darkMode = true;
     private final static Color lightBlue = new Color(153, 255, 255);
     private final static Color darkGray = new Color(49, 51, 56);
 
-    private static List<JLabel> labels = new ArrayList<>();
-    private static List<JPanel> panels = new ArrayList<>();
+    private List<JLabel> labels = new ArrayList<>();
+    private List<JPanel> panels = new ArrayList<>();
 
-    public static void toggleTheme() {
+    public void toggleTheme() {
         darkMode = !darkMode;
         applyTheme();
     }
 
-    public static boolean isDarkMode() {
+    public boolean isDarkTheme() {
         return darkMode;
     }
 
-    public static void registerLabel(JLabel label) {
+    public void registerLabel(JLabel label) {
         labels.add(label);
     }
 
-    public static void registerPanel(JPanel panel) {
+    public void registerPanel(JPanel panel) {
         panels.add(panel);
     }
 
-    public static void applyTheme() {
+    public void applyTheme() {
 
         for (JLabel label : labels) {
             applyThemeToLabel(label);
@@ -44,16 +44,16 @@ public class Theme {
         }
     }
 
-    public static void applyThemeToPanel(JPanel panel) {
-        if (isDarkMode()) {
+    public void applyThemeToPanel(JPanel panel) {
+        if (isDarkTheme()) {
             panel.setBackground(darkGray);
         } else {
             panel.setBackground(lightBlue);
         }
     }
 
-    public static void applyThemeToLabel(JLabel label) {
-        if (isDarkMode()) {
+    public void applyThemeToLabel(JLabel label) {
+        if (isDarkTheme()) {
             label.setForeground(Color.WHITE);
         } else {
             label.setForeground(Color.BLACK);

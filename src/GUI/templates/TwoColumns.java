@@ -2,8 +2,6 @@ package src.GUI.templates;
 
 import javax.swing.*;
 
-import src.GUI.Theme;
-
 import java.awt.*;
 
 public abstract class TwoColumns extends JPanel {
@@ -39,9 +37,6 @@ public abstract class TwoColumns extends JPanel {
 
         add(leftPanel, mainPanelConstrains);
         add(rightPanel, mainPanelConstrains);
-
-        Theme.registerPanel(leftPanel);
-        Theme.registerPanel(rightPanel);
 
     }
 

@@ -4,14 +4,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.security.auth.login.LoginException;
 import javax.swing.*;
 
 import src.GUI.GUI;
 import src.GUI.templates.TwoColumns;
 import src.GUI.templates.Widget;
 import src.models.MainModel;
-import src.models.data.DataStorage;
 import src.models.record.OperatorRecord;
 import src.utils.Interfaces;
 
@@ -109,9 +107,12 @@ public class OperatorLogin extends TwoColumns implements Interfaces.UIPanel {
         this.gui = gui;
 
         addLeft(new Widget.LogoLabel());
-        addRight(new Widget.FormPanel("ID Utente", textfieldUsedID));
-        addRight(new Widget.FormPanel("Password", textfieldPassword));
+        addRight(new Widget.FormPanel(gui.appTheme, "ID Utente", textfieldUsedID));
+        addRight(new Widget.FormPanel(gui.appTheme, "Password", textfieldPassword));
         addRight(buttonPerformLogin);
+
+        gui.appTheme.registerPanel(leftPanel);
+        gui.appTheme.registerPanel(rightPanel);
 
         addActionEvent();
 

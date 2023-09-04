@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import src.GUI.GUI;
-import src.GUI.Theme;
 import src.GUI.templates.Widget;
 import src.models.MainModel;
 import src.models.data.DataQuery.QueryCondition;
@@ -121,16 +120,16 @@ public class CityVisualizer extends JPanel implements Interfaces.UIPanel {
         setLayout(new BorderLayout());
 
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        topPanel.add(new Widget.FormPanel("Nome città", textfieldCityName));
-        topPanel.add(new Widget.FormPanel("Nome nazione", textfieldCountryName));
-        topPanel.add(new Widget.FormPanel("Latitudine", textfieldLatitude));
-        topPanel.add(new Widget.FormPanel("Longitudine", textfieldLongitude));
+        topPanel.add(new Widget.FormPanel(gui.appTheme, "Nome città", textfieldCityName));
+        topPanel.add(new Widget.FormPanel(gui.appTheme, "Nome nazione", textfieldCountryName));
+        topPanel.add(new Widget.FormPanel(gui.appTheme, "Latitudine", textfieldLatitude));
+        topPanel.add(new Widget.FormPanel(gui.appTheme, "Longitudine", textfieldLongitude));
 
         add(topPanel, BorderLayout.NORTH);
         add(table, BorderLayout.CENTER);
         add(buttonToBack, BorderLayout.SOUTH);
 
-        Theme.registerPanel(topPanel);
+        gui.appTheme.registerPanel(topPanel);
 
         addActionEvent();
 
