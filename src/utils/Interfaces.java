@@ -7,7 +7,7 @@ import src.GUI.GUI;
 
 public class Interfaces {
 
-    public interface CityRecord {
+    public interface RecordCity {
         Integer getID();
 
         String getName();
@@ -25,7 +25,7 @@ public class Interfaces {
         String toString();
     }
 
-    public interface OperatorRecord {
+    public interface RecordOperator {
         Integer getID();
 
         String getNameSurname();
@@ -43,7 +43,7 @@ public class Interfaces {
         String toString();
     }
 
-    public interface AreaRecord {
+    public interface RecordArea {
         Integer getID();
         String getAreaName();
         String getStreetName();
@@ -55,7 +55,7 @@ public class Interfaces {
     }
     
 
-    public interface WeatherRecord {
+    public interface RecordWeather {
         Integer getID();
 
         Integer getAreaID();

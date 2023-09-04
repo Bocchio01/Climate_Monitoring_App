@@ -1,4 +1,4 @@
-package src.GUI.templates;
+package src.GUI.mainElements;
 
 import java.awt.Cursor;
 import java.awt.FlowLayout;
@@ -7,6 +7,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import src.GUI.GUI;
 import src.GUI.panels.AreaAddData;
@@ -15,6 +16,7 @@ import src.GUI.panels.Home;
 import src.GUI.panels.OperatorHome;
 import src.GUI.panels.OperatorLogin;
 import src.GUI.panels.OperatorRegister;
+import src.models.CurrentOperator;
 
 public class MenuBar extends JMenuBar {
 
@@ -28,6 +30,7 @@ public class MenuBar extends JMenuBar {
         JMenuItem itemOperatorLogin = new JMenuItem("Login");
         JMenuItem itemOperatorRegistration = new JMenuItem("Registrazione");
         JMenuItem itemAreaAddData = new JMenuItem("Gestisci area");
+        JMenuItem itemAreaLogout = new JMenuItem("Logout");
 
         JCheckBoxMenuItem itemToggleTheme = new JCheckBoxMenuItem("Tema scuro");
         itemToggleTheme.setSelected(gui.appTheme.isDarkTheme());
@@ -39,6 +42,7 @@ public class MenuBar extends JMenuBar {
                 itemOperatorLogin,
                 itemOperatorRegistration,
                 itemAreaAddData,
+                itemAreaLogout,
                 itemToggleTheme };
 
         itemHome.addActionListener(e -> {
@@ -65,6 +69,18 @@ public class MenuBar extends JMenuBar {
             gui.goToPanel(AreaAddData.ID, null);
         });
 
+        itemAreaLogout.addActionListener(e -> {
+            Integer answer = JOptionPane.showConfirmDialog(
+                this,
+                "Sei sicuro di voler uscire dall'area operatore?",
+                "Logout",
+                JOptionPane.YES_NO_OPTION
+            );
+            if (answer == JOptionPane.YES_OPTION) {
+                CurrentOperator.getInstance().performLogout();
+            }
+        });
+
         itemToggleTheme.addActionListener(e -> {
             gui.appTheme.toggleTheme();
         });
@@ -76,6 +92,7 @@ public class MenuBar extends JMenuBar {
         submenuOperator.add(itemOperatorLogin);
         submenuOperator.add(itemOperatorRegistration);
         submenuOperator.add(itemAreaAddData);
+        submenuOperator.add(itemAreaLogout);
         add(itemToggleTheme);
 
         for (JMenuItem jMenuItem : jMenuItems) {

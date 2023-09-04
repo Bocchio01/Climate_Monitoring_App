@@ -3,39 +3,25 @@ package src.models.logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import src.models.CurrentOperator;
 import src.models.data.DataHandler;
 import src.models.data.DataQuery.QueryCondition;
-import src.models.record.OperatorRecord;
+import src.models.record.RecordOperator;
 
 public class LogicOperator {
 
-    private OperatorRecord currentOperator = null;
     private DataHandler dataHandler;
 
     public LogicOperator(DataHandler dataHandler) {
         this.dataHandler = dataHandler;
     }
 
-    private void setCurrentOperator(OperatorRecord operator) {
-        currentOperator = operator;
-    }
-
-    public OperatorRecord getCurrentOperator() {
-        return currentOperator;
-    }
-
-    public boolean isUserLogged() {
-        return currentOperator != null;
-    }
-
-    public void performLogout() {
-        setCurrentOperator(null);
-    }
-
     public void performLogin(String username, String password) {
 
-        if (isUserLogged()) {
-            performLogout();
+        CurrentOperator currentOperator = CurrentOperator.getInstance();
+
+        if (currentOperator.isUserLogged()) {
+            currentOperator.performLogout();
         }
 
         if (username.isEmpty() || password.isEmpty()) {
@@ -46,11 +32,11 @@ public class LogicOperator {
         conditions.add(new QueryCondition("username", username));
         conditions.add(new QueryCondition("password", password));
 
-        OperatorRecord[] result = dataHandler.getOperatorBy(conditions);
+        RecordOperator[] result = dataHandler.getOperatorBy(conditions);
         if (result.length == 1) {
-            setCurrentOperator(result[0]);
+            currentOperator.setCurrentOperator(result[0]);
         } else {
-            performLogout();
+            currentOperator.performLogout();
             throw new IllegalArgumentException("username or password are incorrect");
         }
     }
@@ -62,8 +48,10 @@ public class LogicOperator {
             String password,
             Integer areaID) {
 
-        if (isUserLogged()) {
-            performLogout();
+        CurrentOperator currentOperator = CurrentOperator.getInstance();
+
+        if (currentOperator.isUserLogged()) {
+            currentOperator.performLogout();
         }
 
         if (!isValidNameSurname(nameSurname))
@@ -77,17 +65,7 @@ public class LogicOperator {
         if (!isValidPassword(password))
             throw new IllegalArgumentException("password!");
 
-        List<QueryCondition> conditions = new ArrayList<>();
-        conditions.add(new QueryCondition("username", username));
-        conditions.add(new QueryCondition("password", password));
-
-        OperatorRecord[] result = dataHandler.getOperatorBy(conditions);
-        if (result.length > 0) {
-            performLogout();
-            throw new IllegalArgumentException("user already exists");
-        }
-
-        OperatorRecord newOperator = dataHandler.addNewRecord(nameSurname,
+        RecordOperator newOperator = dataHandler.addNewRecord(nameSurname,
                 taxCode,
                 email,
                 username,

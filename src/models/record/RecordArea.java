@@ -1,8 +1,11 @@
 package src.models.record;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import src.utils.ENV;
 
-public record AreaRecord(
+public record RecordArea(
         Integer ID,
         String areaName,
         String streetName,
@@ -14,16 +17,20 @@ public record AreaRecord(
 
     @Override
     public String toString() {
+
+            String cityIDsString = Arrays.stream(cityIDs)
+            .map(Object::toString)
+            .collect(Collectors.joining(ENV.CSV_SUB_SEPARATOR));
+
         String[] dataStrings = new String[] {
-                ID.toString(),
+                Integer.toString(ID),
                 areaName,
                 streetName,
                 streetNumber,
                 CAP,
                 townName,
                 districtName,
-                String.join(ENV.CSV_SUB_SEPARATOR, cityIDs.toString())
-        };
+                cityIDsString};
 
         return String.join(ENV.CSV_SEPARATOR, dataStrings);
     }

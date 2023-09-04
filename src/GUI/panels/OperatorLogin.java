@@ -7,10 +7,10 @@ import java.awt.event.KeyListener;
 import javax.swing.*;
 
 import src.GUI.GUI;
-import src.GUI.templates.TwoColumns;
-import src.GUI.templates.Widget;
+import src.GUI.Widget;
+import src.GUI.layouts.TwoColumns;
+import src.models.CurrentOperator;
 import src.models.MainModel;
-import src.models.record.OperatorRecord;
 import src.utils.Interfaces;
 
 public class OperatorLogin extends TwoColumns implements Interfaces.UIPanel {
@@ -56,9 +56,9 @@ public class OperatorLogin extends TwoColumns implements Interfaces.UIPanel {
             try {
                 mainModel.logicOperator.performLogin(userID, userPassword);
 
-                OperatorRecord currentOperator = mainModel.logicOperator.getCurrentOperator();
+                CurrentOperator currentOperator = CurrentOperator.getInstance();
 
-                if (currentOperator.areaID() == null) {
+                if (currentOperator.getCurrentOperator().areaID() == null) {
                     Integer response = JOptionPane.showConfirmDialog(
                             null,
                             "Ancora non hai creato la tua area. Vuoi crearla ora?",
@@ -126,20 +126,22 @@ public class OperatorLogin extends TwoColumns implements Interfaces.UIPanel {
 
     @Override
     public void onOpen(Object[] args) {
-        if(mainModel.logicOperator.isUserLogged()) {
+        CurrentOperator currentOperator = CurrentOperator.getInstance();
+
+        if(currentOperator.isUserLogged()) {
             Integer response = JOptionPane.showConfirmDialog(
                     null,
-                    "Risulti già loggato con UserName: " + mainModel.logicOperator.getCurrentOperator().username() + "\n"
+                    "Risulti già loggato con UserName: " + currentOperator.getCurrentOperator().username() + "\n"
                             + "Proseguire?",
                     "Utente già loggato",
                     JOptionPane.YES_NO_OPTION);
 
             if (response == JOptionPane.YES_OPTION) {
-                textfieldUsedID.setText(mainModel.logicOperator.getCurrentOperator().username());
-                textfieldPassword.setText(mainModel.logicOperator.getCurrentOperator().password());
+                textfieldUsedID.setText(currentOperator.getCurrentOperator().username());
+                textfieldPassword.setText(currentOperator.getCurrentOperator().password());
                 buttonPerformLogin.doClick();
             } else {
-                mainModel.logicOperator.performLogout();
+                currentOperator.performLogout();
             }
         }
     }

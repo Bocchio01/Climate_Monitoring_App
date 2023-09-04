@@ -4,6 +4,7 @@ import src.models.data.DataHandler;
 import src.models.data.DataStorage;
 import src.models.file.FileHandler;
 import src.models.logic.LogicArea;
+import src.models.logic.LogicCity;
 import src.models.logic.LogicOperator;
 
 public class MainModel {
@@ -15,6 +16,7 @@ public class MainModel {
 
     public LogicOperator logicOperator;
     public LogicArea logicArea;
+    public LogicCity logicCity;
 
 
     public MainModel() {
@@ -26,6 +28,8 @@ public class MainModel {
         logicOperator = new LogicOperator(data);
 
         logicArea = new LogicArea(data);
+
+        logicCity = new LogicCity(data);
 
     }
 }

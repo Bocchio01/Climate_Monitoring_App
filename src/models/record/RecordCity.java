@@ -2,7 +2,7 @@ package src.models.record;
 
 import src.utils.ENV;
 
-public record CityRecord(
+public record RecordCity(
         Integer ID,
         String name,
         String ASCIIName,

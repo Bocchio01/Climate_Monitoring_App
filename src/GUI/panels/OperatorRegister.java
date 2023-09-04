@@ -3,8 +3,9 @@ package src.GUI.panels;
 import javax.swing.*;
 
 import src.GUI.GUI;
-import src.GUI.templates.TwoColumns;
-import src.GUI.templates.Widget;
+import src.GUI.Widget;
+import src.GUI.layouts.TwoColumns;
+import src.models.CurrentOperator;
 import src.models.MainModel;
 import src.utils.Interfaces;
 
@@ -90,7 +91,8 @@ public class OperatorRegister extends TwoColumns implements Interfaces.UIPanel {
 
     @Override
     public void onOpen(Object[] args) {
-        mainModel.logicOperator.performLogout();
+        CurrentOperator currentOperator = CurrentOperator.getInstance();
+        currentOperator.performLogout();
     }
 
     public static void main(String[] args) {

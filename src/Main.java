@@ -22,7 +22,7 @@ class Main {
     public void lauchCMD(String[] args) {
         // cmd = new CMD(mainModel);
         // cmd.run(args);
-        // CityRecord city = mainModel.dataHandler.dataQuery.getCityBy(3178229);
+        // RecordCity city = mainModel.dataHandler.dataQuery.getCityBy(3178229);
         // System.out.println(city);
     }
 

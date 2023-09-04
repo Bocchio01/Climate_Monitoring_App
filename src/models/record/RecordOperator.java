@@ -2,7 +2,7 @@ package src.models.record;
 
 import src.utils.ENV;
 
-public record OperatorRecord(
+public record RecordOperator(
         Integer ID,
         String nameSurname,
         String taxCode,

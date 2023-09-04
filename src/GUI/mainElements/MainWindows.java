@@ -1,9 +1,7 @@
-package src.GUI.templates;
+package src.GUI.mainElements;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,6 +9,10 @@ import javax.swing.JScrollPane;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
+import src.models.CurrentOperator;
+import src.models.CurrentOperator.CurrentUserChangeListener;
+import src.models.record.RecordOperator;
+import src.utils.Functions;
 import src.utils.Interfaces;
 
 public class MainWindows extends JPanel implements Interfaces.UIWindows {
@@ -39,12 +41,20 @@ public class MainWindows extends JPanel implements Interfaces.UIWindows {
         add(scrollPane, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
 
-        new Timer(1000, e -> setHour()).start();
-    }
+        new Timer(1000, e -> {
+            String dateTime = Functions.getCurrentTimeDateString();
+            labelCurrentData.setText(dateTime);
+        }).start();
 
-    public void setHour() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-        labelCurrentData.setText(dateFormat.format(new Date()));
+        CurrentOperator.getInstance().addCurrentUserChangeListener(new CurrentUserChangeListener() {
+            @Override
+            public void onCurrentUserChange(RecordOperator newOperator) {
+                if (newOperator == null)
+                    setAppInfo("Operatore: /");
+                else
+                    setAppInfo("Operatore: " + newOperator.username());
+            }
+        });
     }
 
     @Override

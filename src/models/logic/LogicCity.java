@@ -5,10 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import src.models.record.WeatherRecord;
-import src.models.record.WeatherRecord.WeatherData;
+import src.models.data.DataHandler;
+import src.models.record.RecordWeather;
+import src.models.record.RecordWeather.WeatherData;
 
 public class LogicCity {
+
+    private DataHandler dataHandler;
+
+    public LogicCity(DataHandler dataHandler) {
+        this.dataHandler = dataHandler;
+    }
 
     public static class WeatherTableData {
 
@@ -25,8 +32,8 @@ public class LogicCity {
         private Map<String, Integer> categoryRecordCounts = new HashMap<>();
         private Map<String, List<String>> categoryComments = new HashMap<>();
 
-        public WeatherTableData(WeatherRecord[] weatherRecords) {
-            for (WeatherRecord record : weatherRecords) {
+        public WeatherTableData(RecordWeather[] weatherRecords) {
+            for (RecordWeather record : weatherRecords) {
                 processCategory(record.wind(), keys[0]);
                 processCategory(record.humidity(), keys[1]);
                 processCategory(record.pressure(), keys[2]);
@@ -42,6 +49,11 @@ public class LogicCity {
 
                 categoryScore.put(category, categoryScore.getOrDefault(category, 0f) + data.score());
                 categoryRecordCounts.put(category, categoryRecordCounts.getOrDefault(category, 0) + 1);
+
+            }
+
+            if (data.comment() != null) {
+
                 List<String> comments = categoryComments.getOrDefault(category, new ArrayList<>());
                 comments.add(data.comment());
                 categoryComments.put(category, comments);

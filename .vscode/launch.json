@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "_SimpleTable",
+            "request": "launch",
+            "mainClass": "_SimpleTable",
+            "projectName": "Climate_Monitoring_App_4a27388c"
+        },
+        {
+            "type": "java",
+            "name": "AreaAddData",
+            "request": "launch",
+            "mainClass": "src.GUI.panels.AreaAddData",
+            "projectName": "Climate_Monitoring_App_4a27388c"
+        },
+        {
+            "type": "java",
+            "name": "AreaCreateNew",
+            "request": "launch",
+            "mainClass": "src.GUI.panels.AreaCreateNew",
+            "projectName": "Climate_Monitoring_App_4a27388c"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "src.Main",

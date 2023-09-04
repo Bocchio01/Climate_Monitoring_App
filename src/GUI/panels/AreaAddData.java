@@ -6,29 +6,31 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
 import src.GUI.GUI;
-import src.GUI.templates.Widget;
-import src.logics.OperatorFunctions;
-import src.models.data.DataStorage;
-import src.models.logic.AreaFunctions;
+import src.GUI.Widget;
+import src.GUI.Widget.ComboItem;
+import src.models.CurrentOperator;
+import src.models.MainModel;
+import src.models.record.RecordArea;
+import src.models.record.RecordCity;
 import src.utils.ENV;
+import src.utils.Functions;
 import src.utils.Interfaces;
 
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class AreaAddData extends JPanel implements Interfaces.UIPanel {
 
     public static String ID = "AreaAddData";
-    public GUI gui;
+    private GUI gui;
+    private MainModel mainModel;
 
     private static String datePattern = "dd/MM/yyyy";
     private static String dateMask = datePattern.replaceAll("[dMy]", "#");
 
     private JTextField textfieldAreaName = new JTextField();
-    private JComboBox<String> comboboxCityName = new JComboBox<>();
+    private JComboBox<ComboItem> comboboxCityName = new JComboBox<>();
     private JFormattedTextField textfieldDate = new JFormattedTextField();
     private JTable table = new JTable();
     private DefaultTableModel defaulmodelTable = new DefaultTableModel();
@@ -44,7 +46,8 @@ public class AreaAddData extends JPanel implements Interfaces.UIPanel {
             { "Massa dei ghiacciai", "In kg" }
     };
 
-    public AreaAddData() {
+    public AreaAddData(MainModel mainModel) {
+        this.mainModel = mainModel;
     }
 
     private void addActionEvent() {
@@ -61,12 +64,12 @@ public class AreaAddData extends JPanel implements Interfaces.UIPanel {
                 String dateString = textfieldDate.getText();
 
                 if (dateString.equals(dateMask.replace("#", " "))) {
-                    textfieldDate.setText(getCurrentDateString());
+                    textfieldDate.setText(Functions.getCurrentDateString());
                     textfieldDate.setForeground(Color.GRAY);
                     return;
                 }
 
-                if (!AreaFunctions.isDateValid(dateString, datePattern)) {
+                if (!Functions.isDateValid(dateString)) {
                     JOptionPane.showMessageDialog(null,
                             "La data inserita non è corretta.",
                             "Data errata",
@@ -80,11 +83,8 @@ public class AreaAddData extends JPanel implements Interfaces.UIPanel {
 
         buttonPerformSave.addActionListener(e -> {
 
-            boolean allRowsNull = true;
-
-            String insertedDate = textfieldDate.getText(),
-                    nameArea = textfieldAreaName.getText(),
-                    cityName = (String) comboboxCityName.getSelectedItem();
+            Integer cityID = ((ComboItem) comboboxCityName.getSelectedItem()).getValue();
+            String date = textfieldDate.getText();
 
             Object[][] tableData = new Object[defaulmodelTable.getRowCount()][defaulmodelTable.getColumnCount() - 1];
 
@@ -95,45 +95,31 @@ public class AreaAddData extends JPanel implements Interfaces.UIPanel {
                 String commentCell = defaulmodelTable.getValueAt(i, 2).toString();
 
                 tableData[i] = new Object[] {
-                        !scoreCell.isEmpty() ? scoreCell : ENV.EMPTY_STRING,
+                        !scoreCell.isEmpty() ? Integer.parseInt(scoreCell) : null,
                         !commentCell.isEmpty() ? commentCell.trim() : ENV.EMPTY_STRING
                 };
             }
 
-            for (int i = 0; i < tableData.length; i++) {
-                if (tableData[i][0] != ENV.EMPTY_STRING) {
-                    allRowsNull = false;
-                    break;
-                }
-            }
-
-            if (allRowsNull) {
-                JOptionPane.showMessageDialog(this,
-                        "Inserisci almeno un punteggio nella tabella.",
-                        "Valore errato",
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            if (AreaFunctions.saveScoresToFile(AreaFunctions.getCityID(cityName), nameArea, insertedDate, tableData))
+            try {
+                mainModel.logicArea.addDataToArea(
+                        cityID,
+                        date,
+                        tableData);
                 JOptionPane.showMessageDialog(this,
                         "Dati salvati con successo!",
                         "Salvataggio dati",
                         JOptionPane.INFORMATION_MESSAGE);
-            else
+                // gui.goToPanel(OperatorHome.ID, null);
+
+            } catch (Exception exception) {
+                // TODO: handle exception
                 JOptionPane.showMessageDialog(this,
                         "Errore nella scrittura dei dati!",
                         "Errore nel salvataggio dati",
                         JOptionPane.ERROR_MESSAGE);
+            }
         });
 
-    }
-
-    public static String getCurrentDateString() {
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-
-        return currentDate.format(formatter);
     }
 
     public static class IntegerCellEditor extends DefaultCellEditor {
@@ -200,7 +186,7 @@ public class AreaAddData extends JPanel implements Interfaces.UIPanel {
         textfieldAreaName.setEnabled(false);
         textfieldAreaName.setEditable(false);
 
-        textfieldDate.setText(getCurrentDateString());
+        textfieldDate.setText(Functions.getCurrentDateString());
         textfieldDate.setForeground(Color.GRAY);
 
         defaulmodelTable.addColumn("Categoria");
@@ -228,7 +214,6 @@ public class AreaAddData extends JPanel implements Interfaces.UIPanel {
         topPanel.add(new Widget.FormPanel(gui.appTheme, "Area operatore", textfieldAreaName));
         topPanel.add(new Widget.FormPanel(gui.appTheme, "Città selezionata", comboboxCityName));
         topPanel.add(new Widget.FormPanel(gui.appTheme, "Data rilevazione", textfieldDate));
-        // topPanel.add(new JSeparator());
 
         add(topPanel, BorderLayout.NORTH);
         add(table, BorderLayout.CENTER);
@@ -248,18 +233,26 @@ public class AreaAddData extends JPanel implements Interfaces.UIPanel {
 
     @Override
     public void onOpen(Object[] args) {
-        if (OperatorFunctions.isUserLogged()) {
-            String nameArea = OperatorFunctions.getCurrentUserArea();
+        comboboxCityName.removeAllItems();
+        CurrentOperator currentOperator = CurrentOperator.getInstance();
 
-            if (nameArea != null) {
-                Integer[] cityIDs = AreaFunctions.getCityIDInArea(nameArea);
+        if (currentOperator.isUserLogged()) {
+            Integer areaID = currentOperator.getCurrentOperator().areaID();
+
+            RecordArea area = mainModel.data.getAreaBy(areaID);
+
+            if (area != null) {
+
+                Integer[] cityIDs = area.cityIDs();
 
                 for (Integer cityID : cityIDs) {
-                    String cityName = AreaFunctions.getCityName(cityID);
-                    comboboxCityName.addItem(cityName);
+                    RecordCity city = mainModel.data.getCityBy(cityID);
+                    if (city != null) {
+                        comboboxCityName.addItem(new ComboItem(city.name(), city.ID()));
+                    }
                 }
 
-                textfieldAreaName.setText(nameArea);
+                textfieldAreaName.setText(area.areaName());
 
             } else {
                 JOptionPane.showMessageDialog(
@@ -283,11 +276,11 @@ public class AreaAddData extends JPanel implements Interfaces.UIPanel {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
 
-            OperatorFunctions.performLogin(ENV.DefaultData.ID, ENV.DefaultData.PWD);
+            MainModel mainModel = new MainModel();
+            GUI gui = new GUI(mainModel);
+            AreaAddData areaAddData = new AreaAddData(mainModel);
 
-            DataStorage appData = new DataStorage();
-            GUI gui = new GUI(appData);
-            AreaAddData areaAddData = new AreaAddData();
+            mainModel.logicOperator.performLogin(ENV.DefaultData.ID, ENV.DefaultData.PWD);
 
             gui.addPanel(areaAddData.createPanel(gui));
             areaAddData.onOpen(args);

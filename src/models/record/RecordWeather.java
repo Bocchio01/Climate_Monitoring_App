@@ -1,8 +1,9 @@
 package src.models.record;
 
+import src.models.record.RecordWeather.WeatherData;
 import src.utils.ENV;
 
-public record WeatherRecord(
+public record RecordWeather(
         Integer ID,
         Integer cityID,
         Integer areaID,
@@ -40,7 +41,10 @@ public record WeatherRecord(
 
         @Override
         public String toString() {
-            return Integer.toString(score) + ENV.CSV_SUB_SEPARATOR + comment;
+            return (score != null ? Integer.toString(score)
+                    : ENV.EMPTY_STRING) +
+                    ENV.CSV_SUB_SEPARATOR +
+                    comment;
         }
     }
 }

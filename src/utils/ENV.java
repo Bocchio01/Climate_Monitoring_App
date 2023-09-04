@@ -62,7 +62,7 @@ public class ENV {
 
     public static final class GUI {
         public static final Integer FRAME_WIDTH = 1400;
-        public static final Integer FRAME_HEIGHT = 800;
+        public static final Integer FRAME_HEIGHT = 900;
         public static final Dimension WIDGET_DIMENSION = new Dimension(300, 40);
 
         private GUI() {
@@ -73,8 +73,8 @@ public class ENV {
         public static final String NAME = "Tommaso Bocchietti";
         public static final String TAXCODE = "TaxCode_Bocchio";
         public static final String EMAIL = "tommaso.bocchietti@gmail.com";
-        public static final String ID = "ID_Bocchio";
-        public static final String PWD = "PWD_Bocchio";
+        public static final String ID = "ID_Bocchio01";
+        public static final String PWD = "PWD_Bocchio01!";
         public static final String AREA = "Area di Bocchio";
 
         private DefaultData() {

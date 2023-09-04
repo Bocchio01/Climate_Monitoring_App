@@ -8,12 +8,12 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import src.GUI.GUI;
-import src.GUI.templates.Widget;
+import src.GUI.Widget;
 import src.models.MainModel;
 import src.models.data.DataQuery.QueryCondition;
 import src.models.logic.LogicCity.WeatherTableData;
-import src.models.record.CityRecord;
-import src.models.record.WeatherRecord;
+import src.models.record.RecordCity;
+import src.models.record.RecordWeather;
 import src.utils.Interfaces;
 
 public class CityVisualizer extends JPanel implements Interfaces.UIPanel {
@@ -52,14 +52,14 @@ public class CityVisualizer extends JPanel implements Interfaces.UIPanel {
 
     public void loadDatas(Integer cityID) {
 
-        CityRecord cityRecord = mainModel.data.getCityBy(cityID);
-        textfieldCityName.setText(cityRecord.name());
-        textfieldCountryName.setText(cityRecord.countryName());
-        textfieldLatitude.setText(String.valueOf(cityRecord.latitude()));
-        textfieldLongitude.setText(String.valueOf(cityRecord.longitude()));
+        RecordCity RecordCity = mainModel.data.getCityBy(cityID);
+        textfieldCityName.setText(RecordCity.name());
+        textfieldCountryName.setText(RecordCity.countryName());
+        textfieldLatitude.setText(String.valueOf(RecordCity.latitude()));
+        textfieldLongitude.setText(String.valueOf(RecordCity.longitude()));
 
         QueryCondition condition = new QueryCondition("cityID", cityID);
-        WeatherRecord[] weatherRecords = mainModel.data.getWeatherBy(condition);
+        RecordWeather[] weatherRecords = mainModel.data.getWeatherBy(condition);
 
         if (weatherRecords.length > 0) {
 

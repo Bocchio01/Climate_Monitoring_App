@@ -9,6 +9,9 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import src.GUI.mainElements.MainFrame;
+import src.GUI.mainElements.MainWindows;
+import src.GUI.mainElements.MenuBar;
 import src.GUI.panels.AreaAddData;
 import src.GUI.panels.AreaCreateNew;
 import src.GUI.panels.CityQuery;
@@ -18,17 +21,11 @@ import src.GUI.panels.Loading;
 import src.GUI.panels.OperatorHome;
 import src.GUI.panels.OperatorLogin;
 import src.GUI.panels.OperatorRegister;
-import src.GUI.templates.MainFrame;
-import src.GUI.templates.MainWindows;
-import src.GUI.templates.MenuBar;
 import src.models.MainModel;
 import src.utils.Interfaces;
-import src.utils.Interfaces.UIPanel;
-import src.utils.Interfaces.UIWindows;
 
 public class GUI {
 
-    private MainModel mainModel;
     public Theme appTheme = new Theme();
 
     private CardLayout cardLayout = new CardLayout();
@@ -45,11 +42,9 @@ public class GUI {
     private OperatorLogin operatorLoginPanel;
     private OperatorRegister operatorRegisterPanel;
     private AreaCreateNew areaCreateNewPanel;
-    // private AreaAddData areaAddDataPanel = new AreaAddData();
+    private AreaAddData areaAddDataPanel;
 
     public GUI(MainModel mainModel) {
-
-        this.mainModel = mainModel;
 
         mainFrame.setJMenuBar(new MenuBar(this));
         mainFrame.add(mainWindowsArea.getMainPanel(), BorderLayout.CENTER);
@@ -65,6 +60,7 @@ public class GUI {
         operatorLoginPanel = new OperatorLogin(mainModel);
         operatorRegisterPanel = new OperatorRegister(mainModel);
         areaCreateNewPanel = new AreaCreateNew(mainModel);
+        areaAddDataPanel = new AreaAddData(mainModel);
 
     }
 
@@ -77,7 +73,7 @@ public class GUI {
         addPanel(operatorLoginPanel.createPanel(this));
         addPanel(operatorRegisterPanel.createPanel(this));
         addPanel(areaCreateNewPanel.createPanel(this));
-        // addPanel(areaAddDataPanel.createPanel(this));
+        addPanel(areaAddDataPanel.createPanel(this));
     }
 
     public void addPanel(Interfaces.UIPanel Panel) {

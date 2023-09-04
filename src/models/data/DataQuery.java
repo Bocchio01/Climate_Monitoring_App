@@ -5,10 +5,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import src.models.record.CityRecord;
-import src.models.record.OperatorRecord;
-import src.models.record.AreaRecord;
-import src.models.record.WeatherRecord;
+import src.models.record.RecordCity;
+import src.models.record.RecordOperator;
+import src.models.record.RecordArea;
+import src.models.record.RecordWeather;
 
 public class DataQuery {
 
@@ -18,88 +18,88 @@ public class DataQuery {
         this.dataStorage = dataStorage;
     }
 
-    public CityRecord getCityBy(Integer ID) {
-        CityRecord[] matchingCity = getCityBy(new QueryCondition("ID", ID));
+    public RecordCity getCityBy(Integer ID) {
+        RecordCity[] matchingCity = getCityBy(new QueryCondition("ID", ID));
         if (matchingCity.length > 1)
         throw new IllegalArgumentException("Multiple cities with same ID");
         
         return matchingCity[0]; 
     }
 
-    public CityRecord[] getCityBy(QueryCondition condition) {
+    public RecordCity[] getCityBy(QueryCondition condition) {
         ArrayList<QueryCondition> conditions = new ArrayList<>();
         conditions.add(condition);
         return getCityBy(conditions);
     }
 
-    public CityRecord[] getCityBy(List<QueryCondition> conditions) {
-        List<CityRecord> matchingCity = filterData(dataStorage.cityMap.values(),
+    public RecordCity[] getCityBy(List<QueryCondition> conditions) {
+        List<RecordCity> matchingCity = filterData(dataStorage.cityMap.values(),
                 conditions,
                 this::checkCityCondition);
-        return matchingCity.toArray(new CityRecord[0]);
+        return matchingCity.toArray(new RecordCity[0]);
     }
 
-    public OperatorRecord getOperatorBy(Integer ID) {
-        OperatorRecord[] matchingOperator = getOperatorBy(new QueryCondition("ID", ID));
+    public RecordOperator getOperatorBy(Integer ID) {
+        RecordOperator[] matchingOperator = getOperatorBy(new QueryCondition("ID", ID));
         if (matchingOperator.length > 1)
             throw new IllegalArgumentException("Multiple operators with same ID");
 
         return matchingOperator[0];
     }
 
-    public OperatorRecord[] getOperatorBy(QueryCondition condition) {
+    public RecordOperator[] getOperatorBy(QueryCondition condition) {
         ArrayList<QueryCondition> conditions = new ArrayList<>();
         conditions.add(condition);
         return getOperatorBy(conditions);
     }
 
-    public OperatorRecord[] getOperatorBy(List<QueryCondition> conditions) {
-        List<OperatorRecord> matchingOperator = filterData(dataStorage.operatorMap.values(),
+    public RecordOperator[] getOperatorBy(List<QueryCondition> conditions) {
+        List<RecordOperator> matchingOperator = filterData(dataStorage.operatorMap.values(),
                 conditions,
                 this::checkOperatorCondition);
-        return matchingOperator.toArray(new OperatorRecord[0]);
+        return matchingOperator.toArray(new RecordOperator[0]);
     }
 
-    public AreaRecord getAreaBy(Integer ID) {
-        AreaRecord[] matchingArea = getAreaBy(new QueryCondition("ID", ID));
+    public RecordArea getAreaBy(Integer ID) {
+        RecordArea[] matchingArea = getAreaBy(new QueryCondition("ID", ID));
         if (matchingArea.length > 1)
             throw new IllegalArgumentException("Multiple areas with same ID");
 
         return matchingArea[0];
     }
 
-    public AreaRecord[] getAreaBy(QueryCondition condition) {
+    public RecordArea[] getAreaBy(QueryCondition condition) {
         ArrayList<QueryCondition> conditions = new ArrayList<>();
         conditions.add(condition);
         return getAreaBy(conditions);
     }
 
-    public AreaRecord[] getAreaBy(List<QueryCondition> conditions) {
-        List<AreaRecord> matchingArea = filterData(dataStorage.areaMap.values(),
+    public RecordArea[] getAreaBy(List<QueryCondition> conditions) {
+        List<RecordArea> matchingArea = filterData(dataStorage.areaMap.values(),
                 conditions,
                 this::checkAreaCondition);
-        return matchingArea.toArray(new AreaRecord[0]);
+        return matchingArea.toArray(new RecordArea[0]);
     }
 
-    public WeatherRecord getWeatherBy(Integer ID) {
-        WeatherRecord[] matchingWeather = getWeatherBy(new QueryCondition("ID", ID));
+    public RecordWeather getWeatherBy(Integer ID) {
+        RecordWeather[] matchingWeather = getWeatherBy(new QueryCondition("ID", ID));
         if (matchingWeather.length > 1)
             throw new IllegalArgumentException("Multiple weather records with same ID");
 
         return matchingWeather[0];
     }
 
-    public WeatherRecord[] getWeatherBy(QueryCondition condition) {
+    public RecordWeather[] getWeatherBy(QueryCondition condition) {
         ArrayList<QueryCondition> conditions = new ArrayList<>();
         conditions.add(condition);
         return getWeatherBy(conditions);
     }
 
-    public WeatherRecord[] getWeatherBy(List<QueryCondition> conditions) {
-        List<WeatherRecord> matchingWeather = filterData(dataStorage.weatherMap.values(),
+    public RecordWeather[] getWeatherBy(List<QueryCondition> conditions) {
+        List<RecordWeather> matchingWeather = filterData(dataStorage.weatherMap.values(),
                 conditions,
                 this::checkWeatherCondition);
-        return matchingWeather.toArray(new WeatherRecord[0]);
+        return matchingWeather.toArray(new RecordWeather[0]);
     }
 
     private <T> List<T> filterData(Collection<T> data,
@@ -138,7 +138,7 @@ public class DataQuery {
         return matchingData;
     }
 
-    private boolean checkCityCondition(CityRecord city, QueryCondition condition) {
+    private boolean checkCityCondition(RecordCity city, QueryCondition condition) {
 
         String key = condition.getKey();
         Object value = condition.getValue();
@@ -176,7 +176,7 @@ public class DataQuery {
 
     }
 
-    private boolean checkOperatorCondition(OperatorRecord operator, QueryCondition condition) {
+    private boolean checkOperatorCondition(RecordOperator operator, QueryCondition condition) {
 
         String key = condition.getKey();
         Object value = condition.getValue();
@@ -214,7 +214,7 @@ public class DataQuery {
 
     }
 
-    private boolean checkAreaCondition(AreaRecord area, QueryCondition condition) {
+    private boolean checkAreaCondition(RecordArea area, QueryCondition condition) {
 
         String key = condition.getKey();
         Object value = condition.getValue();
@@ -262,7 +262,7 @@ public class DataQuery {
 
     }
 
-    private boolean checkWeatherCondition(WeatherRecord weather, QueryCondition condition) {
+    private boolean checkWeatherCondition(RecordWeather weather, QueryCondition condition) {
 
         String key = condition.getKey();
         Object value = condition.getValue();

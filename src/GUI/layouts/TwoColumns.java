@@ -1,18 +1,18 @@
-package src.GUI.templates;
+package src.GUI.layouts;
 
 import javax.swing.*;
 
 import java.awt.*;
 
-public abstract class TwoRows extends JPanel {
+public abstract class TwoColumns extends JPanel {
 
-    public JPanel topPanel;
-    public JPanel bottomPanel;
+    public JPanel leftPanel;
+    public JPanel rightPanel;
 
     protected GridBagConstraints mainPanelConstrains = new GridBagConstraints() {
         {
-            gridx = 0;
-            gridy = GridBagConstraints.RELATIVE;
+            gridx = GridBagConstraints.RELATIVE;
+            gridy = 0;
             weightx = 1;
             weighty = 1;
             anchor = GridBagConstraints.CENTER;
@@ -30,21 +30,21 @@ public abstract class TwoRows extends JPanel {
         }
     };
 
-    public TwoRows() {
+    public TwoColumns() {
         setLayout(new GridBagLayout());
-        topPanel = new JPanel(new GridBagLayout());
-        bottomPanel = new JPanel(new GridBagLayout());
+        leftPanel = new JPanel(new GridBagLayout());
+        rightPanel = new JPanel(new GridBagLayout());
 
-        add(topPanel, mainPanelConstrains);
-        add(bottomPanel, mainPanelConstrains);
+        add(leftPanel, mainPanelConstrains);
+        add(rightPanel, mainPanelConstrains);
 
     }
 
-    protected void addTop(Component component) {
-        topPanel.add(component, subPanelConstrains);
+    protected void addLeft(Component component) {
+        leftPanel.add(component, subPanelConstrains);
     }
 
-    protected void addBottom(Component component) {
-        bottomPanel.add(component, subPanelConstrains);
+    protected void addRight(Component component) {
+        rightPanel.add(component, subPanelConstrains);
     }
 }

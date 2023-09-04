@@ -3,11 +3,11 @@ package src.GUI.panels;
 import javax.swing.*;
 
 import src.GUI.GUI;
-import src.GUI.templates.TwoColumns;
-import src.GUI.templates.Widget;
+import src.GUI.Widget;
+import src.GUI.layouts.TwoColumns;
 import src.models.MainModel;
 import src.models.data.DataQuery.QueryCondition;
-import src.models.record.CityRecord;
+import src.models.record.RecordCity;
 import src.utils.Interfaces;
 
 import java.awt.event.*;
@@ -61,7 +61,7 @@ public class CityQuery extends TwoColumns implements Interfaces.UIPanel {
 
         buttonPerfomQuery.addActionListener(e -> {
 
-            CityRecord[] result = null;
+            RecordCity[] result = null;
             List<QueryCondition> conditions = new ArrayList<>();
 
             switch (comboboxQueryType.getSelectedIndex()) {
@@ -73,17 +73,25 @@ public class CityQuery extends TwoColumns implements Interfaces.UIPanel {
                     break;
 
                 case 1:
-                    Double latitude = Double.parseDouble(textfieldLatitude.getText().replace(',', '.'));
-                    Double longitude = Double.parseDouble(textfieldLongitude.getText().replace(',', '.'));
+                    try {
+                        Double latitude = Double.parseDouble(textfieldLatitude.getText().replace(',', '.'));
+                        Double longitude = Double.parseDouble(textfieldLongitude.getText().replace(',', '.'));
 
-                    conditions.add(new QueryCondition("latitude", latitude));
-                    conditions.add(new QueryCondition("longitude", longitude));
-                    result = mainModel.data.getCityBy(conditions);
-                    break;
+                        conditions.add(new QueryCondition("latitude", latitude));
+                        conditions.add(new QueryCondition("longitude", longitude));
+                        result = mainModel.data.getCityBy(conditions);
+                    } catch (Exception exception) {
+                        // TODO: handle exception
+                        JOptionPane.showMessageDialog(null,
+                                "Inserisci delle coordinate valide (es. 45,80819 e 9,0832)",
+                                "Coordinate non valide",
+                                JOptionPane.WARNING_MESSAGE);
+                                return;
+                    }
             }
 
             if (result.length > 1) {
-                CityRecord selectedCity = (CityRecord) JOptionPane.showInputDialog(
+                RecordCity selectedCity = (RecordCity) JOptionPane.showInputDialog(
                         this,
                         "Sono state trovate più città con lo stesso nome. Seleziona quella desiderata.",
                         "Città trovate",
@@ -107,10 +115,6 @@ public class CityQuery extends TwoColumns implements Interfaces.UIPanel {
         });
 
         comboboxQueryType.addActionListener(e -> {
-            // textfieldCityName.setText("");
-            // textfieldLatitude.setText("");
-            // textfieldLongitude.setText("");
-
             if (comboboxQueryType.getSelectedIndex() == 0) {
                 textfieldCityName.setEnabled(true);
                 textfieldLatitude.setEnabled(false);
@@ -157,10 +161,7 @@ public class CityQuery extends TwoColumns implements Interfaces.UIPanel {
 
     @Override
     public void onOpen(Object[] args) {
-        // comboboxQueryType.setSelectedIndex(0);
-        // textfieldCityName.setText("");
-        // textfieldLatitude.setText("");
-        // textfieldLongitude.setText("");
+        comboboxQueryType.setSelectedIndex(0);
     }
 
     public static void main(String[] args) {

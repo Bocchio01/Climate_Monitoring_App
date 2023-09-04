@@ -1,4 +1,4 @@
-package src.GUI.templates;
+package src.GUI;
 
 import java.awt.Cursor;
 import java.awt.GridBagConstraints;
@@ -15,7 +15,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import src.GUI.Theme;
 import src.utils.ENV;
 
 public class Widget {
@@ -78,6 +77,25 @@ public class Widget {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public static class ComboItem {
+        private String label;
+        private int value;
+    
+        public ComboItem(String label, int value) {
+            this.label = label;
+            this.value = value;
+        }
+    
+        public int getValue() {
+            return value;
+        }
+    
+        @Override
+        public String toString() {
+            return label;
         }
     }
 }

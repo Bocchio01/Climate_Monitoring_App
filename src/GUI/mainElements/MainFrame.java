@@ -1,4 +1,4 @@
-package src.GUI.templates;
+package src.GUI.mainElements;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import src.GUI.Widget;
 import src.utils.ENV;
 
 public class MainFrame extends JFrame {

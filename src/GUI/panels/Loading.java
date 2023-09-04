@@ -5,8 +5,8 @@ import java.awt.*;
 import javax.swing.*;
 
 import src.GUI.GUI;
-import src.GUI.templates.TwoRows;
-import src.GUI.templates.Widget;
+import src.GUI.Widget;
+import src.GUI.layouts.TwoRows;
 import src.models.MainModel;
 import src.utils.ENV;
 import src.utils.Interfaces;
