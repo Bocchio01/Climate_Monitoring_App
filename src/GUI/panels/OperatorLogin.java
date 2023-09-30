@@ -1,4 +1,4 @@
-package src.GUI.panels;
+package GUI.panels;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -6,12 +6,12 @@ import java.awt.event.KeyListener;
 
 import javax.swing.*;
 
-import src.GUI.GUI;
-import src.GUI.Widget;
-import src.GUI.layouts.TwoColumns;
-import src.models.CurrentOperator;
-import src.models.MainModel;
-import src.utils.Interfaces;
+import GUI.GUI;
+import GUI.Widget;
+import GUI.layouts.TwoColumns;
+import models.CurrentOperator;
+import models.MainModel;
+import utils.Interfaces;
 
 public class OperatorLogin extends TwoColumns implements Interfaces.UIPanel {
 

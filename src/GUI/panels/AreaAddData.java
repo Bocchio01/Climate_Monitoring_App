@@ -1,20 +1,20 @@
-package src.GUI.panels;
+package GUI.panels;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.MaskFormatter;
 
-import src.GUI.GUI;
-import src.GUI.Widget;
-import src.GUI.Widget.ComboItem;
-import src.models.CurrentOperator;
-import src.models.MainModel;
-import src.models.record.RecordArea;
-import src.models.record.RecordCity;
-import src.utils.ENV;
-import src.utils.Functions;
-import src.utils.Interfaces;
+import GUI.GUI;
+import GUI.Widget;
+import GUI.Widget.ComboItem;
+import models.CurrentOperator;
+import models.MainModel;
+import models.record.RecordArea;
+import models.record.RecordCity;
+import utils.ENV;
+import utils.Functions;
+import utils.Interfaces;
 
 import java.awt.*;
 import java.awt.event.FocusEvent;

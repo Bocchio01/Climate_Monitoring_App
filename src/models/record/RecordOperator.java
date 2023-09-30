@@ -1,6 +1,6 @@
-package src.models.record;
+package models.record;
 
-import src.utils.ENV;
+import utils.ENV;
 
 public record RecordOperator(
         Integer ID,

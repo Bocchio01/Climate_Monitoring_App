@@ -1,8 +1,6 @@
-package src;
-
-import src.GUI.GUI;
-import src.GUI.panels.Loading;
-import src.models.MainModel;
+import GUI.GUI;
+import GUI.panels.Loading;
+import models.MainModel;
 
 class Main {
 

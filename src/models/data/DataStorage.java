@@ -1,16 +1,16 @@
-package src.models.data;
+package models.data;
 
 import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
 
-import src.utils.ENV;
-import src.models.file.FileHandler;
-import src.models.record.RecordArea;
-import src.models.record.RecordCity;
-import src.models.record.RecordOperator;
-import src.models.record.RecordWeather;
-import src.models.record.RecordWeather.WeatherData;
+import utils.ENV;
+import models.file.FileHandler;
+import models.record.RecordArea;
+import models.record.RecordCity;
+import models.record.RecordOperator;
+import models.record.RecordWeather;
+import models.record.RecordWeather.WeatherData;
 
 public class DataStorage {
 

@@ -1,4 +1,4 @@
-package src.GUI.panels;
+package GUI.panels;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -7,14 +7,14 @@ import java.text.DecimalFormat;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import src.GUI.GUI;
-import src.GUI.Widget;
-import src.models.MainModel;
-import src.models.data.DataQuery.QueryCondition;
-import src.models.logic.LogicCity.WeatherTableData;
-import src.models.record.RecordCity;
-import src.models.record.RecordWeather;
-import src.utils.Interfaces;
+import GUI.GUI;
+import GUI.Widget;
+import models.MainModel;
+import models.data.DataQuery.QueryCondition;
+import models.logic.LogicCity.WeatherTableData;
+import models.record.RecordCity;
+import models.record.RecordWeather;
+import utils.Interfaces;
 
 public class CityVisualizer extends JPanel implements Interfaces.UIPanel {
 

@@ -1,9 +1,9 @@
-package src.models.record;
+package models.record;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import src.utils.ENV;
+import utils.ENV;
 
 public record RecordArea(
         Integer ID,

@@ -1,4 +1,4 @@
-package src.models.logic;
+package models.logic;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -6,13 +6,13 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.models.CurrentOperator;
-import src.models.data.DataHandler;
-import src.models.record.RecordArea;
-import src.models.record.RecordOperator;
-import src.models.record.RecordWeather;
-import src.models.record.RecordWeather.WeatherData;
-import src.utils.Functions;
+import models.CurrentOperator;
+import models.data.DataHandler;
+import models.record.RecordArea;
+import models.record.RecordOperator;
+import models.record.RecordWeather;
+import models.record.RecordWeather.WeatherData;
+import utils.Functions;
 
 public class LogicArea {
 

@@ -1,12 +1,12 @@
-package src.models.logic;
+package models.logic;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import src.models.CurrentOperator;
-import src.models.data.DataHandler;
-import src.models.data.DataQuery.QueryCondition;
-import src.models.record.RecordOperator;
+import models.CurrentOperator;
+import models.data.DataHandler;
+import models.data.DataQuery.QueryCondition;
+import models.record.RecordOperator;
 
 public class LogicOperator {
 

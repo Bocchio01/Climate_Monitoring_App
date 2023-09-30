@@ -1,13 +1,13 @@
-package src.models.logic;
+package models.logic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import src.models.data.DataHandler;
-import src.models.record.RecordWeather;
-import src.models.record.RecordWeather.WeatherData;
+import models.data.DataHandler;
+import models.record.RecordWeather;
+import models.record.RecordWeather.WeatherData;
 
 public class LogicCity {
 

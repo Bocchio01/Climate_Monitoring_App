@@ -1,4 +1,4 @@
-package src.GUI.panels;
+package GUI.panels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +11,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import src.GUI.GUI;
-import src.GUI.Widget;
-import src.GUI.layouts.TwoColumns;
-import src.models.CurrentOperator;
-import src.models.MainModel;
-import src.models.data.DataQuery.QueryCondition;
-import src.models.record.RecordCity;
-import src.utils.ENV;
-import src.utils.Interfaces;
+import GUI.GUI;
+import GUI.Widget;
+import GUI.layouts.TwoColumns;
+import models.CurrentOperator;
+import models.MainModel;
+import models.data.DataQuery.QueryCondition;
+import models.record.RecordCity;
+import utils.ENV;
+import utils.Interfaces;
 
 public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
 

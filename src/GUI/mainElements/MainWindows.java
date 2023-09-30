@@ -1,4 +1,4 @@
-package src.GUI.mainElements;
+package GUI.mainElements;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -9,11 +9,11 @@ import javax.swing.JScrollPane;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-import src.models.CurrentOperator;
-import src.models.CurrentOperator.CurrentUserChangeListener;
-import src.models.record.RecordOperator;
-import src.utils.Functions;
-import src.utils.Interfaces;
+import models.CurrentOperator;
+import models.CurrentOperator.CurrentUserChangeListener;
+import models.record.RecordOperator;
+import utils.Functions;
+import utils.Interfaces;
 
 public class MainWindows extends JPanel implements Interfaces.UIWindows {
 

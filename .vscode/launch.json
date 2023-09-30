@@ -1,0 +1,86 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+        },
+        {
+            "type": "java",
+            "name": "AreaAddData",
+            "request": "launch",
+            "mainClass": "GUI.panels.AreaAddData",
+        },
+        {
+            "type": "java",
+            "name": "AreaCreateNew",
+            "request": "launch",
+            "mainClass": "GUI.panels.AreaCreateNew",
+        },
+        {
+            "type": "java",
+            "name": "CityQuery",
+            "request": "launch",
+            "mainClass": "GUI.panels.CityQuery",
+        },
+        {
+            "type": "java",
+            "name": "CityVisualizer",
+            "request": "launch",
+            "mainClass": "GUI.panels.CityVisualizer",
+        },
+        {
+            "type": "java",
+            "name": "Home",
+            "request": "launch",
+            "mainClass": "GUI.panels.Home",
+        },
+        {
+            "type": "java",
+            "name": "Loading",
+            "request": "launch",
+            "mainClass": "GUI.panels.Loading",
+        },
+        {
+            "type": "java",
+            "name": "OperatorHome",
+            "request": "launch",
+            "mainClass": "GUI.panels.OperatorHome",
+        },
+        {
+            "type": "java",
+            "name": "OperatorLogin",
+            "request": "launch",
+            "mainClass": "GUI.panels.OperatorLogin",
+        },
+        {
+            "type": "java",
+            "name": "OperatorRegister",
+            "request": "launch",
+            "mainClass": "GUI.panels.OperatorRegister",
+        },
+        {
+            "type": "java",
+            "name": "DataHandler",
+            "request": "launch",
+            "mainClass": "models.data.DataHandler",
+        },
+        {
+            "type": "java",
+            "name": "DataStorage",
+            "request": "launch",
+            "mainClass": "models.data.DataStorage",
+        }
+    ]
+}

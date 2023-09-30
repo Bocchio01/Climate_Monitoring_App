@@ -1,6 +1,6 @@
-package src.models;
+package models;
 
-import src.models.record.RecordOperator;
+import models.record.RecordOperator;
 import java.util.ArrayList;
 import java.util.List;
 

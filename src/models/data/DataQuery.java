@@ -1,14 +1,14 @@
-package src.models.data;
+package models.data;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.BiFunction;
 
-import src.models.record.RecordCity;
-import src.models.record.RecordOperator;
-import src.models.record.RecordArea;
-import src.models.record.RecordWeather;
+import models.record.RecordCity;
+import models.record.RecordOperator;
+import models.record.RecordArea;
+import models.record.RecordWeather;
 
 public class DataQuery {
 

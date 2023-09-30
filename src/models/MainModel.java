@@ -1,11 +1,11 @@
-package src.models;
+package models;
 
-import src.models.data.DataHandler;
-import src.models.data.DataStorage;
-import src.models.file.FileHandler;
-import src.models.logic.LogicArea;
-import src.models.logic.LogicCity;
-import src.models.logic.LogicOperator;
+import models.data.DataHandler;
+import models.data.DataStorage;
+import models.file.FileHandler;
+import models.logic.LogicArea;
+import models.logic.LogicCity;
+import models.logic.LogicOperator;
 
 public class MainModel {
     

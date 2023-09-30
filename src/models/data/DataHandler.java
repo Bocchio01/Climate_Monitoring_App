@@ -1,4 +1,4 @@
-package src.models.data;
+package models.data;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,12 +6,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import src.models.file.FileHandler;
-import src.models.record.RecordArea;
-import src.models.record.RecordCity;
-import src.models.record.RecordOperator;
-import src.models.record.RecordWeather;
-import src.utils.ENV;
+import models.file.FileHandler;
+import models.record.RecordArea;
+import models.record.RecordCity;
+import models.record.RecordOperator;
+import models.record.RecordWeather;
+import utils.ENV;
 
 public class DataHandler extends DataQuery {
 

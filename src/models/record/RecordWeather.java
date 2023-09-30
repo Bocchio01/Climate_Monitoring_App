@@ -1,7 +1,7 @@
-package src.models.record;
+package models.record;
 
-import src.models.record.RecordWeather.WeatherData;
-import src.utils.ENV;
+import models.record.RecordWeather.WeatherData;
+import utils.ENV;
 
 public record RecordWeather(
         Integer ID,

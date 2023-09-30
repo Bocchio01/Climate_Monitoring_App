@@ -1,4 +1,4 @@
-package src.utils;
+package utils;
 
 import java.awt.Dimension;
 import java.nio.file.Paths;
@@ -52,7 +52,7 @@ public class ENV {
             }
 
             private static String getPath(String fileName) {
-                return SEPARATOR + String.join(SEPARATOR, new String[] { "src", "assets", fileName });
+                return SEPARATOR + String.join(SEPARATOR, new String[] { "assets", fileName });
             }
         }
 

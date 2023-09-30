@@ -1,4 +1,4 @@
-package src.GUI;
+package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -9,20 +9,20 @@ import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import src.GUI.mainElements.MainFrame;
-import src.GUI.mainElements.MainWindows;
-import src.GUI.mainElements.MenuBar;
-import src.GUI.panels.AreaAddData;
-import src.GUI.panels.AreaCreateNew;
-import src.GUI.panels.CityQuery;
-import src.GUI.panels.CityVisualizer;
-import src.GUI.panels.Home;
-import src.GUI.panels.Loading;
-import src.GUI.panels.OperatorHome;
-import src.GUI.panels.OperatorLogin;
-import src.GUI.panels.OperatorRegister;
-import src.models.MainModel;
-import src.utils.Interfaces;
+import GUI.mainElements.MainFrame;
+import GUI.mainElements.MainWindows;
+import GUI.mainElements.MenuBar;
+import GUI.panels.AreaAddData;
+import GUI.panels.AreaCreateNew;
+import GUI.panels.CityQuery;
+import GUI.panels.CityVisualizer;
+import GUI.panels.Home;
+import GUI.panels.Loading;
+import GUI.panels.OperatorHome;
+import GUI.panels.OperatorLogin;
+import GUI.panels.OperatorRegister;
+import models.MainModel;
+import utils.Interfaces;
 
 public class GUI {
 

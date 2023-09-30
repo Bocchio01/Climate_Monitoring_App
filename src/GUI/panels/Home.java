@@ -1,12 +1,12 @@
-package src.GUI.panels;
+package GUI.panels;
 
 import javax.swing.*;
 
-import src.GUI.GUI;
-import src.GUI.Widget;
-import src.GUI.layouts.TwoRows;
-import src.models.MainModel;
-import src.utils.Interfaces;
+import GUI.GUI;
+import GUI.Widget;
+import GUI.layouts.TwoRows;
+import models.MainModel;
+import utils.Interfaces;
 
 public class Home extends TwoRows implements Interfaces.UIPanel {
 

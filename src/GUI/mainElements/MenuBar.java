@@ -1,4 +1,4 @@
-package src.GUI.mainElements;
+package GUI.mainElements;
 
 import java.awt.Cursor;
 import java.awt.FlowLayout;
@@ -9,14 +9,14 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import src.GUI.GUI;
-import src.GUI.panels.AreaAddData;
-import src.GUI.panels.CityQuery;
-import src.GUI.panels.Home;
-import src.GUI.panels.OperatorHome;
-import src.GUI.panels.OperatorLogin;
-import src.GUI.panels.OperatorRegister;
-import src.models.CurrentOperator;
+import GUI.GUI;
+import GUI.panels.AreaAddData;
+import GUI.panels.CityQuery;
+import GUI.panels.Home;
+import GUI.panels.OperatorHome;
+import GUI.panels.OperatorLogin;
+import GUI.panels.OperatorRegister;
+import models.CurrentOperator;
 
 public class MenuBar extends JMenuBar {
 
