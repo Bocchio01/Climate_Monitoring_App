@@ -97,7 +97,7 @@ public class LogicOperator {
     }
 
     public boolean isValidPassword(String password) {
-        return password.matches("^(?=.*[A-Z])(?=.*[@#$%^&+=!])(.{8,})$");
+        return password.matches("^(?=.*[A-Z])(?=.*[@#$%^&+=!.])(.{8,})$");
     }
 
 }

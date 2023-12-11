@@ -43,8 +43,8 @@ public class DataHandler extends DataQuery {
         RecordOperator operator = new RecordOperator(
                 generatePrimaryKey(dataStorage.operatorMap),
                 nameSurname,
-                taxCode,
-                email,
+                taxCode.toUpperCase(),
+                email.toLowerCase(),
                 username,
                 password,
                 areaID);
