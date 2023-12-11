@@ -34,7 +34,14 @@ public class LogicOperator {
 
         RecordOperator[] result = dataHandler.getOperatorBy(conditions);
         if (result.length == 1) {
-            currentOperator.setCurrentOperator(result[0]);
+            currentOperator.setCurrentOperator(
+                    new RecordOperator(result[0].ID(),
+                            result[0].nameSurname(),
+                            result[0].taxCode(),
+                            result[0].email(),
+                            result[0].username(),
+                            password,
+                            result[0].areaID()));
         } else {
             currentOperator.performLogout();
             throw new IllegalArgumentException("username or password are incorrect");
@@ -71,7 +78,6 @@ public class LogicOperator {
                 username,
                 password,
                 areaID);
-        // setCurrentOperator(newOperator);
     }
 
     public boolean isValidNameSurname(String nameSurname) {

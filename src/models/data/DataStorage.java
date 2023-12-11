@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
 
-import utils.ENV;
+import utils.Constants;
 import models.file.FileHandler;
 import models.record.RecordArea;
 import models.record.RecordCity;
@@ -48,12 +48,12 @@ public class DataStorage {
         HashMap<Integer, RecordCity> map = new HashMap<>();
 
         try {
-            List<String> lines = FileHandler.readFile(ENV.Path.Files.CITY);
+            List<String> lines = FileHandler.readFile(Constants.Path.Files.CITY);
 
             RecordCity[] cityCoords = new RecordCity[lines.size() - 1];
 
             for (int i = 1; i < lines.size(); i++) {
-                String[] line = lines.get(i).split(ENV.CSV_SEPARATOR);
+                String[] line = lines.get(i).split(Constants.CSV_SEPARATOR);
 
                 if (line.length == 7) {
                     cityCoords[i - 1] = new RecordCity(
@@ -94,12 +94,12 @@ public class DataStorage {
         HashMap<Integer, RecordOperator> map = new HashMap<>();
 
         try {
-            List<String> lines = FileHandler.readFile(ENV.Path.Files.OPERATOR);
+            List<String> lines = FileHandler.readFile(Constants.Path.Files.OPERATOR);
 
             RecordOperator[] operatorDatas = new RecordOperator[lines.size() - 1];
 
             for (int i = 1; i < lines.size(); i++) {
-                String[] line = lines.get(i).split(ENV.CSV_SEPARATOR);
+                String[] line = lines.get(i).split(Constants.CSV_SEPARATOR);
 
                 operatorDatas[i - 1] = new RecordOperator(
                         Integer.parseInt(line[0]),
@@ -108,7 +108,7 @@ public class DataStorage {
                         line[3],
                         line[4],
                         line[5],
-                        line[6].equals(ENV.EMPTY_STRING) ? null : Integer.parseInt(line[6]));
+                        line[6].equals(Constants.EMPTY_STRING) ? null : Integer.parseInt(line[6]));
             }
 
             for (RecordOperator operatorData : operatorDatas) {
@@ -127,12 +127,12 @@ public class DataStorage {
         HashMap<Integer, RecordArea> map = new HashMap<>();
 
         try {
-            List<String> lines = FileHandler.readFile(ENV.Path.Files.AREA);
+            List<String> lines = FileHandler.readFile(Constants.Path.Files.AREA);
 
             RecordArea[] areaDatas = new RecordArea[lines.size() - 1];
 
             for (int i = 1; i < lines.size(); i++) {
-                String[] line = lines.get(i).split(ENV.CSV_SEPARATOR);
+                String[] line = lines.get(i).split(Constants.CSV_SEPARATOR);
 
                 areaDatas[i - 1] = new RecordArea(
                         Integer.parseInt(line[0]),
@@ -142,7 +142,7 @@ public class DataStorage {
                         line[4],
                         line[5],
                         line[6],
-                        Arrays.stream(line[7].split(Pattern.quote(ENV.CSV_SUB_SEPARATOR))).map(Integer::parseInt)
+                        Arrays.stream(line[7].split(Pattern.quote(Constants.CSV_SUB_SEPARATOR))).map(Integer::parseInt)
                                 .toArray(Integer[]::new));
             }
 
@@ -162,20 +162,20 @@ public class DataStorage {
         HashMap<Integer, RecordWeather> map = new HashMap<>();
 
         try {
-            List<String> lines = FileHandler.readFile(ENV.Path.Files.WEATHER);
+            List<String> lines = FileHandler.readFile(Constants.Path.Files.WEATHER);
 
             RecordWeather[] weatherDatas = new RecordWeather[lines.size() - 1];
 
             for (int i = 1; i < lines.size(); i++) {
-                String[] line = lines.get(i).split(ENV.CSV_SEPARATOR);
+                String[] line = lines.get(i).split(Constants.CSV_SEPARATOR);
 
                 List<WeatherData> weatherDataList = new ArrayList<>();
 
                 for (int j = 4; j < line.length; j++) {
-                    String[] data = line[j].split(Pattern.quote(ENV.CSV_SUB_SEPARATOR));
+                    String[] data = line[j].split(Pattern.quote(Constants.CSV_SUB_SEPARATOR));
                     weatherDataList.add(new RecordWeather.WeatherData(
-                            data[0].equals(ENV.EMPTY_STRING) ? null : Integer.parseInt(data[0]),
-                            data[1].equals(ENV.EMPTY_STRING) ? null : data[1]));
+                            data[0].equals(Constants.EMPTY_STRING) ? null : Integer.parseInt(data[0]),
+                            data[1].equals(Constants.EMPTY_STRING) ? null : data[1]));
                 }
 
                 weatherDatas[i - 1] = new RecordWeather(

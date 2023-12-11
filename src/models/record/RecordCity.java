@@ -1,6 +1,6 @@
 package models.record;
 
-import utils.ENV;
+import utils.Constants;
 
 public record RecordCity(
         Integer ID,
@@ -23,6 +23,6 @@ public record RecordCity(
                 String.valueOf(longitude)
         };
 
-        return String.join(ENV.CSV_SEPARATOR, dataStrings);
+        return String.join(Constants.CSV_SEPARATOR, dataStrings);
     }
 }

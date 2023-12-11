@@ -18,7 +18,7 @@ import models.CurrentOperator;
 import models.MainModel;
 import models.data.DataQuery.QueryCondition;
 import models.record.RecordCity;
-import utils.ENV;
+import utils.Constants;
 import utils.Interfaces;
 
 public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
@@ -34,8 +34,6 @@ public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
     private JTextField textfieldTownName = new JTextField();
     private JTextField textfieldDistrictName = new JTextField();
     private JTextField textfieldCityName = new JTextField();
-    // private JButton buttonAddCityName = new Widget.Button("Aggiungi la città
-    // all'area");
     private JButton buttonPerformInit = new Widget.Button("Crea l'area");
 
     private DefaultListModel<String> listmodelCityIDs = new DefaultListModel<>();
@@ -70,12 +68,16 @@ public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
                             result,
                             result[0]);
                     if (selectedCity != null) {
-                        listmodelCityIDs.addElement(selectedCity.toString());
+                        if (containsElement(listmodelCityIDs, selectedCity.toString()) == false) {
+                            listmodelCityIDs.addElement(selectedCity.toString());
+                        }
                         textfieldCityName.setText("");
                     }
 
                 } else if (result.length == 1) {
-                    listmodelCityIDs.addElement(result[0].toString());
+                    if (containsElement(listmodelCityIDs, result[0].toString()) == false) {
+                        listmodelCityIDs.addElement(result[0].toString());
+                    }
                     textfieldCityName.setText("");
                 } else {
                     JOptionPane.showMessageDialog(
@@ -117,7 +119,7 @@ public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
             Integer[] cityIDs = new Integer[listmodelCityIDs.size()];
 
             for (int i = 0; i < listmodelCityIDs.size(); i++) {
-                cityIDs[i] = Integer.parseInt(listmodelCityIDs.get(i).split(ENV.CSV_SEPARATOR)[0]);
+                cityIDs[i] = Integer.parseInt(listmodelCityIDs.get(i).split(Constants.CSV_SEPARATOR)[0]);
             }
 
             try {
@@ -134,7 +136,7 @@ public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
                         "Nuova area inserita",
                         JOptionPane.INFORMATION_MESSAGE);
                 gui.goToPanel(AreaAddData.ID, null);
-                
+
             } catch (Exception exception) {
                 // TODO: handle exception
                 JOptionPane.showMessageDialog(
@@ -146,6 +148,15 @@ public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
         });
     };
 
+    private static boolean containsElement(DefaultListModel<String> model, String element) {
+        for (int i = 0; i < model.size(); i++) {
+            if (model.getElementAt(i).equals(element)) {
+                return true; // Element found
+            }
+        }
+        return false;
+    }
+
     @Override
     public AreaCreateNew createPanel(GUI gui) {
         this.gui = gui;
@@ -153,7 +164,7 @@ public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
         scrollpaneCityInfo.setViewportView(listCityIDs);
         scrollpaneCityInfo.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollpaneCityInfo.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollpaneCityInfo.setPreferredSize(ENV.GUI.WIDGET_DIMENSION);
+        scrollpaneCityInfo.setPreferredSize(Constants.GUI.WIDGET_DIMENSION);
 
         addLeft(new Widget.LogoLabel());
         addRight(new Widget.FormPanel(gui.appTheme, "Nome dell'area", textfieldAreaName));
@@ -211,7 +222,7 @@ public class AreaCreateNew extends TwoColumns implements Interfaces.UIPanel {
             GUI gui = new GUI(mainModel);
             AreaCreateNew areaCreateNew = new AreaCreateNew(mainModel);
 
-            mainModel.logicOperator.performLogin(ENV.DefaultData.ID, ENV.DefaultData.PWD);
+            mainModel.logicOperator.performLogin(Constants.DefaultData.ID, Constants.DefaultData.PWD);
             gui.addPanel(areaCreateNew.createPanel(gui));
             areaCreateNew.onOpen(args);
 

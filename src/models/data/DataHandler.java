@@ -11,7 +11,7 @@ import models.record.RecordArea;
 import models.record.RecordCity;
 import models.record.RecordOperator;
 import models.record.RecordWeather;
-import utils.ENV;
+import utils.Constants;
 
 public class DataHandler extends DataQuery {
 
@@ -55,12 +55,13 @@ public class DataHandler extends DataQuery {
 
         RecordOperator[] result = getOperatorBy(conditions);
         if (result.length > 0) {
-            throw new IllegalArgumentException("user already exists");
+            throw new IllegalArgumentException("User already exists");
         }
 
         try {
-            FileHandler.appendToFile(ENV.Path.Files.OPERATOR, operator.toString());
-            dataStorage.operatorMap.put(operator.ID(), operator);
+            RecordOperator hashedOperator = operator.performHash();
+            FileHandler.appendToFile(Constants.Path.Files.OPERATOR, hashedOperator.toString());
+            dataStorage.operatorMap.put(operator.ID(), hashedOperator);
             return operator;
         } catch (Exception e) {
             // TODO: handle exception
@@ -102,7 +103,7 @@ public class DataHandler extends DataQuery {
         }
 
         try {
-            FileHandler.appendToFile(ENV.Path.Files.AREA, area.toString());
+            FileHandler.appendToFile(Constants.Path.Files.AREA, area.toString());
             dataStorage.areaMap.put(area.ID(), area);
             return area;
         } catch (Exception e) {
@@ -137,7 +138,7 @@ public class DataHandler extends DataQuery {
                 glacierMass);
 
         try {
-            FileHandler.appendToFile(ENV.Path.Files.WEATHER, newWeather.toString());
+            FileHandler.appendToFile(Constants.Path.Files.WEATHER, newWeather.toString());
             dataStorage.weatherMap.put(newWeather.ID(), newWeather);
             return newWeather;
         } catch (Exception e) {
@@ -147,22 +148,23 @@ public class DataHandler extends DataQuery {
     }
 
     public void updateRecord(RecordCity city) {
-        updateRecord(ENV.Path.Files.CITY, city.ID(), city);
+        updateRecord(Constants.Path.Files.CITY, city.ID(), city);
         dataStorage.cityMap.put(city.ID(), city);
     }
 
     public void updateRecord(RecordOperator operator) {
-        updateRecord(ENV.Path.Files.OPERATOR, operator.ID(), operator);
-        dataStorage.operatorMap.put(operator.ID(), operator);
+        RecordOperator hashedOperator = operator.performHash();
+        updateRecord(Constants.Path.Files.OPERATOR, operator.ID(), hashedOperator);
+        dataStorage.operatorMap.put(operator.ID(), hashedOperator);
     }
 
     public void updateRecord(RecordArea area) {
-        updateRecord(ENV.Path.Files.AREA, area.ID(), area);
+        updateRecord(Constants.Path.Files.AREA, area.ID(), area);
         dataStorage.areaMap.put(area.ID(), area);
     }
 
     public void updateRecord(RecordWeather weather) {
-        updateRecord(ENV.Path.Files.WEATHER, weather.ID(), weather);
+        updateRecord(Constants.Path.Files.WEATHER, weather.ID(), weather);
         dataStorage.weatherMap.put(weather.ID(), weather);
     }
 
@@ -171,7 +173,7 @@ public class DataHandler extends DataQuery {
             List<String> lines = FileHandler.readFile(filePath);
 
             for (int i = 1; i < lines.size(); i++) {
-                String[] line = lines.get(i).split(ENV.CSV_SEPARATOR);
+                String[] line = lines.get(i).split(Constants.CSV_SEPARATOR);
 
                 if (Integer.parseInt(line[0]) == ID) {
                     lines.set(i, object.toString());

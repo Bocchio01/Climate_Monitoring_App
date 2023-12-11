@@ -4,13 +4,13 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
-import utils.ENV;
+import utils.Constants;
 
 public class FileHandler {
 
     public FileHandler() {
         try {
-            initFile(ENV.Path.Files.AREA,
+            initFile(Constants.Path.Files.AREA,
                     new String[] {
                             "Area ID",
                             "Area Name",
@@ -21,7 +21,7 @@ public class FileHandler {
                             "District Name",
                             "City IDs" });
 
-            initFile(ENV.Path.Files.WEATHER,
+            initFile(Constants.Path.Files.WEATHER,
                     new String[] {
                             "Record ID",
                             "City ID",
@@ -35,7 +35,7 @@ public class FileHandler {
                             "Glacier elevation",
                             "Mass of glaciers" });
 
-            initFile(ENV.Path.Files.CITY,
+            initFile(Constants.Path.Files.CITY,
                     new String[] {
                             "City ID",
                             "Name",
@@ -45,7 +45,7 @@ public class FileHandler {
                             "Latitude",
                             "Longitude" });
 
-            initFile(ENV.Path.Files.OPERATOR,
+            initFile(Constants.Path.Files.OPERATOR,
                     new String[] {
                             "Operator ID",
                             "Name Surname",
@@ -66,7 +66,7 @@ public class FileHandler {
             file.createNewFile();
 
             FileWriter writer = new FileWriter(file);
-            writer.write(String.join(ENV.CSV_SEPARATOR, fileHeaders) + "\n");
+            writer.write(String.join(Constants.CSV_SEPARATOR, fileHeaders) + "\n");
             writer.close();
         }
     }

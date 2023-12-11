@@ -9,18 +9,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import GUI.Widget;
-import utils.ENV;
+import utils.Constants;
 
 public class MainFrame extends JFrame {
 
     public MainFrame() {
-        setSize(ENV.GUI.FRAME_WIDTH, ENV.GUI.FRAME_HEIGHT);
+        setSize(Constants.GUI.FRAME_WIDTH, Constants.GUI.FRAME_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
 
-        setTitle(ENV.APP_TITLE);
-        setIcon(ENV.Path.Assets.LOGO);
+        setTitle(Constants.APP_TITLE);
+        setIcon(Constants.Path.Assets.LOGO);
         setLayout(new BorderLayout());
     }
 

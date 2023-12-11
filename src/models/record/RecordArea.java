@@ -3,7 +3,7 @@ package models.record;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import utils.ENV;
+import utils.Constants;
 
 public record RecordArea(
         Integer ID,
@@ -20,7 +20,7 @@ public record RecordArea(
 
             String cityIDsString = Arrays.stream(cityIDs)
             .map(Object::toString)
-            .collect(Collectors.joining(ENV.CSV_SUB_SEPARATOR));
+            .collect(Collectors.joining(Constants.CSV_SUB_SEPARATOR));
 
         String[] dataStrings = new String[] {
                 Integer.toString(ID),
@@ -32,6 +32,6 @@ public record RecordArea(
                 districtName,
                 cityIDsString};
 
-        return String.join(ENV.CSV_SEPARATOR, dataStrings);
+        return String.join(Constants.CSV_SEPARATOR, dataStrings);
     }
 }

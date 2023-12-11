@@ -9,6 +9,7 @@ import models.record.RecordCity;
 import models.record.RecordOperator;
 import models.record.RecordArea;
 import models.record.RecordWeather;
+import utils.Functions;
 
 public class DataQuery {
 
@@ -149,11 +150,11 @@ public class DataQuery {
 
         } else if (key.equals("name")) {
             String targetName = (String) value;
-            return city.name().equals(targetName);
+            return city.name().equalsIgnoreCase(targetName);
 
         } else if (key.equals("ASCIIName")) {
             String targetASCIIName = (String) value;
-            return city.ASCIIName().equals(targetASCIIName);
+            return city.ASCIIName().equalsIgnoreCase(targetASCIIName);
 
         } else if (key.equals("countryCode")) {
             String targetCountryCode = (String) value;
@@ -161,7 +162,7 @@ public class DataQuery {
 
         } else if (key.equals("countryName")) {
             String targetCountryName = (String) value;
-            return city.countryName().equals(targetCountryName);
+            return city.countryName().equalsIgnoreCase(targetCountryName);
 
         } else if (key.equals("latitude")) {
             double targetLatitude = (double) value;
@@ -187,22 +188,22 @@ public class DataQuery {
 
         } else if (key.equals("nameSurname")) {
             String targetNameSurname = (String) value;
-            return operator.nameSurname().equals(targetNameSurname);
+            return operator.nameSurname().equalsIgnoreCase(targetNameSurname);
 
         } else if (key.equals("taxCode")) {
             String targetTaxCode = (String) value;
-            return operator.taxCode().equals(targetTaxCode);
+            return operator.taxCode().equalsIgnoreCase(targetTaxCode);
 
         } else if (key.equals("email")) {
             String targetEmail = (String) value;
-            return operator.email().equals(targetEmail);
+            return operator.email().equalsIgnoreCase(targetEmail);
 
         } else if (key.equals("username")) {
             String targetUsername = (String) value;
             return operator.username().equals(targetUsername);
 
         } else if (key.equals("password")) {
-            String targetPassword = (String) value;
+            String targetPassword = Functions.performHash((String) value);
             return operator.password().equals(targetPassword);
 
         } else if (key.equals("areaID")) {
@@ -225,15 +226,15 @@ public class DataQuery {
 
         } else if (key.equals("areaName")) {
             String targetAreaName = (String) value;
-            return area.areaName().equals(targetAreaName);
+            return area.areaName().equalsIgnoreCase(targetAreaName);
 
         } else if (key.equals("streetName")) {
             String targetStreetName = (String) value;
-            return area.streetName().equals(targetStreetName);
+            return area.streetName().equalsIgnoreCase(targetStreetName);
 
         } else if (key.equals("streetNumber")) {
             String targetStreetNumber = (String) value;
-            return area.streetNumber().equals(targetStreetNumber);
+            return area.streetNumber().equalsIgnoreCase(targetStreetNumber);
 
         } else if (key.equals("CAP")) {
             String targetCAP = (String) value;
@@ -241,11 +242,11 @@ public class DataQuery {
 
         } else if (key.equals("townName")) {
             String targetTownName = (String) value;
-            return area.townName().equals(targetTownName);
+            return area.townName().equalsIgnoreCase(targetTownName);
 
         } else if (key.equals("districtName")) {
             String targetDistrictName = (String) value;
-            return area.districtName().equals(targetDistrictName);
+            return area.districtName().equalsIgnoreCase(targetDistrictName);
 
         } else if (key.equals("cityID")) {
             Integer targetCityID = (Integer) value;

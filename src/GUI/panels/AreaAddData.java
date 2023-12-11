@@ -12,7 +12,7 @@ import models.CurrentOperator;
 import models.MainModel;
 import models.record.RecordArea;
 import models.record.RecordCity;
-import utils.ENV;
+import utils.Constants;
 import utils.Functions;
 import utils.Interfaces;
 
@@ -96,7 +96,7 @@ public class AreaAddData extends JPanel implements Interfaces.UIPanel {
 
                 tableData[i] = new Object[] {
                         !scoreCell.isEmpty() ? Integer.parseInt(scoreCell) : null,
-                        !commentCell.isEmpty() ? commentCell.trim() : ENV.EMPTY_STRING
+                        !commentCell.isEmpty() ? commentCell.trim() : Constants.EMPTY_STRING
                 };
             }
 
@@ -280,7 +280,7 @@ public class AreaAddData extends JPanel implements Interfaces.UIPanel {
             GUI gui = new GUI(mainModel);
             AreaAddData areaAddData = new AreaAddData(mainModel);
 
-            mainModel.logicOperator.performLogin(ENV.DefaultData.ID, ENV.DefaultData.PWD);
+            mainModel.logicOperator.performLogin(Constants.DefaultData.ID, Constants.DefaultData.PWD);
 
             gui.addPanel(areaAddData.createPanel(gui));
             areaAddData.onOpen(args);

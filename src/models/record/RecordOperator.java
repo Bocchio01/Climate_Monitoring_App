@@ -1,6 +1,7 @@
 package models.record;
 
-import utils.ENV;
+import utils.Constants;
+import utils.Functions;
 
 public record RecordOperator(
         Integer ID,
@@ -11,6 +12,17 @@ public record RecordOperator(
         String password,
         Integer areaID) {
 
+    public RecordOperator performHash() {
+        return new RecordOperator(
+                ID,
+                nameSurname,
+                taxCode,
+                email,
+                username,
+                Functions.performHash(password),
+                areaID);
+    }
+
     @Override
     public String toString() {
         String[] dataStrings = new String[] {
@@ -20,9 +32,9 @@ public record RecordOperator(
                 email,
                 username,
                 password,
-                areaID == null ? ENV.EMPTY_STRING : areaID.toString()
+                areaID == null ? Constants.EMPTY_STRING : areaID.toString()
         };
 
-        return String.join(ENV.CSV_SEPARATOR, dataStrings);
+        return String.join(Constants.CSV_SEPARATOR, dataStrings);
     }
 }

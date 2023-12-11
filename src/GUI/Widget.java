@@ -15,7 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import utils.ENV;
+import utils.Constants;
 
 public class Widget {
 
@@ -25,7 +25,7 @@ public class Widget {
             super(new GridBagLayout());
 
             JLabel label = new JLabel(labelText);
-            activeArea.setPreferredSize(ENV.GUI.WIDGET_DIMENSION);
+            activeArea.setPreferredSize(Constants.GUI.WIDGET_DIMENSION);
             
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = 0;
@@ -49,7 +49,7 @@ public class Widget {
         public Button(String text) {
             setText(text);
             setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            setPreferredSize(ENV.GUI.WIDGET_DIMENSION);
+            setPreferredSize(Constants.GUI.WIDGET_DIMENSION);
         }
     }
 
@@ -68,7 +68,7 @@ public class Widget {
             setVerticalAlignment(JLabel.CENTER);
     
             try {
-                BufferedImage originalImage = ImageIO.read(getClass().getResource(ENV.Path.Assets.LOGO));
+                BufferedImage originalImage = ImageIO.read(getClass().getResource(Constants.Path.Assets.LOGO));
                 Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
     
                 ImageIcon icon = new ImageIcon(scaledImage);

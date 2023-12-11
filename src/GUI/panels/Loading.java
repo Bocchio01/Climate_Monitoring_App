@@ -8,7 +8,7 @@ import GUI.GUI;
 import GUI.Widget;
 import GUI.layouts.TwoRows;
 import models.MainModel;
-import utils.ENV;
+import utils.Constants;
 import utils.Interfaces;
 
 public class Loading extends TwoRows implements Interfaces.UIPanel {
@@ -36,7 +36,7 @@ public class Loading extends TwoRows implements Interfaces.UIPanel {
             int animationSteps = 5;
             int currentStep = (int) (e.getWhen() / 700 % animationSteps);
 
-            labelAppName.setText(ENV.APP_TITLE + ".".repeat((currentStep % 4)));
+            labelAppName.setText(Constants.APP_TITLE + ".".repeat((currentStep % 4)));
 
             if (currentStep == animationSteps - 1) {
                 timer.stop();
@@ -44,7 +44,7 @@ public class Loading extends TwoRows implements Interfaces.UIPanel {
             }
         });
 
-        labelAppName.setText(ENV.APP_TITLE);
+        labelAppName.setText(Constants.APP_TITLE);
         labelAppName.setFont(new Font("Ink Free", Font.CENTER_BASELINE, 35));
 
         addTop(new Widget.LogoLabel(2));

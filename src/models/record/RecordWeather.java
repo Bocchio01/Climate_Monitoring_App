@@ -1,7 +1,7 @@
 package models.record;
 
 import models.record.RecordWeather.WeatherData;
-import utils.ENV;
+import utils.Constants;
 
 public record RecordWeather(
         Integer ID,
@@ -32,7 +32,7 @@ public record RecordWeather(
                 glacierMass.toString()
         };
 
-        return String.join(ENV.CSV_SEPARATOR, dataStrings);
+        return String.join(Constants.CSV_SEPARATOR, dataStrings);
     }
 
     public record WeatherData(
@@ -42,8 +42,8 @@ public record RecordWeather(
         @Override
         public String toString() {
             return (score != null ? Integer.toString(score)
-                    : ENV.EMPTY_STRING) +
-                    ENV.CSV_SUB_SEPARATOR +
+                    : Constants.EMPTY_STRING) +
+                    Constants.CSV_SUB_SEPARATOR +
                     comment;
         }
     }

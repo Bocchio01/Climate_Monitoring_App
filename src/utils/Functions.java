@@ -1,5 +1,8 @@
 package utils;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -32,4 +35,25 @@ public class Functions {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
         return dateFormat.format(new Date());
     }
+
+        public static String performHash(String plainText) {
+
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+                byte[] hashedText = md.digest(plainText.getBytes(StandardCharsets.UTF_8));
+
+                StringBuilder sb = new StringBuilder();
+                for (byte hashedByte : hashedText) {
+                    sb.append(String.format("%02x", hashedByte));
+                }
+
+                return sb.toString();
+
+            } catch (NoSuchAlgorithmException e) {
+                // TODO: handle exception
+            }
+
+            return null;
+
+        }
 }

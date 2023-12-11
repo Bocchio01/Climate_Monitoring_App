@@ -3,14 +3,14 @@ package utils;
 import java.awt.Dimension;
 import java.nio.file.Paths;
 
-public class ENV {
+public class Constants {
 
     public static final String EMPTY_STRING = "NULL";
     public static final String CSV_SEPARATOR = ";";
     public static final String CSV_SUB_SEPARATOR = "|";
     public static final String APP_TITLE = "Monitoraggio Climatico";
 
-    private ENV() {
+    private Constants() {
     }
 
     public static final class Index {
@@ -82,7 +82,7 @@ public class ENV {
 
         @Override
         public String toString() {
-            return String.join(ENV.CSV_SEPARATOR, new String[] { NAME, TAXCODE, EMAIL, ID, PWD, AREA });
+            return String.join(Constants.CSV_SEPARATOR, new String[] { NAME, TAXCODE, EMAIL, ID, PWD, AREA });
         }
     }
 
